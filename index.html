@@ -31,7 +31,7 @@
     color: var(--white);
     font-family: var(--sans);
     font-weight: 300;
-    overflow-x: hidden;
+    overflow-x: clip;
     cursor: none;
   }
 
@@ -877,6 +877,7 @@
   .coop {
     padding: 140px 0 0;
     background: var(--off-black);
+    overflow: visible; /* must override section{overflow:hidden} so sticky works */
   }
   .coop-inner {
     max-width: 1400px;
@@ -922,14 +923,11 @@
     /* stack context */
   }
 
-  /* each card — 16:9 with side margins, centered vertically */
+  /* each card — sized & centered by JS */
   .coop-card {
     position: absolute;
-    left: 60px;
-    right: 60px;
-    top: 50%;
-    aspect-ratio: 16 / 9;
     overflow: hidden;
+    border-radius: 0;
     transform-origin: center center;
     will-change: transform;
   }
@@ -1818,7 +1816,31 @@
     const N      = cards.length;
     const TRANSITION = 'transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease, border-radius 0.5s ease';
 
-    function setStackHeight(){
+    // Calculate card dimensions: 16:9, max width = vw-120px, max height = vh-80px
+    function getMetrics(){
+      const winW = window.innerWidth;
+      const winH = window.innerHeight;
+      let w = winW - 120;          // 60px margin each side
+      let h = w * 9 / 16;
+      if(h > winH - 80){           // too tall → constrain by height
+        h = winH - 80;
+        w = h * 16 / 9;
+      }
+      return {
+        w, h,
+        left: (winW - w) / 2,
+        top:  (winH - h) / 2
+      };
+    }
+
+    function applyLayout(){
+      const m = getMetrics();
+      cards.forEach(card => {
+        card.style.width  = m.w + 'px';
+        card.style.height = m.h + 'px';
+        card.style.left   = m.left + 'px';
+        card.style.top    = m.top  + 'px';
+      });
       stack.style.height = (N + 1) * window.innerHeight + 'px';
     }
 
@@ -1826,8 +1848,7 @@
 
     function update(){
       raf = null;
-      const stackTop = stack.getBoundingClientRect().top;
-      const scrolled = -stackTop;
+      const scrolled = -stack.getBoundingClientRect().top;
       const winH     = window.innerHeight;
       const SLOT     = winH;
 
@@ -1837,7 +1858,6 @@
         const cardScroll    = scrolled - i * SLOT;
         const enterProgress = Math.max(0, Math.min(1, cardScroll / SLOT));
 
-        // How many cards have stacked on top of this one
         let stackedAbove = 0;
         for(let j = i + 1; j < N; j++){
           stackedAbove += Math.max(0, Math.min(1, (scrolled - j * SLOT) / SLOT));
@@ -1852,14 +1872,9 @@
         card.style.borderRadius = radius + 'px';
         card.style.zIndex       = i + 1;
 
-        if(cardScroll < 0){
-          // Below viewport — waiting to enter
-          card.style.transform = `translateY(calc(-50% + ${winH}px))`;
-        } else {
-          // Sliding up into centered position
-          const offPx = (1 - enterProgress) * winH;
-          card.style.transform = `translateY(calc(-50% + ${offPx.toFixed(1)}px)) scale(${scale.toFixed(4)})`;
-        }
+        // translateY: winH = below viewport, 0 = at rest (centered via top)
+        const offPx = cardScroll < 0 ? winH : (1 - enterProgress) * winH;
+        card.style.transform = `translateY(${offPx.toFixed(1)}px) scale(${scale.toFixed(4)})`;
 
         const isTop = enterProgress >= 0.98 && stackedAbove < 0.05;
         if(isTop) dotEls.forEach((d, di) => d.classList.toggle('active', di === i));
@@ -1868,10 +1883,10 @@
 
     function onScroll(){ if(!raf) raf = requestAnimationFrame(update); }
 
-    setStackHeight();
+    applyLayout();
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => { setStackHeight(); update(); });
+    window.addEventListener('resize', () => { applyLayout(); update(); });
   })();
 
     // ── MARQUEE ──
