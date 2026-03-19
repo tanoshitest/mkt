@@ -922,12 +922,15 @@
     /* stack context */
   }
 
-  /* each card lives absolutely inside the viewport */
+  /* each card — 16:9 with side margins, centered vertically */
   .coop-card {
     position: absolute;
-    inset: 0;
+    left: 60px;
+    right: 60px;
+    top: 50%;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
-    transform-origin: top center;
+    transform-origin: center center;
     will-change: transform;
   }
 
@@ -1808,95 +1811,67 @@
 
   // ── OVERLAP STACK SCROLL ──
   (function(){
-    const stack    = document.getElementById('coopStack');
-    const viewport = document.getElementById('coopViewport');
-    const cards    = Array.from(document.querySelectorAll('.coop-card'));
-    const dots     = document.getElementById('coopDots');
-    const dotEls   = Array.from(dots.querySelectorAll('.coop-dot'));
-    const N        = cards.length;
+    const stack  = document.getElementById('coopStack');
+    const cards  = Array.from(document.querySelectorAll('.coop-card'));
+    const dots   = document.getElementById('coopDots');
+    const dotEls = Array.from(dots.querySelectorAll('.coop-dot'));
+    const N      = cards.length;
+    const TRANSITION = 'transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease, border-radius 0.5s ease';
 
-    // Each card needs its own scroll "slot" — 100vh per card + final 100vh to rest on last
-    // Total stack height = N * 100vh  (the sticky viewport itself = 100vh, so scroll space = (N-1)*100vh)
-    const SLOT = window.innerHeight;          // px each card occupies in scroll budget
-    stack.style.height = (N * SLOT + SLOT) + 'px';  // total scroll room
-
-    // Tuning
-    const MAX_SCALE_SHRINK = 0.08;   // card 0 shrinks to 1-2*0.08 = 0.84 when fully stacked
-    const MAX_TOP_OFFSET   = 18;     // px each stacked card is pushed down from top
-    const TRANSITION       = 'transform 0.6s cubic-bezier(0.16,1,0.3,1), border-radius 0.5s ease, filter 0.5s ease';
+    function setStackHeight(){
+      stack.style.height = (N + 1) * window.innerHeight + 'px';
+    }
 
     let raf = null;
 
     function update(){
       raf = null;
       const stackTop = stack.getBoundingClientRect().top;
-      // scrolled = how many px we've scrolled past the top of the stack
       const scrolled = -stackTop;
-      const winH = window.innerHeight;
+      const winH     = window.innerHeight;
+      const SLOT     = winH;
 
-      // Show dots when stack is in view
-      const inView = scrolled > -winH && scrolled < N * SLOT + winH;
-      dots.classList.toggle('visible', inView);
+      dots.classList.toggle('visible', scrolled > -winH && scrolled < N * SLOT + winH);
 
       cards.forEach((card, i) => {
-        // progress for THIS card: 0 = card just enters, 1 = card fully in place
-        // card i starts entering when scrolled = i * SLOT
-        const cardScroll = scrolled - i * SLOT;
-        // 0→1 as card scrolls into place (over one SLOT of scroll)
+        const cardScroll    = scrolled - i * SLOT;
         const enterProgress = Math.max(0, Math.min(1, cardScroll / SLOT));
 
-        // translateY: start from 100% (below), arrive at 0
-        // Only applies while entering (cardScroll < SLOT)
-        // Once in place (enterProgress=1) it stays at translateY=0 via sticky
-        const translateY = (1 - enterProgress) * 100; // percent
-
-        // How many cards have entered AFTER this one = stacking pressure on this card
+        // How many cards have stacked on top of this one
         let stackedAbove = 0;
-        for(let j = i+1; j < N; j++){
-          const jScroll = scrolled - j * SLOT;
-          const jProgress = Math.max(0, Math.min(1, jScroll / SLOT));
-          stackedAbove += jProgress; // smooth accumulation
+        for(let j = i + 1; j < N; j++){
+          stackedAbove += Math.max(0, Math.min(1, (scrolled - j * SLOT) / SLOT));
         }
 
-        // Scale shrinks as more cards stack on top
-        const scale  = Math.max(1 - stackedAbove * MAX_SCALE_SHRINK, 1 - (N-1)*MAX_SCALE_SHRINK);
-        // push down from top so stacked cards peek out
-        const topPx  = stackedAbove * MAX_TOP_OFFSET;
-        // round corners as cards get buried
-        const radius = Math.min(stackedAbove * 10, 28);
-        // darken buried cards
-        const bright = Math.max(0.4, 0.85 - stackedAbove * 0.18);
+        const scale  = Math.max(1 - stackedAbove * 0.05, 1 - (N - 1) * 0.05);
+        const bright = Math.max(0.4, 1 - stackedAbove * 0.22);
+        const radius = Math.min(stackedAbove * 10, 24);
 
-        card.style.transition = TRANSITION;
+        card.style.transition   = TRANSITION;
+        card.style.filter       = `brightness(${bright.toFixed(2)})`;
         card.style.borderRadius = radius + 'px';
-        card.style.filter = `brightness(${bright.toFixed(2)})`;
+        card.style.zIndex       = i + 1;
 
-        // card not yet entered: slide up from bottom
         if(cardScroll < 0){
-          card.style.transform = `translateY(100%)`;
-          card.style.zIndex = i + 1;
+          // Below viewport — waiting to enter
+          card.style.transform = `translateY(calc(-50% + ${winH}px))`;
         } else {
-          // entering or in place
-          card.style.transform = `translateY(${translateY.toFixed(2)}%) scale(${scale.toFixed(4)}) translateY(${topPx.toFixed(1)}px)`;
-          card.style.zIndex = i + 1;
+          // Sliding up into centered position
+          const offPx = (1 - enterProgress) * winH;
+          card.style.transform = `translateY(calc(-50% + ${offPx.toFixed(1)}px)) scale(${scale.toFixed(4)})`;
         }
 
-        // active dot = topmost card fully in place
         const isTop = enterProgress >= 0.98 && stackedAbove < 0.05;
-        if(isTop){
-          dotEls.forEach((d,di) => d.classList.toggle('active', di === i));
-        }
+        if(isTop) dotEls.forEach((d, di) => d.classList.toggle('active', di === i));
       });
     }
 
     function onScroll(){ if(!raf) raf = requestAnimationFrame(update); }
 
-    window.addEventListener('scroll', onScroll, { passive:true });
-    window.addEventListener('resize', () => {
-      stack.style.height = (N * window.innerHeight + window.innerHeight) + 'px';
-      update();
-    });
+    setStackHeight();
     update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { setStackHeight(); update(); });
   })();
 
     // ── MARQUEE ──
