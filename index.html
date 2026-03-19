@@ -123,17 +123,13 @@
 
   /* logo */
   #intro-logo {
-    font-family: var(--serif);
-    font-size: clamp(64px, 12vw, 160px);
-    font-weight: 300;
-    letter-spacing: 0.18em;
-    color: var(--white);
-    line-height: 1;
     opacity: 0;
     transform: translateY(20px);
     animation: introLogoIn 1.4s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  #intro-logo span { color: var(--gold); }
 
   @keyframes introLogoIn {
     to { opacity: 1; transform: translateY(0); }
@@ -313,15 +309,22 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    color: var(--white);
     text-decoration: none;
-    text-transform: uppercase;
+    display: flex;
+    align-items: center;
   }
-  .nav-logo span { color: var(--gold); }
+
+  /* ── LOGO IMAGE — wrapper trick: screen blend removes black bg ── */
+  .logo-wrap {
+    display: inline-flex;
+    align-items: center;
+    background: #000;          /* explicit black so screen blend erases it */
+    mix-blend-mode: screen;    /* black→transparent, white→white */
+  }
+  .logo-img { display: block; }
+  .logo-img--nav    { height: 30px; width: auto; }
+  .logo-img--intro  { height: clamp(56px, 9vw, 110px); width: auto; }
+  .logo-img--footer { height: 38px; width: auto; }
 
   /* right side cta */
   .nav-cta {
@@ -1401,7 +1404,7 @@
   </div>
   <!-- Center content -->
   <div id="intro-content">
-    <div id="intro-logo">M<span>K</span>T</div>
+    <div id="intro-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--intro" alt="MKT"></span></div>
     <div id="intro-tagline">Wear Grillz Not Only To Flex</div>
     <div id="intro-line"></div>
     <button id="intro-btn" onclick="enterSite()">
@@ -1455,7 +1458,7 @@
     <span></span>
     <span></span>
   </button>
-  <a href="#home" class="nav-logo">M<span>K</span>T</a>
+  <a href="#home" class="nav-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--nav" alt="MKT"></span></a>
   <a href="#contact" class="nav-cta">Book Appointment</a>
 </nav>
 
@@ -1682,7 +1685,7 @@
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="footer-logo">M<span>K</span>T</div>
+        <div class="footer-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--footer" alt="MKT"></span></div>
         <p class="footer-tagline">"Wear grillz not only to flex" — Premium Custom Grillz & Jewelry, crafted in Vietnam for the world.</p>
         <div class="footer-socials">
           <a href="https://www.instagram.com/mkt.worldwide/" class="footer-social" target="_blank">IG</a>
@@ -1929,6 +1932,37 @@
       <div class="marquee-role">${c.role}</div>
     </div>`
   ).join('');
+
+  // ── LOGO — remove black background via canvas ──
+  (function(){
+    function removeBg(img) {
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth; c.height = img.naturalHeight;
+      const ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const d = ctx.getImageData(0, 0, c.width, c.height);
+      const px = d.data;
+      for(let i = 0; i < px.length; i += 4){
+        const bright = (px[i] + px[i+1] + px[i+2]) / 3;
+        if(bright < 80){
+          px[i+3] = 0;                         // dark → transparent
+        } else if(bright < 140){
+          px[i+3] = Math.round((bright - 80) / 60 * 255); // edge → fade
+        }
+      }
+      ctx.putImageData(d, 0, 0);
+      const dataUrl = c.toDataURL('image/png');
+      document.querySelectorAll('.logo-img').forEach(el => {
+        if(el !== img) el.src = dataUrl;
+        img.src = dataUrl;
+      });
+    }
+    const first = document.querySelector('.logo-img');
+    if(!first) return;
+    if(first.complete && first.naturalWidth) removeBg(first);
+    else first.addEventListener('load', () => removeBg(first));
+  })();
+
 </script>
 </body>
 </html>
