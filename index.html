@@ -1744,6 +1744,74 @@
     .bm-day { width: 36px; height: 36px; font-size: 12px; }
     .bm-cal-dow span { width: 36px; }
   }
+
+  /* ══ WORN BY — SLIDING ROWS ══ */
+  .worn-by-section {
+    background: var(--black);
+    padding: 100px 0 120px;
+    overflow: hidden;
+  }
+  .wb-label {
+    text-align: center;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 64px;
+    opacity: 0.7;
+  }
+  .wb-rows { display: flex; flex-direction: column; gap: 24px; }
+  .wb-row {
+    display: flex;
+    gap: 20px;
+    will-change: transform;
+    transition: transform 0.1s linear;
+  }
+  .wb-row-1 { padding-left: 40px; }
+  .wb-row-2 { padding-left: 120px; }
+  .wb-card {
+    flex-shrink: 0;
+    width: 200px;
+    cursor: pointer;
+  }
+  .wb-card-img {
+    width: 200px;
+    height: 250px;
+    overflow: hidden;
+    background: #111;
+  }
+  .wb-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
+    display: block;
+  }
+  .wb-card:hover .wb-card-img img {
+    transform: scale(1.07);
+    filter: grayscale(0%);
+  }
+  .wb-card-info {
+    padding: 12px 0 0;
+    border-top: 1px solid rgba(201,169,110,0.15);
+    margin-top: 12px;
+  }
+  .wb-card-name {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+  }
+  .wb-card-role {
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-top: 4px;
+  }
 </style>
 </head>
 <body>
@@ -1992,11 +2060,221 @@
 </div>
 
 <!-- MARQUEE — Clients -->
-<section class="marquee-section" id="clients">
-  <div class="marquee-label">Worn By</div>
-  <div class="marquee-track">
-    <div class="marquee-inner" id="marqueeInner">
-      <!-- filled by JS -->
+<section class="worn-by-section" id="clients">
+  <div class="wb-label">Worn By</div>
+  <div class="wb-rows">
+    <div class="wb-row wb-row-1">
+      
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_74ac7893dbfb4b3e9503c59a49974bef~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_74ac7893dbfb4b3e9503c59a49974bef~mv2.jpg" alt="Quynh Anh Shyn" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Quynh Anh Shyn</div>
+        <div class="wb-card-role">Fashionista</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_aa422822202c4123bbb9ba92540dc7b5~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_aa422822202c4123bbb9ba92540dc7b5~mv2.jpg" alt="Big Daddy" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Big Daddy</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_b8ac1de40ad44c64b6dcc99d074cb9de~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_b8ac1de40ad44c64b6dcc99d074cb9de~mv2.jpg" alt="B-ray" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">B-ray</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_791ad54c1cb9495b99301c2b5cb3b909~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_791ad54c1cb9495b99301c2b5cb3b909~mv2.jpg" alt="Addree Right Hand" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Addree Right Hand</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_9c3c908d159f49af86c3838c382b5549~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_9c3c908d159f49af86c3838c382b5549~mv2.jpg" alt="Soobin Hoang Son" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Soobin Hoang Son</div>
+        <div class="wb-card-role">Singer</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_e17b4bb39c244e959d784aaa50557314~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_e17b4bb39c244e959d784aaa50557314~mv2.jpg" alt="Phuong My Chi" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Phuong My Chi</div>
+        <div class="wb-card-role">Singer</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_60ae8b16be23418d8e4dbe494cb4ee36~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_60ae8b16be23418d8e4dbe494cb4ee36~mv2.jpg" alt="Ricky Star" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Ricky Star</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_80ad29561ed844a4bde36620922ac9b0~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_80ad29561ed844a4bde36620922ac9b0~mv2.jpg" alt="Suboi" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Suboi</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_520be8ab268c4816b1f2e3977380ecd4~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_520be8ab268c4816b1f2e3977380ecd4~mv2.jpg" alt="Phuong Vu" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Phuong Vu</div>
+        <div class="wb-card-role">Director</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_f4eb7c8c8be74c418f6b0e6e46037298~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_f4eb7c8c8be74c418f6b0e6e46037298~mv2.jpg" alt="Lam Bao Ngoc" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Lam Bao Ngoc</div>
+        <div class="wb-card-role">Singer</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_9acddd7075b340a8b5a3d8b81353acf8~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_9acddd7075b340a8b5a3d8b81353acf8~mv2.jpg" alt="Fabo Nguyen" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Fabo Nguyen</div>
+        <div class="wb-card-role">Youtuber</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_4d0cfc9db56747d1b12878d64e5f37ab~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_4d0cfc9db56747d1b12878d64e5f37ab~mv2.jpg" alt="Saabirose" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Saabirose</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    </div>
+    <div class="wb-row wb-row-2">
+      
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_9ce8894faf744f7b864d37d843de0a9a~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_9ce8894faf744f7b864d37d843de0a9a~mv2.jpg" alt="Doan Nguyen" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Doan Nguyen</div>
+        <div class="wb-card-role">Artist</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_24e3d059e1a64e18ab725f9dfb135273~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_24e3d059e1a64e18ab725f9dfb135273~mv2.jpg" alt="Tlinh" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Tlinh</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_298d03748e6143e2a395b7256c2aacae~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_298d03748e6143e2a395b7256c2aacae~mv2.jpg" alt="Duy Khanh Zhou Zhou" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Duy Khanh Zhou Zhou</div>
+        <div class="wb-card-role">Actor</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_cb751163318a45d59b8e4d2c2e92a0eb~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_cb751163318a45d59b8e4d2c2e92a0eb~mv2.jpg" alt="Low-G" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Low-G</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_4dad42539d7249eea6adb715917d148f~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_4dad42539d7249eea6adb715917d148f~mv2.jpg" alt="Wrxdie" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Wrxdie</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_de913b69268842e694046c0f80e99101~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_de913b69268842e694046c0f80e99101~mv2.jpg" alt="Duy Manh" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Duy Manh</div>
+        <div class="wb-card-role">Singer</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_32b2bd3bc7734e6abefe5d10ee7d1217~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_32b2bd3bc7734e6abefe5d10ee7d1217~mv2.jpg" alt="Cuong Seven" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Cuong Seven</div>
+        <div class="wb-card-role">Singer</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_3177e1ca40b84b85a04e2b72bf042517~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_3177e1ca40b84b85a04e2b72bf042517~mv2.jpg" alt="Blacka" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Blacka</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_0124d4ed0c124fd19905ff661941600b~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_0124d4ed0c124fd19905ff661941600b~mv2.jpg" alt="Can Nguyen" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Can Nguyen</div>
+        <div class="wb-card-role">Singer</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_5179e4160ad9424284795518720d3bdf~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_5179e4160ad9424284795518720d3bdf~mv2.jpg" alt="Lil Wyhn" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Lil Wyhn</div>
+        <div class="wb-card-role">Rapper</div>
+      </div>
+    </div>
+    <div class="wb-card">
+      <div class="wb-card-img">
+        <img src="https://static.wixstatic.com/media/bbdef6_72994c2032f74621a08f31b6ca03746a~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_72994c2032f74621a08f31b6ca03746a~mv2.jpg" alt="Gil Le" loading="lazy">
+      </div>
+      <div class="wb-card-info">
+        <div class="wb-card-name">Gil Le</div>
+        <div class="wb-card-role">Actor</div>
+      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -2328,6 +2606,28 @@
     else first.addEventListener('load', () => removeBg(first));
   })();
 
+
+  // ── WORN BY SLIDING ROWS ──
+  (function(){
+    const section = document.querySelector('.worn-by-section');
+    const row1    = document.querySelector('.wb-row-1');
+    const row2    = document.querySelector('.wb-row-2');
+    if(!section || !row1 || !row2) return;
+    const SPEED = 0.12;
+    let ticking = false;
+    function update() {
+      const rect    = section.getBoundingClientRect();
+      const centerY = rect.top + rect.height / 2;
+      const delta   = (window.innerHeight / 2 - centerY) * SPEED;
+      row1.style.transform = 'translateX(' + delta + 'px) translateZ(0)';
+      row2.style.transform = 'translateX(' + (-delta) + 'px) translateZ(0)';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if(!ticking){ requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
 </script>
 
 <!-- ══════════════════════════════════════════
