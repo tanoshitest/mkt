@@ -1765,7 +1765,7 @@
     display: flex;
     gap: 20px;
     will-change: transform;
-    transition: transform 0.1s linear;
+    transition: none;
   }
   .wb-row-1 { padding-left: 40px; }
   .wb-row-2 { padding-left: 120px; }
@@ -2613,24 +2613,15 @@
     const row1    = document.querySelector('.wb-row-1');
     const row2    = document.querySelector('.wb-row-2');
     if(!section || !row1 || !row2) return;
-    const SPEED = 0.22;
-    let lastY = -1;
+    const SPEED = 0.5;
     function loop() {
-      const curY = window.scrollY || document.documentElement.scrollTop || 0;
-      if(curY !== lastY) {
-        lastY = curY;
-        const rect = section.getBoundingClientRect();
-        const vh   = window.innerHeight;
-        // only animate when section is within viewport range
-        if(rect.bottom > -50 && rect.top < vh + 50) {
-          const centerY = rect.top + rect.height / 2;
-          const delta   = (centerY - vh / 2) * SPEED;
-          row1.style.transform = 'translateX(' + delta + 'px) translateZ(0)';
-          row2.style.transform = 'translateX(' + (-delta) + 'px) translateZ(0)';
-        } else {
-          row1.style.transform = 'translateX(0px) translateZ(0)';
-          row2.style.transform = 'translateX(0px) translateZ(0)';
-        }
+      const rect = section.getBoundingClientRect();
+      const vh   = window.innerHeight;
+      if(rect.bottom > -50 && rect.top < vh + 50) {
+        const centerY = rect.top + rect.height / 2;
+        const delta   = (centerY - vh / 2) * SPEED;
+        row1.style.transform = 'translateX(' + delta + 'px) translateZ(0)';
+        row2.style.transform = 'translateX(' + (-delta) + 'px) translateZ(0)';
       }
       requestAnimationFrame(loop);
     }
