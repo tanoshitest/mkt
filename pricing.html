@@ -2210,6 +2210,8 @@
 </head>
 <body>
 <div class="noise-overlay"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <nav id="navbar">
   <button id="menu-btn" onclick="toggleMenu()" aria-label="Menu">
@@ -2474,6 +2476,29 @@
   // Logo bg removal
   (function(){function removeBg(img){const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;const ctx=c.getContext('2d');ctx.drawImage(img,0,0);const d=ctx.getImageData(0,0,c.width,c.height);const px=d.data;for(let i=0;i<px.length;i+=4){const b=(px[i]+px[i+1]+px[i+2])/3;if(b<80)px[i+3]=0;else if(b<140)px[i+3]=Math.round((b-80)/60*255);}ctx.putImageData(d,0,0);document.querySelectorAll('.logo-img').forEach(el=>{el.src=c.toDataURL('image/png');});}
   const f=document.querySelector('.logo-img');if(!f)return;if(f.complete&&f.naturalWidth)removeBg(f);else f.addEventListener('load',()=>removeBg(f));})();
+
+  // ── CUSTOM CURSOR ──
+  (function(){
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+    if(!cursor || !cursorRing) return;
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      cursorRing.style.left = e.clientX + 'px';
+      cursorRing.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, select, input, textarea, label[for]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '16px'; cursor.style.height = '16px';
+        cursorRing.style.width = '56px'; cursorRing.style.height = '56px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '8px'; cursor.style.height = '8px';
+        cursorRing.style.width = '36px'; cursorRing.style.height = '36px';
+      });
+    });
+  })();
 </script>
 <script>
 /* ── BOOKING MODAL ── */
