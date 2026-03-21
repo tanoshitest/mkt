@@ -993,7 +993,6 @@
 <script>
   function toggleMenu(){ document.getElementById('menu-overlay').classList.toggle('open'); document.getElementById('menu-btn').classList.toggle('open'); }
   function closeMenu(){ document.getElementById('menu-overlay').classList.remove('open'); document.getElementById('menu-btn').classList.remove('open'); }
-  document.getElementById('menu-btn').addEventListener('click', toggleMenu);
   window.addEventListener('scroll',()=>{ document.getElementById('navbar').classList.toggle('scrolled', window.scrollY>60); });
 
   // VIDEO ART — play/pause toggle (activate when real video is added)

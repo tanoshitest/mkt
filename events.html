@@ -225,7 +225,6 @@ footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(
 <script>
 function toggleMenu(){document.getElementById('menu-overlay').classList.toggle('open');document.getElementById('menu-btn').classList.toggle('open');}
 function closeMenu(){document.getElementById('menu-overlay').classList.remove('open');document.getElementById('menu-btn').classList.remove('open');}
-document.getElementById('menu-btn').addEventListener('click',toggleMenu);
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);});
 (function(){const c=document.getElementById('cursor'),r=document.getElementById('cursorRing');document.addEventListener('mousemove',e=>{c.style.left=r.style.left=e.clientX+'px';c.style.top=r.style.top=e.clientY+'px';});document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{c.style.width=c.style.height='16px';r.style.width=r.style.height='56px';});el.addEventListener('mouseleave',()=>{c.style.width=c.style.height='8px';r.style.width=r.style.height='36px';});});})();
 
