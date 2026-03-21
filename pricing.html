@@ -2211,7 +2211,7 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav id="navbar">
-  <button id="menu-btn" onclick="toggleMenu()" aria-label="Menu">
+  <button id="menu-btn" aria-label="Menu">
     <span></span>
     <span></span>
     <span></span>
@@ -2512,9 +2512,17 @@
 
 
 <script>
-  function toggleMenu(){document.getElementById('menu-overlay').classList.toggle('open');document.body.classList.toggle('menu-open');}
-  function closeMenu(){document.getElementById('menu-overlay').classList.remove('open');document.body.classList.remove('menu-open');}
-  document.getElementById('menu-btn').addEventListener('click',toggleMenu);
+  function toggleMenu(){
+    document.getElementById('menu-overlay').classList.toggle('open');
+    document.getElementById('menu-btn').classList.toggle('open');
+    document.body.classList.toggle('menu-open');
+  }
+  function closeMenu(){
+    document.getElementById('menu-overlay').classList.remove('open');
+    document.getElementById('menu-btn').classList.remove('open');
+    document.body.classList.remove('menu-open');
+  }
+  document.getElementById('menu-btn').addEventListener('click', toggleMenu);
   window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);});
 
   // ── CUSTOM CURSOR ──
