@@ -2234,8 +2234,8 @@
     <div class="menu-divider"></div>
     <div class="menu-bottom">
       <div class="menu-secondary">
-        <a href="#">Contact</a>
-        <a href="#">Book an appointment</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" id="menu-book-btn">Book an appointment</a>
       </div>
       <div class="menu-socials">
         <span class="menu-follow-label">Follow us</span>
@@ -2486,19 +2486,19 @@
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="#">Collections</a></li>
-          <li><a href="#">Book Appointment</a></li>
+          <li><a href="collection.html">Collections</a></li>
+          <li><a href="#" id="footer-book-btn">Book Appointment</a></li>
           <li><a href="store.html">Store Locator</a></li>
-          <li><a href="#">Pricing</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Friend & Partner</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Instagram</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="contact.html">Friend & Partner</a></li>
+          <li><a href="contact.html">Press</a></li>
+          <li><a href="https://www.instagram.com/mkt.worldwide/" target="_blank">Instagram</a></li>
         </ul>
       </div>
     </div>
@@ -2601,6 +2601,14 @@
   var qlBtn = document.getElementById('ql-book-btn');
   if (qlBtn) {
     qlBtn.addEventListener('click', function(e){ e.preventDefault(); openBooking(); });
+  }
+  var menuBookBtn = document.getElementById('menu-book-btn');
+  if (menuBookBtn) {
+    menuBookBtn.addEventListener('click', function(e){ e.preventDefault(); openBooking(); });
+  }
+  var footerBookBtn = document.getElementById('footer-book-btn');
+  if (footerBookBtn) {
+    footerBookBtn.addEventListener('click', function(e){ e.preventDefault(); openBooking(); });
   }
   document.querySelectorAll('.nav-cta').forEach(function(el){
     if (el.textContent.trim().toUpperCase().indexOf('BOOK') !== -1) {
