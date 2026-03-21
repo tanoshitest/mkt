@@ -2401,8 +2401,21 @@
     const intro = document.getElementById('intro');
     intro.classList.add('hide');
     document.body.classList.remove('intro-active');
+    sessionStorage.setItem('mkt_entered', '1');
     setTimeout(() => { if (intro.parentNode) intro.remove(); }, 1400);
   };
+
+  // Skip intro if coming from internal navigation (HOME link) or already entered
+  if (sessionStorage.getItem('mkt_entered') === '1' || location.hash === '#main') {
+    const intro = document.getElementById('intro');
+    if (intro) {
+      intro.style.transition = 'none';
+      intro.style.opacity = '0';
+      intro.style.visibility = 'hidden';
+      document.body.classList.remove('intro-active');
+      intro.remove();
+    }
+  }
 
   // also make intro-btn cursor-aware
   document.getElementById('intro-btn').addEventListener('mouseenter', () => {
