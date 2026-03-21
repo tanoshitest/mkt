@@ -30,7 +30,7 @@
     background: var(--black);
     color: var(--white);
     font-family: var(--sans);
-    font-weight: 300;
+    font-weight: 400;
     overflow-x: clip;
     cursor: none;
   }
@@ -118,8 +118,8 @@
     align-items: center;
   }
   .logo-img { display: block; }
-  .logo-img--nav    { height: 30px; width: auto; }
-  .logo-img--footer { height: 38px; width: auto; }
+  .logo-img--nav    { height: 50px; width: auto; }
+  .logo-img--footer { height: 55px; width: auto; filter: brightness(0) invert(1); }
 
   .nav-cta {
     font-size: 9px;
@@ -717,6 +717,39 @@
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.35s; }
+
+  /* ── TYPOGRAPHY REFINEMENTS — Richard Mille scale ── */
+  /* Body paragraphs & descriptive text: regular weight */
+  p, li, cite, blockquote,
+  .founder-body, .vision-desc, .pillar-body,
+  .footer-tagline, .hero-desc,
+  .store-story-dd, .contact-desc,
+  .bm-field-note { font-weight: 400; line-height: 1.75; }
+
+  /* Section headings (medium): weight 400 — readable, not too heavy */
+  .founder-h2, .vision-h2, .coop-h2,
+  .ql-title, .pillar-title,
+  .store-map-heading, .contact-heading { font-weight: 400; }
+
+  /* Small labels & UI text: semibold for legibility at small sizes */
+  .section-label, .hero-eyebrow,
+  .nav-cta, .btn-primary, .btn-ghost,
+  .link-num, .menu-secondary a,
+  .footer-col h4, .ql-label { font-weight: 500; letter-spacing: 0.28em; }
+
+  /* Buttons: medium weight */
+  .btn-primary, .btn-ghost,
+  .bm-btn-primary { font-weight: 500; font-size: 10px; letter-spacing: 0.25em; }
+
+  /* Menu nav links */
+  .menu-links li a { font-weight: 400; }
+
+  /* Display hero: keep thin — size carries the weight visually */
+  .hero-title, .hero-phrase,
+  .cs-title { font-weight: 300; }
+
+  /* Intro text stays thin */
+  #intro-tagline { font-weight: 300; }
 </style>
 </head>
 <body>
@@ -956,7 +989,7 @@
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="footer-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--footer" alt="MKT"></span></div>
+        <div class="footer-logo"><span class="logo-wrap"><img src="indentify/mkt final white.png" class="logo-img logo-img--footer" alt="MKT"></span></div>
         <p class="footer-tagline">"Wear grillz not only to flex" — Premium Custom Grillz & Jewelry, crafted in Vietnam for the world.</p>
         <div class="footer-socials">
           <a href="https://www.instagram.com/mkt.worldwide/" class="footer-social" target="_blank">IG</a>
