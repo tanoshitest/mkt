@@ -2417,19 +2417,22 @@
     }
   }
 
-  // also make intro-btn cursor-aware
-  document.getElementById('intro-btn').addEventListener('mouseenter', () => {
-    document.getElementById('cursor').style.width = '16px';
-    document.getElementById('cursor').style.height = '16px';
-    document.getElementById('cursorRing').style.width = '56px';
-    document.getElementById('cursorRing').style.height = '56px';
-  });
-  document.getElementById('intro-btn').addEventListener('mouseleave', () => {
-    document.getElementById('cursor').style.width = '8px';
-    document.getElementById('cursor').style.height = '8px';
-    document.getElementById('cursorRing').style.width = '36px';
-    document.getElementById('cursorRing').style.height = '36px';
-  });
+  // also make intro-btn cursor-aware (only if intro not skipped)
+  const _introBtn = document.getElementById('intro-btn');
+  if (_introBtn) {
+    _introBtn.addEventListener('mouseenter', () => {
+      document.getElementById('cursor').style.width = '16px';
+      document.getElementById('cursor').style.height = '16px';
+      document.getElementById('cursorRing').style.width = '56px';
+      document.getElementById('cursorRing').style.height = '56px';
+    });
+    _introBtn.addEventListener('mouseleave', () => {
+      document.getElementById('cursor').style.width = '8px';
+      document.getElementById('cursor').style.height = '8px';
+      document.getElementById('cursorRing').style.width = '36px';
+      document.getElementById('cursorRing').style.height = '36px';
+    });
+  }
 
   // Custom Cursor
   const cursorRing = document.getElementById('cursorRing');
