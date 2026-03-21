@@ -701,6 +701,22 @@
     #menu-overlay { padding: 100px 32px 48px; }
     #menu-overlay::before { left: 32px; right: 32px; }
   }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible, .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.35s; }
 </style>
 </head>
 <body>
@@ -1032,6 +1048,35 @@
     this.style.display = 'none';
     document.getElementById('cf-success').classList.add('show');
   });
+
+  // ── SCROLL REVEAL ──
+  (function(){
+    var selectors = [
+      'h1','h2','h3',
+      '.cs-eyebrow','.cs-tagline','.cs-badge','.cs-line',
+      '.ql-item','.ql-label',
+      '.footer-col',
+      '.store-story-block','.store-story-hd','.store-story-dd',
+      '.store-map-section','.store-map-heading',
+      '.contact-form','.contact-info-block','.contact-hours-block',
+      '.contact-social-link',
+      '.pricing-card','.pricing-filter',
+      'blockquote','cite',
+      'p.footer-tagline'
+    ].join(',');
+    var els = document.querySelectorAll(selectors);
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    els.forEach(function(el, i){
+      if(!el.classList.contains('reveal') && !el.classList.contains('reveal-right')){
+        el.classList.add(i % 2 === 0 ? 'reveal' : 'reveal-right');
+      }
+      io.observe(el);
+    });
+  })();
 </script>
 
 </body>

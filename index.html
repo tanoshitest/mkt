@@ -698,10 +698,15 @@
   }
   .reveal {
     opacity: 0;
-    transform: translateY(48px);
-    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    transform: translateX(-80px);
+    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
   }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible, .reveal-right.visible { opacity: 1; transform: translateX(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.35s; }
@@ -1930,12 +1935,12 @@
       <p class="founder-body reveal reveal-delay-2">
         As the founder of MKT, grillz are not merely a piece of jewelry for showing off or chasing trends. To me, grillz are a personal language — a refined medium through which one's individuality, life story, and inner spirit are expressed with depth and intention.
       </p>
-      <div class="founder-quote reveal reveal-delay-3">
+      <div class="founder-quote reveal-right reveal-delay-3">
         <p>"MKT exists to elevate grillz beyond mere display, transforming them into an integral part of fashion, culture, and personal storytelling — a space where the wearer doesn't just shine, but truly belongs."</p>
         <div class="founder-sig">— Mai Kim Thanh</div>
       </div>
     </div>
-    <div class="founder-images reveal reveal-delay-2">
+    <div class="founder-images reveal-right reveal-delay-2">
       <div class="founder-img">
         <img src="https://static.wixstatic.com/media/bbdef6_872e463be1404854ba3701bded9ee010~mv2.jpg/v1/crop/x_73,y_0,w_1829,h_2048/fill/w_875,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/452929829_2599130003606884_6002212986055116049_n.jpg" alt="Mai Kim Thanh" loading="lazy">
       </div>
@@ -1958,7 +1963,7 @@
           Identity,<br>not <em>imitation.</em>
         </h2>
       </div>
-      <p class="vision-desc reveal reveal-delay-2">
+      <p class="vision-desc reveal-right reveal-delay-2">
         No remakes, no mass production. Each piece is a personal statement crafted with artistic vision and elevated standards of fine craftsmanship — designed for those who understand that true luxury is singular.
       </p>
     </div>
@@ -1973,7 +1978,7 @@
         <div class="pillar-title">Meticulous Craft</div>
         <p class="pillar-body">Anglage by hand. Burnished pivots. Each surface treated with obsessive precision — the same standards found in the finest Swiss ateliers.</p>
       </div>
-      <div class="pillar reveal reveal-delay-2">
+      <div class="pillar reveal-right reveal-delay-2">
         <div class="pillar-num">03</div>
         <div class="pillar-title">Unique Masterpiece</div>
         <p class="pillar-body">Every masterpiece is carefully crafted down to every detail. Limited production ensures that no two pieces are ever the same.</p>
@@ -1987,7 +1992,7 @@
   <blockquote class="reveal">
     "Grillz are not tied to a single image or community — they stand as symbols of <em>identity, storytelling,</em> and attitude."
   </blockquote>
-  <cite class="reveal reveal-delay-1">Doan Nguyen — Artist</cite>
+  <cite class="reveal-right reveal-delay-1">Doan Nguyen — Artist</cite>
 </section>
 
 <!-- COOPERATION -->
@@ -1998,7 +2003,7 @@
         <div class="section-label reveal">Collaborations</div>
         <h2 class="coop-h2 reveal reveal-delay-1">Our<br><em>Cooperation</em></h2>
       </div>
-      <div class="coop-count reveal">04</div>
+      <div class="coop-count reveal-right">04</div>
     </div>
   </div>
 
@@ -2282,7 +2287,7 @@
 <!-- QUICK LINKS -->
 <section class="quicklinks" id="contact">
   <div class="quicklinks-grid">
-    <a href="store.html" class="ql-item">
+    <a href="store.html" class="ql-item reveal">
       <img class="ql-img"
         src="https://static.wixstatic.com/media/bbdef6_a59e50ab8b80412392908cdb89bc54dc~mv2.jpg/v1/fill/w_980,h_700,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_3939.jpg"
         alt="Store Locator" loading="lazy">
@@ -2292,7 +2297,7 @@
         <div class="ql-arrow">→</div>
       </div>
     </a>
-    <a href="#" id="ql-book-btn" class="ql-item">
+    <a href="#" id="ql-book-btn" class="ql-item reveal-right">
       <img class="ql-img"
         src="https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/crop/x_84,y_0,w_907,h_1214/fill/w_907,h_1214,al_c,q_85,enc_avif,quality_auto/536553245_1658062488450681_1675531161089091145_n.jpg"
         alt="Book Appointment" loading="lazy">
@@ -2302,7 +2307,7 @@
         <div class="ql-arrow">→</div>
       </div>
     </a>
-    <a href="pricing.html" class="ql-item">
+    <a href="pricing.html" class="ql-item reveal reveal-delay-1">
       <img class="ql-img"
         src="https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/fill/w_980,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg"
         alt="Pricing" loading="lazy">
@@ -2312,7 +2317,7 @@
         <div class="ql-arrow">→</div>
       </div>
     </a>
-    <a href="contact.html" class="ql-item">
+    <a href="contact.html" class="ql-item reveal-right reveal-delay-1">
       <img class="ql-img"
         src="https://static.wixstatic.com/media/bbdef6_d1fbc42b4f3747fb8d07d3f750d5bd72~mv2.jpg/v1/fill/w_980,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_d1fbc42b4f3747fb8d07d3f750d5bd72~mv2.jpg"
         alt="Contact" loading="lazy">
@@ -2466,7 +2471,7 @@
   }, { passive: true });
 
   // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
+  const reveals = document.querySelectorAll('.reveal, .reveal-right');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -2474,7 +2479,7 @@
         io.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   reveals.forEach(el => io.observe(el));
 
   // ── OVERLAP STACK SCROLL ──
