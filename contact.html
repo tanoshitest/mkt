@@ -6,7 +6,7 @@
 <title>Contact — MKT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -14,14 +14,14 @@
     --black: #080808;
     --off-black: #111010;
     --dark: #161514;
-    --gold: #c9a96e;
-    --gold-light: #e8cc9a;
-    --gold-dim: #7a6342;
+    --gold: #4169E1;
+    --gold-light: #6b8ef0;
+    --gold-dim: #2a4ab5;
     --white: #f5f0ea;
     --gray: #888480;
     --gray-light: #b8b4ae;
-    --serif: 'Cormorant Garamond', Georgia, serif;
-    --sans: 'Outfit', sans-serif;
+    --serif: 'Montserrat', sans-serif;
+    --sans: 'Montserrat', sans-serif;
   }
 
   html { scroll-behavior: smooth; }
@@ -50,7 +50,7 @@
   .cursor-ring {
     position: fixed;
     width: 36px; height: 36px;
-    border: 1px solid rgba(201,169,110,0.5);
+    border: 1px solid rgba(65,105,225,0.5);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
@@ -161,7 +161,7 @@
     position: absolute;
     top: 0; left: 80px; right: 80px;
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(201,169,110,0.35), transparent);
+    background: linear-gradient(to right, transparent, rgba(65,105,225,0.35), transparent);
     transform: scaleX(0);
     transition: transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.15s;
   }
@@ -170,9 +170,9 @@
   .menu-links { list-style: none; }
   .menu-links li {
     overflow: hidden;
-    border-bottom: 1px solid rgba(201,169,110,0.07);
+    border-bottom: 1px solid rgba(65,105,225,0.07);
   }
-  .menu-links li:first-child { border-top: 1px solid rgba(201,169,110,0.07); }
+  .menu-links li:first-child { border-top: 1px solid rgba(65,105,225,0.07); }
   .menu-links li a {
     display: flex;
     align-items: center;
@@ -226,7 +226,7 @@
   .menu-divider {
     width: 100%;
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(201,169,110,0.2), transparent);
+    background: linear-gradient(to right, transparent, rgba(65,105,225,0.2), transparent);
     margin-bottom: 32px;
   }
   .menu-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
@@ -267,7 +267,7 @@
     padding: 140px 80px 80px;
     text-align: center;
     position: relative;
-    border-bottom: 1px solid rgba(201,169,110,0.08);
+    border-bottom: 1px solid rgba(65,105,225,0.08);
   }
   .contact-hero-eyebrow {
     font-size: 9px;
@@ -311,7 +311,7 @@
   /* Left: Info */
   .contact-info {
     padding: 100px 80px;
-    border-right: 1px solid rgba(201,169,110,0.08);
+    border-right: 1px solid rgba(65,105,225,0.08);
     display: flex;
     flex-direction: column;
     gap: 64px;
@@ -355,7 +355,7 @@
     justify-content: space-between;
     align-items: baseline;
     padding-bottom: 12px;
-    border-bottom: 1px solid rgba(201,169,110,0.06);
+    border-bottom: 1px solid rgba(65,105,225,0.06);
     font-size: 13px;
     color: var(--gray-light);
   }
@@ -374,13 +374,13 @@
     gap: 20px;
     text-decoration: none;
     padding: 20px 0;
-    border-bottom: 1px solid rgba(201,169,110,0.07);
+    border-bottom: 1px solid rgba(65,105,225,0.07);
     transition: all 0.3s ease;
     group: true;
   }
   .contact-social-icon {
     width: 40px; height: 40px;
-    border: 1px solid rgba(201,169,110,0.2);
+    border: 1px solid rgba(65,105,225,0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -456,7 +456,7 @@
   .cf-input, .cf-select, .cf-textarea {
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(201,169,110,0.2);
+    border-bottom: 1px solid rgba(65,105,225,0.2);
     padding: 14px 0;
     font-family: var(--sans);
     font-size: 14px;
@@ -484,7 +484,7 @@
     gap: 16px;
     margin-top: 40px;
     background: none;
-    border: 1px solid rgba(201,169,110,0.3);
+    border: 1px solid rgba(65,105,225,0.3);
     padding: 20px 40px;
     font-family: var(--sans);
     font-size: 10px;
@@ -503,7 +503,7 @@
   .cf-submit-arrow {
     width: 28px; height: 28px;
     border-radius: 50%;
-    border: 1px solid rgba(201,169,110,0.3);
+    border: 1px solid rgba(65,105,225,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -517,7 +517,7 @@
     display: none;
     text-align: center;
     padding: 40px;
-    border: 1px solid rgba(201,169,110,0.2);
+    border: 1px solid rgba(65,105,225,0.2);
   }
   .cf-success.show { display: block; }
   .cf-success-icon {
@@ -554,7 +554,7 @@
     text-decoration: none;
     display: block;
   }
-  .ql-item + .ql-item { border-left: 1px solid rgba(201,169,110,0.06); }
+  .ql-item + .ql-item { border-left: 1px solid rgba(65,105,225,0.06); }
   .ql-img {
     width: 100%; height: 100%;
     object-fit: cover;
@@ -596,7 +596,7 @@
     margin-top: 16px;
     width: 36px; height: 36px;
     border-radius: 50%;
-    border: 1px solid rgba(201,169,110,0.3);
+    border: 1px solid rgba(65,105,225,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -612,7 +612,7 @@
   footer {
     background: var(--black);
     padding: 80px 80px 60px;
-    border-top: 1px solid rgba(201,169,110,0.1);
+    border-top: 1px solid rgba(65,105,225,0.1);
   }
   .footer-inner { max-width: 1400px; margin: 0 auto; }
   .footer-top {
@@ -620,7 +620,7 @@
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
     gap: 60px;
     padding-bottom: 60px;
-    border-bottom: 1px solid rgba(201,169,110,0.07);
+    border-bottom: 1px solid rgba(65,105,225,0.07);
   }
   .footer-logo {
     margin-bottom: 20px;
@@ -638,7 +638,7 @@
   .footer-socials { display: flex; gap: 12px; }
   .footer-social {
     width: 40px; height: 40px;
-    border: 1px solid rgba(201,169,110,0.15);
+    border: 1px solid rgba(65,105,225,0.15);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -683,7 +683,7 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     .contact-body { grid-template-columns: 1fr; }
-    .contact-info { border-right: none; border-bottom: 1px solid rgba(201,169,110,0.08); padding: 60px 40px; }
+    .contact-info { border-right: none; border-bottom: 1px solid rgba(65,105,225,0.08); padding: 60px 40px; }
     .contact-form-wrap { padding: 60px 40px; }
     .quicklinks-grid { grid-template-columns: repeat(2, 1fr); }
     footer { padding: 60px 40px 48px; }
