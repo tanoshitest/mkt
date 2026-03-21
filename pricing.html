@@ -316,12 +316,9 @@
     align-items: center;
   }
 
-  /* ── LOGO IMAGE — wrapper trick: screen blend removes black bg ── */
   .logo-wrap {
     display: inline-flex;
     align-items: center;
-    background: #000;          /* explicit black so screen blend erases it */
-    mix-blend-mode: screen;    /* black→transparent, white→white */
   }
   .logo-img { display: block; }
   .logo-img--nav    { height: 30px; width: auto; }
@@ -2519,9 +2516,6 @@
   function closeMenu(){document.getElementById('menu-overlay').classList.remove('open');document.body.classList.remove('menu-open');}
   document.getElementById('menu-btn').addEventListener('click',toggleMenu);
   window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);});
-  // Logo bg removal
-  (function(){function removeBg(img){const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;const ctx=c.getContext('2d');ctx.drawImage(img,0,0);const d=ctx.getImageData(0,0,c.width,c.height);const px=d.data;for(let i=0;i<px.length;i+=4){const b=(px[i]+px[i+1]+px[i+2])/3;if(b<80)px[i+3]=0;else if(b<140)px[i+3]=Math.round((b-80)/60*255);}ctx.putImageData(d,0,0);document.querySelectorAll('.logo-img').forEach(el=>{el.src=c.toDataURL('image/png');});}
-  const f=document.querySelector('.logo-img');if(!f)return;if(f.complete&&f.naturalWidth)removeBg(f);else f.addEventListener('load',()=>removeBg(f));})();
 
   // ── CUSTOM CURSOR ──
   (function(){

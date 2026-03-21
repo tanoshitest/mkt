@@ -318,8 +318,6 @@
   .logo-wrap {
     display: inline-flex;
     align-items: center;
-    background: #000;          /* explicit black so screen blend erases it */
-    mix-blend-mode: screen;    /* black→transparent, white→white */
   }
   .logo-img { display: block; }
   .logo-img--nav    { height: 30px; width: auto; }
@@ -2578,35 +2576,6 @@
     </div>`
   ).join('');
 
-  // ── LOGO — remove black background via canvas ──
-  (function(){
-    function removeBg(img) {
-      const c = document.createElement('canvas');
-      c.width = img.naturalWidth; c.height = img.naturalHeight;
-      const ctx = c.getContext('2d');
-      ctx.drawImage(img, 0, 0);
-      const d = ctx.getImageData(0, 0, c.width, c.height);
-      const px = d.data;
-      for(let i = 0; i < px.length; i += 4){
-        const bright = (px[i] + px[i+1] + px[i+2]) / 3;
-        if(bright < 80){
-          px[i+3] = 0;                         // dark → transparent
-        } else if(bright < 140){
-          px[i+3] = Math.round((bright - 80) / 60 * 255); // edge → fade
-        }
-      }
-      ctx.putImageData(d, 0, 0);
-      const dataUrl = c.toDataURL('image/png');
-      document.querySelectorAll('.logo-img').forEach(el => {
-        if(el !== img) el.src = dataUrl;
-        img.src = dataUrl;
-      });
-    }
-    const first = document.querySelector('.logo-img');
-    if(!first) return;
-    if(first.complete && first.naturalWidth) removeBg(first);
-    else first.addEventListener('load', () => removeBg(first));
-  })();
 
 
   // ── WORN BY SLIDING ROWS ──
