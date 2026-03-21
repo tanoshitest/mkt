@@ -277,10 +277,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 28px 48px;
-    pointer-events: none;
-  }
-  #navbar > * { pointer-events: all; }
-
+    }
   /* hamburger button */
   #menu-btn {
     display: flex;
@@ -2251,7 +2248,7 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav id="navbar">
-  <button id="menu-btn" aria-label="Menu">
+  <button id="menu-btn" onclick="toggleMenu()" aria-label="Menu">
     <span></span>
     <span></span>
     <span></span>

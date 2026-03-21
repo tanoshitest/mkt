@@ -60,9 +60,9 @@
   #navbar {
     position:fixed; top:0; left:0; right:0; z-index:1000;
     display:flex; align-items:center; justify-content:space-between;
-    padding:28px 48px; pointer-events:none;
+    padding:28px 48px;
   }
-  #navbar > * { pointer-events:all; }
+  
   #menu-btn {
     display:flex; flex-direction:column; gap:6px;
     background:none; border:none; cursor:none; padding:8px; z-index:1100;
@@ -625,7 +625,7 @@
 
 <!-- NAV -->
 <nav id="navbar">
-  <button id="menu-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button id="menu-btn" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
   <a href="index.html" class="nav-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--nav" alt="MKT"></span></a>
   <a href="#" id="nav-book-btn" class="nav-cta">Book Appointment</a>
 </nav>
@@ -634,7 +634,7 @@
 <div id="menu-overlay">
   <nav>
     <ul class="menu-links">
-      <li><a href="index.html" onclick="closeMenu()"><span class="link-num">00</span>Home</a></li>
+      <li><a href="index.html#main" onclick="closeMenu()"><span class="link-num">00</span>Home</a></li>
       <li><a href="brand.html" onclick="closeMenu()"><span class="link-num">01</span>The Brand</a></li>
       <li><a href="collection.html" onclick="closeMenu()"><span class="link-num">02</span>Collection</a></li>
       <li><a href="store.html"><span class="link-num">03</span>Store Locator</a></li>
