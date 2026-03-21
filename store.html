@@ -127,11 +127,12 @@
   .menu-links li a:hover::after { opacity:1; transform:translateX(0); }
   .menu-links li a:hover { color:var(--gold); }
   #menu-overlay.open .menu-links li a { opacity:1; transform:translateY(0); }
-  #menu-overlay.open .menu-links li:nth-child(1) a { transition-delay:.1s; }
-  #menu-overlay.open .menu-links li:nth-child(2) a { transition-delay:.15s; }
-  #menu-overlay.open .menu-links li:nth-child(3) a { transition-delay:.2s; }
-  #menu-overlay.open .menu-links li:nth-child(4) a { transition-delay:.25s; }
-  #menu-overlay.open .menu-links li:nth-child(5) a { transition-delay:.3s; }
+  #menu-overlay.open .menu-links li:nth-child(1) a { transition-delay:.03s; }
+  #menu-overlay.open .menu-links li:nth-child(2) a { transition-delay:.08s; }
+  #menu-overlay.open .menu-links li:nth-child(3) a { transition-delay:.13s; }
+  #menu-overlay.open .menu-links li:nth-child(4) a { transition-delay:.18s; }
+  #menu-overlay.open .menu-links li:nth-child(5) a { transition-delay:.23s; }
+  #menu-overlay.open .menu-links li:nth-child(6) a { transition-delay:.28s; }
   .link-num { font-family:var(--sans); font-size:10px; letter-spacing:.2em; color:var(--gold-dim); font-style:normal; min-width:28px; }
   .menu-divider { width:100%; height:1px; background:linear-gradient(to right,transparent,rgba(201,169,110,.2),transparent); margin-bottom:32px; }
   .menu-bottom { display:flex; justify-content:space-between; align-items:flex-end; }
@@ -584,6 +585,7 @@
 <div id="menu-overlay">
   <nav>
     <ul class="menu-links">
+      <li><a href="index.html" onclick="closeMenu()"><span class="link-num">00</span>Home</a></li>
       <li><a href="brand.html" onclick="closeMenu()"><span class="link-num">01</span>The Brand</a></li>
       <li><a href="collection.html" onclick="closeMenu()"><span class="link-num">02</span>Collection</a></li>
       <li><a href="store.html"><span class="link-num">03</span>Store Locator</a></li>
