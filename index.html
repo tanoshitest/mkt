@@ -2529,7 +2529,7 @@
         card.style.left   = m.left + 'px';
         card.style.top    = m.top  + 'px';
       });
-      stack.style.height = (N + 1) * window.innerHeight + 'px';
+      stack.style.height = N * window.innerHeight + 'px';
     }
 
     let raf = null;
@@ -2561,10 +2561,16 @@
         card.style.zIndex       = i + 1;
 
         // translateY: winH = below viewport, 0 = at rest (centered via top)
-        const offPx = cardScroll < 0 ? winH : (1 - enterProgress) * winH;
+        // Card 0: show immediately when section enters view (no blank waiting area)
+        // Cards 1+: slide in from below as user scrolls
+        const offPx = (i === 0 && scrolled >= 0)
+          ? 0
+          : (cardScroll < 0 ? winH : (1 - enterProgress) * winH);
         card.style.transform = `translateY(${offPx.toFixed(1)}px) scale(${scale.toFixed(4)})`;
 
-        const isTop = enterProgress >= 0.98 && stackedAbove < 0.05;
+        // Dot active: card 0 active at entry, others by enterProgress
+        const isTop = (i === 0 && scrolled >= 0 && scrolled < SLOT * 0.8)
+          || (enterProgress >= 0.98 && stackedAbove < 0.05);
         if(isTop) dotEls.forEach((d, di) => d.classList.toggle('active', di === i));
       });
     }
