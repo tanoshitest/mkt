@@ -11,11 +11,12 @@
    Fix: use overflow-x:clip on html (no new scroll context)
    and overflow-x:hidden only on body.
 ──────────────────────────────────────────────────────────── */
-html {
-  overflow-x: clip; /* clip ≠ hidden — does NOT break IntersectionObserver */
-}
-body {
-  overflow-x: hidden;
+html, body {
+  overflow-x: clip; /* clip ≠ hidden:
+     - does NOT create a new scroll container  → position:sticky still works
+     - does NOT break IntersectionObserver     → reveal animations still work
+     - DOES prevent horizontal scroll overflow → no sideways scrolling
+  */
   max-width: 100%;
 }
 
