@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Brand — MKT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{--black:#080808;--off-black:#111010;--dark:#161514;--gold:#4169E1;--gold-light:#6b8ef0;--gold-dim:#2a4ab5;--white:#f5f0ea;--gray:#888480;--gray-light:#b8b4ae;--serif:'Montserrat',sans-serif;--sans:'Montserrat',sans-serif;}
@@ -13,8 +13,10 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 .cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;mix-blend-mode:difference;}
 .cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(65,105,225,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s,top .12s,width .3s,height .3s;}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.028;pointer-events:none;z-index:9990;}
-#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:28px 48px;}
 
+/* NAV */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:28px 48px;transition:background .4s,padding .4s;}
+#navbar.scrolled{background:rgba(8,8,8,.88);backdrop-filter:blur(12px);padding:18px 48px;}
 #menu-btn{display:flex;flex-direction:column;gap:6px;background:none;border:none;cursor:none;padding:8px;z-index:1100;}
 #menu-btn span{display:block;width:28px;height:1px;background:var(--white);transition:transform .5s cubic-bezier(.76,0,.24,1),opacity .4s,width .4s;transform-origin:left center;}
 #menu-btn.open span:nth-child(1){transform:rotate(38deg) scaleX(1.1);}
@@ -23,121 +25,210 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .nav-logo{position:absolute;left:50%;transform:translateX(-50%);text-decoration:none;display:flex;align-items:center;}
 .logo-wrap{display:inline-flex;align-items:center;}
 .logo-img{display:block;}.logo-img--nav{height:30px;width:auto;}.logo-img--footer{height:38px;width:auto;}
-.nav-cta{font-size:9px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--white);text-decoration:none;opacity:.55;transition:opacity .3s;cursor:none;}
+.nav-cta{font-size:9px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--white);text-decoration:none;opacity:.55;transition:opacity .3s;cursor:none;}
 .nav-cta:hover{opacity:1;}
-#menu-overlay{position:fixed;inset:0;z-index:900;background:rgba(4,4,4,.15);backdrop-filter:blur(6px) brightness(.72);-webkit-backdrop-filter:blur(6px) brightness(.72);display:flex;flex-direction:column;justify-content:space-between;padding:110px 80px 64px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .65s cubic-bezier(.76,0,.24,1),visibility .65s;}
-#menu-overlay.open{opacity:1;visibility:visible;pointer-events:all;}
+
+/* MENU */
+#menu-overlay{position:fixed;inset:0;z-index:900;background:rgba(4,4,4,.15);backdrop-filter:blur(6px) brightness(.72);-webkit-backdrop-filter:blur(6px) brightness(.72);display:flex;flex-direction:column;justify-content:space-between;padding:110px 80px 64px;opacity:0;visibility:hidden;transition:opacity .65s cubic-bezier(.76,0,.24,1),visibility .65s;}
+#menu-overlay.open{opacity:1;visibility:visible;}
 #menu-overlay::before{content:'';position:absolute;top:0;left:80px;right:80px;height:1px;background:linear-gradient(to right,transparent,rgba(65,105,225,.35),transparent);transform:scaleX(0);transition:transform .9s cubic-bezier(.16,1,.3,1) .15s;}
 #menu-overlay.open::before{transform:scaleX(1);}
-.menu-links{list-style:none;}
-.menu-links li{overflow:hidden;border-bottom:1px solid rgba(65,105,225,.07);}
-.menu-links li:first-child{border-top:1px solid rgba(65,105,225,.07);}
-.menu-links li a{display:flex;align-items:center;gap:16px;font-family:var(--serif);font-size:clamp(20px,2.8vw,42px);font-weight:300;font-style:italic;color:var(--white);text-decoration:none;line-height:1;padding:10px 0;opacity:0;transform:translateY(52px);position:relative;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .6s,color .3s;}
-.menu-links li a::after{content:'→';font-family:var(--sans);font-style:normal;font-size:16px;position:absolute;right:0;color:var(--gold);opacity:0;transform:translateX(-14px);transition:opacity .3s,transform .35s cubic-bezier(.16,1,.3,1);}
+.menu-links{list-style:none;}.menu-links li{overflow:hidden;border-bottom:1px solid rgba(65,105,225,.07);}.menu-links li:first-child{border-top:1px solid rgba(65,105,225,.07);}
+.menu-links li a{display:flex;align-items:center;gap:16px;font-size:clamp(16px,2.2vw,34px);font-weight:400;font-style:italic;color:var(--white);text-decoration:none;line-height:1;padding:10px 0;opacity:0;transform:translateY(52px);position:relative;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .6s,color .3s;}
+.menu-links li a::after{content:'→';font-style:normal;font-size:14px;position:absolute;right:0;color:var(--gold);opacity:0;transform:translateX(-14px);transition:opacity .3s,transform .35s;}
 .menu-links li a:hover::after{opacity:1;transform:translateX(0);}.menu-links li a:hover{color:var(--gold);}
 #menu-overlay.open .menu-links li a{opacity:1;transform:translateY(0);}
-#menu-overlay.open .menu-links li:nth-child(1) a{transition-delay:.1s;}#menu-overlay.open .menu-links li:nth-child(2) a{transition-delay:.15s;}#menu-overlay.open .menu-links li:nth-child(3) a{transition-delay:.2s;}#menu-overlay.open .menu-links li:nth-child(4) a{transition-delay:.25s;}#menu-overlay.open .menu-links li:nth-child(5) a{transition-delay:.3s;}
-.link-num{font-family:var(--sans);font-size:10px;letter-spacing:.2em;color:var(--gold-dim);font-style:normal;min-width:28px;}
+#menu-overlay.open .menu-links li:nth-child(1) a{transition-delay:.08s;}#menu-overlay.open .menu-links li:nth-child(2) a{transition-delay:.13s;}#menu-overlay.open .menu-links li:nth-child(3) a{transition-delay:.18s;}#menu-overlay.open .menu-links li:nth-child(4) a{transition-delay:.23s;}#menu-overlay.open .menu-links li:nth-child(5) a{transition-delay:.28s;}#menu-overlay.open .menu-links li:nth-child(6) a{transition-delay:.33s;}
+.link-num{font-size:10px;letter-spacing:.2em;color:var(--gold-dim);font-style:normal;font-weight:500;min-width:28px;}
 .menu-divider{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(65,105,225,.2),transparent);margin-bottom:32px;}
 .menu-bottom{display:flex;justify-content:space-between;align-items:flex-end;}
-.menu-secondary{display:flex;flex-direction:column;gap:12px;}
-.menu-secondary a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,234,.45);text-decoration:none;transition:color .3s;}
-.menu-secondary a:hover{color:var(--gold);}
-.menu-socials{display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
-.menu-follow-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);}
-.menu-socials a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,234,.45);text-decoration:none;transition:color .3s;}
-.menu-socials a:hover{color:var(--white);}
+.menu-secondary{display:flex;flex-direction:column;gap:12px;}.menu-secondary a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,234,.45);text-decoration:none;transition:color .3s;}.menu-secondary a:hover{color:var(--gold);}
+.menu-socials{display:flex;flex-direction:column;align-items:flex-end;gap:12px;}.menu-follow-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);}
+.menu-socials a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,234,.45);text-decoration:none;transition:color .3s;}.menu-socials a:hover{color:var(--white);}
 
-/* COMING SOON */
-.cs-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.cs-bg{position:absolute;inset:0;background-image:url('https://static.wixstatic.com/media/bbdef6_872e463be1404854ba3701bded9ee010~mv2.jpg/v1/crop/x_73,y_0,w_1829,h_2048/fill/w_875,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/452929829_2599130003606884_6002212986055116049_n.jpg');background-size:cover;background-position:center;filter:brightness(.22) grayscale(30%);}
-.cs-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 20%,rgba(8,8,8,.85) 100%);}
-.cs-content{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;padding:0 40px;}
-.cs-eyebrow{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;opacity:.8;}
-.cs-title{font-family:var(--serif);font-size:clamp(56px,9vw,130px);font-weight:300;font-style:italic;color:var(--white);line-height:1.05;letter-spacing:-.02em;margin-bottom:48px;white-space:nowrap;}
-.cs-line{width:120px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin-bottom:40px;}
-.cs-tagline{font-family:var(--serif);font-size:clamp(16px,2vw,22px);font-weight:300;font-style:italic;color:rgba(245,240,234,.45);letter-spacing:.06em;margin-bottom:56px;max-width:560px;line-height:1.6;}
-.cs-badge{display:inline-flex;align-items:center;gap:14px;border:1px solid rgba(65,105,225,.25);padding:16px 36px;font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-dim);}
-.cs-badge::before,.cs-badge::after{content:'';display:block;width:20px;height:1px;background:rgba(65,105,225,.3);}
-/* QUICK LINKS */
-.quicklinks{padding:0;background:var(--off-black);}
-.quicklinks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
-.ql-item{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--dark);text-decoration:none;display:block;}
-.ql-item+.ql-item{border-left:1px solid rgba(65,105,225,.06);}
-.ql-img{width:100%;height:100%;object-fit:cover;filter:grayscale(60%) brightness(.5);transition:transform 1s cubic-bezier(.16,1,.3,1),filter 1s;}
-.ql-item:hover .ql-img{transform:scale(1.08);filter:grayscale(20%) brightness(.65);}
-.ql-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:40px 32px;background:linear-gradient(to top,rgba(8,8,8,.85) 0%,transparent 60%);}
-.ql-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:0;transform:translateY(12px);transition:opacity .4s,transform .4s;}
-.ql-item:hover .ql-label{opacity:1;transform:translateY(0);}
-.ql-title{font-family:var(--serif);font-size:clamp(20px,2vw,28px);font-weight:300;color:var(--white);line-height:1.2;}
-.ql-arrow{margin-top:16px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(65,105,225,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:14px;opacity:0;transform:scale(.8);transition:opacity .4s,transform .4s;}
-.ql-item:hover .ql-arrow{opacity:1;transform:scale(1);}
-/* FOOTER */
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateX(-70px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal-right{opacity:0;transform:translateX(70px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal-up{opacity:0;transform:translateY(60px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal.visible,.reveal-right.visible,.reveal-up.visible{opacity:1;transform:translate(0);}
+.reveal-delay-1{transition-delay:.1s;}.reveal-delay-2{transition-delay:.2s;}.reveal-delay-3{transition-delay:.32s;}.reveal-delay-4{transition-delay:.45s;}.reveal-delay-5{transition-delay:.58s;}.reveal-delay-6{transition-delay:.7s;}
+
+/* ── HERO ── */
+.br-hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;}
+.br-hero-bg{position:absolute;inset:0;}
+.br-hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.3) saturate(.6);}
+.br-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,.4) 40%,transparent 70%);}
+.br-hero-content{position:relative;z-index:2;padding:0 80px 100px;width:100%;}
+.br-hero-eyebrow{font-size:9px;font-weight:500;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:.85;}
+.br-hero-title{font-size:clamp(72px,11vw,160px);font-weight:300;font-style:italic;line-height:.9;letter-spacing:-.03em;color:var(--white);margin-bottom:32px;}
+.br-hero-sub{font-size:clamp(14px,1.4vw,18px);font-weight:300;font-style:italic;color:rgba(245,240,234,.45);max-width:500px;line-height:1.65;}
+.br-hero-scroll{position:absolute;right:80px;bottom:100px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.br-hero-scroll span{font-size:8px;letter-spacing:.4em;text-transform:uppercase;color:rgba(245,240,234,.3);writing-mode:vertical-rl;}
+.br-scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ── PHILOSOPHY ── */
+.br-philosophy{padding:140px 80px;display:flex;gap:80px;align-items:flex-start;border-bottom:1px solid rgba(65,105,225,.07);}
+.br-phil-left{flex:0 0 200px;}
+.br-phil-num{font-size:clamp(80px,12vw,160px);font-weight:900;line-height:.85;color:rgba(65,105,225,.08);letter-spacing:-.05em;margin-bottom:16px;}
+.br-phil-label{font-size:9px;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);opacity:.8;}
+.br-phil-right{flex:1;}
+.br-phil-heading{font-size:clamp(32px,4.5vw,68px);font-weight:300;font-style:italic;line-height:1.1;letter-spacing:-.02em;margin-bottom:40px;}
+.br-phil-heading em{color:var(--gold);font-style:italic;}
+.br-phil-body{font-size:clamp(15px,1.3vw,18px);font-weight:400;line-height:1.85;color:rgba(245,240,234,.55);max-width:640px;}
+.br-phil-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:48px;}
+.br-phil-tag{font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;border:1px solid rgba(65,105,225,.2);padding:10px 20px;color:rgba(245,240,234,.45);}
+
+/* ── STORY ── */
+.br-story{display:grid;grid-template-columns:1fr 1fr;min-height:700px;border-bottom:1px solid rgba(65,105,225,.07);}
+.br-story-visual{position:relative;overflow:hidden;background:var(--dark);}
+.br-story-visual img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.7);transition:transform 8s ease;}
+.br-story-visual:hover img{transform:scale(1.04);}
+.br-story-year{position:absolute;bottom:40px;left:40px;font-size:clamp(60px,8vw,110px);font-weight:900;color:rgba(245,240,234,.06);line-height:1;letter-spacing:-.05em;}
+.br-story-badge{position:absolute;top:40px;right:40px;width:100px;height:100px;border:1px solid rgba(65,105,225,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:8px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);line-height:1.5;}
+.br-story-text{padding:100px 80px;display:flex;flex-direction:column;justify-content:center;gap:32px;}
+.br-story-eyebrow{font-size:9px;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);opacity:.8;}
+.br-story-heading{font-size:clamp(28px,3.5vw,52px);font-weight:300;font-style:italic;line-height:1.15;letter-spacing:-.015em;}
+.br-story-divider{width:60px;height:1px;background:linear-gradient(to right,var(--gold),transparent);}
+.br-story-body{font-size:15px;font-weight:400;line-height:1.9;color:rgba(245,240,234,.55);}
+.br-story-body+.br-story-body{margin-top:-16px;}
+
+/* ── FOUNDER ── */
+.br-founder{background:var(--white);color:var(--black);display:grid;grid-template-columns:1fr 1fr;min-height:700px;}
+.br-founder-img{position:relative;overflow:hidden;background:#e8e3dc;}
+.br-founder-img img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.br-founder-img-label{position:absolute;bottom:32px;left:32px;font-size:8px;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:rgba(8,8,8,.4);}
+.br-founder-text{padding:100px 80px;display:flex;flex-direction:column;justify-content:center;gap:28px;}
+.br-founder-eyebrow{font-size:9px;font-weight:600;letter-spacing:.5em;text-transform:uppercase;color:#4169E1;}
+.br-founder-name{font-size:clamp(36px,5vw,76px);font-weight:800;line-height:.9;letter-spacing:-.04em;text-transform:uppercase;color:#080808;}
+.br-founder-title{font-size:11px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(8,8,8,.4);margin-top:-12px;}
+.br-founder-divider{width:60px;height:3px;background:#4169E1;}
+.br-founder-bio{font-size:clamp(14px,1.2vw,17px);font-weight:400;line-height:1.85;color:rgba(8,8,8,.65);max-width:480px;}
+.br-founder-quote{font-size:clamp(18px,2vw,26px);font-weight:300;font-style:italic;line-height:1.35;border-left:4px solid #4169E1;padding-left:24px;color:#080808;}
+.br-founder-stats{display:flex;gap:48px;margin-top:8px;}
+.br-founder-stat-num{font-size:clamp(32px,4vw,56px);font-weight:900;color:#4169E1;line-height:1;}
+.br-founder-stat-lbl{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(8,8,8,.45);margin-top:4px;}
+
+/* ── COLLECTIONS ── */
+.br-collections{padding:120px 80px;border-top:1px solid rgba(65,105,225,.07);}
+.br-col-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:64px;}
+.br-col-eyebrow{font-size:9px;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:.8;}
+.br-col-heading{font-size:clamp(28px,4vw,56px);font-weight:300;font-style:italic;line-height:1.1;}
+.br-col-link{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(65,105,225,.3);padding-bottom:4px;transition:border-color .3s;}
+.br-col-link:hover{border-color:var(--gold);}
+.br-col-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
+.br-col-grid--grillz{grid-template-columns:repeat(3,1fr);margin-bottom:3px;}
+.br-col-card{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--dark);text-decoration:none;display:block;}
+.br-col-card img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%) brightness(.6);transition:transform 1.2s cubic-bezier(.16,1,.3,1),filter .8s;}
+.br-col-card:hover img{transform:scale(1.07);filter:grayscale(0%) brightness(.75);}
+.br-col-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.9) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px 24px;}
+.br-col-card-cat{font-size:8px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;opacity:.85;}
+.br-col-card-name{font-size:clamp(16px,1.8vw,22px);font-weight:300;font-style:italic;color:var(--white);line-height:1.1;margin-bottom:10px;}
+.br-col-card-arrow{font-size:16px;color:var(--gold);opacity:0;transform:translateX(-8px);transition:opacity .35s,transform .35s;}
+.br-col-card:hover .br-col-card-arrow{opacity:1;transform:translateX(0);}
+
+/* ── PROCESS ── */
+.br-process{background:var(--off-black);padding:120px 80px;border-top:1px solid rgba(65,105,225,.07);border-bottom:1px solid rgba(65,105,225,.07);}
+.br-process-header{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-bottom:80px;align-items:end;}
+.br-process-eyebrow{font-size:9px;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:.8;}
+.br-process-heading{font-size:clamp(28px,4vw,56px);font-weight:300;font-style:italic;line-height:1.1;}
+.br-process-intro{font-size:15px;font-weight:400;line-height:1.85;color:rgba(245,240,234,.5);align-self:end;}
+.br-process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(65,105,225,.07);}
+.br-process-step{background:var(--off-black);padding:48px 40px;position:relative;overflow:hidden;}
+.br-process-step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .6s cubic-bezier(.16,1,.3,1);}
+.br-process-step.visible::before{transform:scaleX(1);}
+.br-step-num{font-size:clamp(52px,6vw,80px);font-weight:900;color:rgba(65,105,225,.07);line-height:.85;letter-spacing:-.04em;margin-bottom:24px;}
+.br-step-title{font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--white);margin-bottom:12px;text-transform:uppercase;font-size:11px;letter-spacing:.2em;}
+.br-step-body{font-size:13px;font-weight:400;line-height:1.8;color:rgba(245,240,234,.45);}
+.br-step-icon{width:36px;height:36px;border:1px solid rgba(65,105,225,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:28px;color:var(--gold);}
+
+/* ── STATS ── */
+.br-stats{background:#f5f0ea;color:#080808;padding:100px 80px;}
+.br-stats-eyebrow{font-size:9px;font-weight:600;letter-spacing:.5em;text-transform:uppercase;color:#4169E1;margin-bottom:60px;display:block;}
+.br-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(8,8,8,.08);}
+.br-stat-item{background:#f5f0ea;padding:60px 48px;}
+.br-stat-num{font-size:clamp(52px,7vw,100px);font-weight:900;line-height:.85;letter-spacing:-.04em;color:#080808;}
+.br-stat-unit{font-size:clamp(24px,3vw,42px);font-weight:900;color:#4169E1;vertical-align:top;line-height:1;}
+.br-stat-lbl{font-size:11px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(8,8,8,.45);margin-top:16px;}
+.br-stat-desc{font-size:13px;font-weight:400;line-height:1.7;color:rgba(8,8,8,.55);margin-top:8px;max-width:200px;}
+
+/* ── MANIFESTO ── */
+.br-manifesto{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:120px 80px;position:relative;overflow:hidden;}
+.br-manifesto-bg{position:absolute;inset:0;background:linear-gradient(135deg,#080808 0%,#0d0d18 50%,#080808 100%);}
+.br-manifesto-bg::before{content:'MKT';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:40vw;font-weight:900;color:rgba(65,105,225,.025);letter-spacing:-.08em;pointer-events:none;line-height:1;}
+.br-manifesto-content{position:relative;z-index:2;text-align:center;max-width:900px;}
+.br-manifesto-eyebrow{font-size:9px;font-weight:500;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:40px;display:block;opacity:.8;}
+.br-manifesto-quote{font-size:clamp(24px,4vw,60px);font-weight:300;font-style:italic;line-height:1.2;color:var(--white);letter-spacing:-.015em;}
+.br-manifesto-quote em{color:var(--gold);font-style:italic;}
+.br-manifesto-author{font-size:11px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,240,234,.3);margin-top:40px;display:block;}
+
+/* ── CTA STRIP ── */
+.br-cta{padding:100px 80px;display:flex;align-items:center;justify-content:space-between;gap:60px;background:var(--off-black);border-top:1px solid rgba(65,105,225,.08);}
+.br-cta-eyebrow{font-size:9px;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;opacity:.8;}
+.br-cta-title{font-size:clamp(24px,3vw,46px);font-weight:300;font-style:italic;line-height:1.15;max-width:560px;}
+.br-cta-actions{display:flex;gap:14px;flex-shrink:0;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--white);font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;padding:17px 34px;text-decoration:none;cursor:none;transition:background .3s,transform .3s;}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(65,105,225,.3);color:var(--white);font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;padding:17px 34px;text-decoration:none;cursor:none;transition:border-color .3s,color .3s,transform .3s;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+
+/* ── FOOTER ── */
 footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(65,105,225,.1);}
 .footer-inner{max-width:1400px;margin:0 auto;}
 .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;padding-bottom:60px;border-bottom:1px solid rgba(65,105,225,.07);}
 .footer-logo{margin-bottom:20px;display:flex;align-items:center;}
-.footer-tagline{font-size:13px;line-height:1.8;color:var(--gray);max-width:280px;margin-bottom:32px;}
+.footer-tagline{font-size:13px;font-weight:400;line-height:1.8;color:var(--gray);max-width:280px;margin-bottom:32px;}
 .footer-socials{display:flex;gap:12px;}
-.footer-social{width:40px;height:40px;border:1px solid rgba(65,105,225,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.08em;color:var(--gray);text-decoration:none;transition:border-color .3s,color .3s;}
+.footer-social{width:40px;height:40px;border:1px solid rgba(65,105,225,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gray);text-decoration:none;transition:border-color .3s,color .3s;}
 .footer-social:hover{border-color:var(--gold);color:var(--gold);}
-.footer-col h4{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:24px;}
+.footer-col h4{font-size:9px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:24px;}
 .footer-col ul{list-style:none;}.footer-col ul li{margin-bottom:12px;}
-.footer-col ul li a{font-size:13px;color:var(--gray);text-decoration:none;transition:color .3s;letter-spacing:.04em;}
+.footer-col ul li a{font-size:13px;font-weight:400;color:var(--gray);text-decoration:none;transition:color .3s;letter-spacing:.04em;}
 .footer-col ul li a:hover{color:var(--white);}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:40px;}
 .footer-copy{font-size:11px;color:var(--gray);letter-spacing:.12em;}
 .footer-copy span{color:var(--gold-dim);}
-@media(max-width:768px){.quicklinks-grid{grid-template-columns:repeat(2,1fr);}footer{padding:60px 24px 40px;}.footer-top{grid-template-columns:1fr;gap:32px;}.footer-bottom{flex-direction:column;gap:12px;text-align:center;}#menu-overlay{padding:100px 32px 48px;}#menu-overlay::before{left:32px;right:32px;}}
 
-  /* ── SCROLL REVEAL ── */
-  .reveal {
-    opacity: 0;
-    transform: translateX(-80px);
-    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
-  }
-  .reveal-right {
-    opacity: 0;
-    transform: translateX(80px);
-    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1);
-  }
-  .reveal.visible, .reveal-right.visible { opacity: 1; transform: translateX(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.35s; }
-
-  /* ── TYPOGRAPHY REFINEMENTS — Richard Mille scale ── */
-  /* Body paragraphs & descriptive text: regular weight */
-  p, li, cite, blockquote,
-  .founder-body, .vision-desc, .pillar-body,
-  .footer-tagline, .hero-desc,
-  .store-story-dd, .contact-desc,
-  .bm-field-note { font-weight: 400; line-height: 1.75; }
-
-  /* Section headings (medium): weight 400 — readable, not too heavy */
-  .founder-h2, .vision-h2, .coop-h2,
-  .ql-title, .pillar-title,
-  .store-map-heading, .contact-heading { font-weight: 400; }
-
-  /* Small labels & UI text: semibold for legibility at small sizes */
-  .section-label, .hero-eyebrow,
-  .nav-cta, .btn-primary, .btn-ghost,
-  .link-num, .menu-secondary a,
-  .footer-col h4, .ql-label { font-weight: 500; letter-spacing: 0.28em; }
-
-  /* Buttons: medium weight */
-  .btn-primary, .btn-ghost,
-  .bm-btn-primary { font-weight: 500; font-size: 10px; letter-spacing: 0.25em; }
-
-  /* Menu nav links */
-  .menu-links li a { font-weight: 400; }
-
-  /* Display hero: keep thin — size carries the weight visually */
-  .hero-title, .hero-phrase,
-  .cs-title { font-weight: 300; }
-
-  /* Intro text stays thin */
-  #intro-tagline { font-weight: 300; }
+/* RESPONSIVE */
+@media(max-width:1200px){
+  .br-col-grid--grillz{grid-template-columns:repeat(3,1fr);}
+  .br-col-grid{grid-template-columns:repeat(2,1fr);}
+  .br-stats-grid{grid-template-columns:repeat(2,1fr);}
+  .br-process-steps{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:1024px){
+  .br-philosophy{flex-direction:column;gap:48px;padding:100px 48px;}
+  .br-phil-left{flex:none;}
+  .br-story{grid-template-columns:1fr;}
+  .br-story-visual{min-height:400px;}
+  .br-founder{grid-template-columns:1fr;}
+  .br-founder-img{min-height:400px;}
+  .br-process-header{grid-template-columns:1fr;}
+  .br-cta{flex-direction:column;align-items:flex-start;padding:80px 48px;}
+  .br-collections{padding:80px 48px;}
+  .br-stats{padding:80px 48px;}
+  .br-process{padding:80px 48px;}
+  .br-manifesto{padding:80px 48px;}
+}
+@media(max-width:768px){
+  #navbar{padding:20px 28px;}
+  #menu-overlay{padding:100px 32px 48px;}
+  #menu-overlay::before{left:32px;right:32px;}
+  .br-hero-content{padding:0 28px 64px;}
+  .br-hero-scroll{display:none;}
+  .br-col-grid--grillz,.br-col-grid{grid-template-columns:1fr 1fr;}
+  .br-process-steps{grid-template-columns:1fr;}
+  .br-stats-grid{grid-template-columns:1fr 1fr;}
+  .br-founder-text{padding:64px 28px;}
+  .br-story-text{padding:64px 28px;}
+  .br-collections,.br-stats,.br-process,.br-manifesto,.br-philosophy,.br-cta{padding:64px 28px;}
+  .br-process-header{gap:32px;}
+  .br-col-header{flex-direction:column;align-items:flex-start;gap:20px;}
+  footer{padding:60px 24px 40px;}
+  .footer-top{grid-template-columns:1fr;gap:32px;}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center;}
+  .br-founder-stats{gap:28px;}
+}
 
   /* BOOKING MODAL */
   #booking-modal{position:fixed;inset:0;z-index:9500;background:rgba(4,4,4,0.96);display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;}
@@ -205,11 +296,13 @@ footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(
 <body>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
 <nav id="navbar">
   <button id="menu-btn" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
-  <a href="index.html" class="nav-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--nav" alt="MKT"></span></a>
+  <a href="index.html#main" class="nav-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--nav" alt="MKT"></span></a>
   <a href="#" class="nav-cta">Book Appointment</a>
 </nav>
+
 <div id="menu-overlay">
   <nav><ul class="menu-links">
     <li><a href="index.html#main"><span class="link-num">00</span>Home</a></li>
@@ -220,27 +313,273 @@ footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(
     <li><a href="events.html"><span class="link-num">05</span>Events</a></li>
   </ul></nav>
   <div><div class="menu-divider"></div><div class="menu-bottom">
-    <div class="menu-secondary"><a href="contact.html">Contact</a><a href="contact.html">Book an appointment</a></div>
+    <div class="menu-secondary"><a href="contact.html">Contact</a><a href="#" id="menu-book-btn">Book an appointment</a></div>
     <div class="menu-socials"><span class="menu-follow-label">Follow us</span><a href="https://www.instagram.com/mkt.worldwide/" target="_blank">Instagram</a><a href="https://www.facebook.com/mktgrillz" target="_blank">Facebook</a><a href="https://www.tiktok.com/@mkt.worldwide" target="_blank">TikTok</a></div>
   </div></div>
 </div>
+
 <main>
-<section class="cs-hero">
-  <div class="cs-bg"></div>
-  <div class="cs-content">
-    <div class="cs-eyebrow">01 · The Brand</div>
-    <h1 class="cs-title">The Brand</h1>
-    <div class="cs-line"></div>
-    <p class="cs-tagline">"Wear grillz not only to flex" — the story of MKT, crafted with vision and purpose.</p>
-    <div class="cs-badge">Coming Soon</div>
+
+<!-- ── HERO ── -->
+<section class="br-hero">
+  <div class="br-hero-bg">
+    <img src="https://static.wixstatic.com/media/bbdef6_872e463be1404854ba3701bded9ee010~mv2.jpg/v1/crop/x_73,y_0,w_1829,h_2048/fill/w_1400,h_980,al_c,q_85,enc_avif,quality_auto/452929829_2599130003606884_6002212986055116049_n.jpg" alt="MKT Brand" loading="eager">
+  </div>
+  <div class="br-hero-content">
+    <div class="br-hero-eyebrow">01 · The Brand</div>
+    <h1 class="br-hero-title">The Brand</h1>
+    <p class="br-hero-sub">"Wear grillz not only to flex" — Premium Custom Grillz &amp; Jewelry, crafted with vision and purpose in Vietnam.</p>
+  </div>
+  <div class="br-hero-scroll">
+    <span>Scroll</span>
+    <div class="br-scroll-line"></div>
   </div>
 </section>
-<section class="quicklinks"><div class="quicklinks-grid">
-  <a href="store.html" class="ql-item"><img class="ql-img" src="https://static.wixstatic.com/media/bbdef6_a59e50ab8b80412392908cdb89bc54dc~mv2.jpg/v1/fill/w_980,h_700,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_3939.jpg" alt="Store Locator" loading="lazy"><div class="ql-overlay"><div class="ql-label">Find Us</div><div class="ql-title">Store Locator</div><div class="ql-arrow">→</div></div></a>
-  <a href="contact.html" class="ql-item"><img class="ql-img" src="https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/crop/x_84,y_0,w_907,h_1214/fill/w_907,h_1214,al_c,q_85,enc_avif,quality_auto/536553245_1658062488450681_1675531161089091145_n.jpg" alt="Book Appointment" loading="lazy"><div class="ql-overlay"><div class="ql-label">Private Consultation</div><div class="ql-title">Book Appointment</div><div class="ql-arrow">→</div></div></a>
-  <a href="pricing.html" class="ql-item"><img class="ql-img" src="https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/fill/w_980,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg" alt="Pricing" loading="lazy"><div class="ql-overlay"><div class="ql-label">Investment</div><div class="ql-title">Pricing & Options</div><div class="ql-arrow">→</div></div></a>
-  <a href="contact.html" class="ql-item"><img class="ql-img" src="https://static.wixstatic.com/media/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg/v1/fill/w_762,h_1005,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg" alt="Contact" loading="lazy"><div class="ql-overlay"><div class="ql-label">Get In Touch</div><div class="ql-title">Contact Us</div><div class="ql-arrow">→</div></div></a>
-</div></section>
+
+<!-- ── PHILOSOPHY ── -->
+<section class="br-philosophy">
+  <div class="br-phil-left reveal">
+    <div class="br-phil-num">01</div>
+    <div class="br-phil-label">Philosophy</div>
+  </div>
+  <div class="br-phil-right">
+    <h2 class="br-phil-heading reveal reveal-delay-1">MKT không chỉ làm ra<br><em>trang sức.</em><br>Chúng tôi tạo ra<br>danh tính.</h2>
+    <p class="br-phil-body reveal reveal-delay-2">MKT ra đời từ một triết lý đơn giản: mỗi người xứng đáng có một tác phẩm được tạo ra hoàn toàn cho riêng mình. Không sản xuất hàng loạt. Không làm lại. Không nhượng bộ về chất lượng. Mỗi chiếc grillz và trang sức từ MKT là kết quả của sự lắng nghe, thiết kế tỉ mỉ và tay nghề thủ công được rèn giũa qua nhiều năm.</p>
+    <div class="br-phil-tags reveal reveal-delay-3">
+      <span class="br-phil-tag">Custom Only</span>
+      <span class="br-phil-tag">Handcrafted</span>
+      <span class="br-phil-tag">Limited Edition</span>
+      <span class="br-phil-tag">Vietnam Made</span>
+      <span class="br-phil-tag">No Remake</span>
+      <span class="br-phil-tag">1 of 1</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── OUR STORY ── -->
+<section class="br-story">
+  <div class="br-story-visual reveal">
+    <img src="https://static.wixstatic.com/media/bbdef6_a59e50ab8b80412392908cdb89bc54dc~mv2.jpg/v1/fill/w_980,h_1200,al_c,q_85,enc_avif,quality_auto/IMG_3939.jpg" alt="MKT Story" loading="lazy">
+    <div class="br-story-year">MKT</div>
+    <div class="br-story-badge">Est.<br>Vietnam<br>HCMC</div>
+  </div>
+  <div class="br-story-text">
+    <div class="br-story-eyebrow reveal-right">Our Story</div>
+    <h2 class="br-story-heading reveal-right reveal-delay-1">Từ một xưởng nhỏ ở<br>Hồ Chí Minh —<br>ra thế giới.</h2>
+    <div class="br-story-divider reveal-right reveal-delay-2"></div>
+    <p class="br-story-body reveal-right reveal-delay-2">MKT bắt đầu như một đam mê thuần túy — niềm tin rằng nghề thủ công Việt Nam có thể đạt tiêu chuẩn quốc tế mà không đánh mất bản sắc. Từ xưởng nhỏ ở trung tâm Thành phố Hồ Chí Minh, mỗi tác phẩm được tạo ra bằng tay, qua từng công đoạn được kiểm soát nghiêm ngặt.</p>
+    <p class="br-story-body reveal-right reveal-delay-3">Ngày nay, MKT phục vụ khách hàng trên toàn cầu — từ nghệ sĩ, vận động viên đến những cá nhân muốn sở hữu điều gì đó thực sự riêng biệt. Mỗi đơn hàng là một cuộc trò chuyện, mỗi sản phẩm là một câu chuyện.</p>
+  </div>
+</section>
+
+<!-- ── FOUNDER ── -->
+<section class="br-founder">
+  <div class="br-founder-img reveal">
+    <img src="https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/fill/w_980,h_1200,al_c,q_85,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg" alt="Mai Kim Thanh — Founder" loading="lazy">
+    <div class="br-founder-img-label">Founder &amp; Creative Director</div>
+  </div>
+  <div class="br-founder-text">
+    <span class="br-founder-eyebrow reveal-right">The Visionary</span>
+    <h2 class="br-founder-name reveal-right reveal-delay-1">Mai<br>Kim<br>Thanh</h2>
+    <div class="br-founder-title reveal-right reveal-delay-1">Founder · Creative Director · Designer</div>
+    <div class="br-founder-divider reveal-right reveal-delay-2"></div>
+    <p class="br-founder-bio reveal-right reveal-delay-2">Mai Kim Thanh là người sáng lập, nhà thiết kế và nguồn cảm hứng phía sau mọi bộ sưu tập của MKT. Với nền tảng trong nghệ thuật thủ công truyền thống Việt Nam kết hợp với chuẩn mực trang sức cao cấp quốc tế, cô tạo ra những tác phẩm mang dấu ấn cá nhân sâu sắc.</p>
+    <blockquote class="br-founder-quote reveal-right reveal-delay-3">"Tôi không làm trang sức để trưng bày. Tôi làm cho những người cảm nhận được nó khi đeo."</blockquote>
+    <div class="br-founder-stats reveal-right reveal-delay-4">
+      <div>
+        <div class="br-founder-stat-num">7</div>
+        <div class="br-founder-stat-lbl">Collections</div>
+      </div>
+      <div>
+        <div class="br-founder-stat-num">100<span style="font-size:.6em">%</span></div>
+        <div class="br-founder-stat-lbl">Handcrafted</div>
+      </div>
+      <div>
+        <div class="br-founder-stat-num">0</div>
+        <div class="br-founder-stat-lbl">Remakes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLLECTIONS ── -->
+<section class="br-collections">
+  <div class="br-col-header">
+    <div>
+      <div class="br-col-eyebrow reveal">Our Collections</div>
+      <h2 class="br-col-heading reveal reveal-delay-1">7 Collections.<br>7 Statements.</h2>
+    </div>
+    <a href="collection.html" class="br-col-link reveal-right">View All Collections →</a>
+  </div>
+
+  <!-- GRILLZ ROW (3) -->
+  <div class="br-col-grid br-col-grid--grillz">
+    <a href="collection-mscotik.html" class="br-col-card reveal">
+      <img src="https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg" alt="M'SCOTIK" loading="lazy">
+      <div class="br-col-card-overlay">
+        <div class="br-col-card-cat">Grillz · 001</div>
+        <div class="br-col-card-name">M'SCOTIK</div>
+        <div class="br-col-card-arrow">→</div>
+      </div>
+    </a>
+    <a href="collection-mcelestial.html" class="br-col-card reveal reveal-delay-1">
+      <img src="https://static.wixstatic.com/media/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_avif,quality_auto/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg" alt="M'CELESTIAL" loading="lazy">
+      <div class="br-col-card-overlay">
+        <div class="br-col-card-cat">Grillz · 002</div>
+        <div class="br-col-card-name">M'CELESTIAL</div>
+        <div class="br-col-card-arrow">→</div>
+      </div>
+    </a>
+    <a href="collection-mrisingstar.html" class="br-col-card reveal reveal-delay-2">
+      <img src="https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/fill/w_600,h_800,al_c,q_85,enc_avif,quality_auto/536553245_1658062488450681_1675531161089091145_n.jpg" alt="M'RISING STAR" loading="lazy">
+      <div class="br-col-card-overlay">
+        <div class="br-col-card-cat">Grillz · Color · 003</div>
+        <div class="br-col-card-name">M'RISING STAR</div>
+        <div class="br-col-card-arrow">→</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- JEWELRY ROW (4) -->
+  <div class="br-col-grid">
+    <a href="collection-knot.html" class="br-col-card reveal">
+      <img src="https://static.wixstatic.com/media/bbdef6_a59e50ab8b80412392908cdb89bc54dc~mv2.jpg/v1/fill/w_500,h_660,al_c,q_85,enc_avif,quality_auto/IMG_3939.jpg" alt="K'NOT" loading="lazy">
+      <div class="br-col-card-overlay">
+        <div class="br-col-card-cat">Jewelry · Q4 2025 · 004</div>
+        <div class="br-col-card-name">K'NOT</div>
+        <div class="br-col-card-arrow">→</div>
+      </div>
+    </a>
+    <a href="collection-kethereality.html" class="br-col-card reveal reveal-delay-1">
+      <img src="https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/crop/x_0,y_0,w_980,h_1300/fill/w_500,h_660,al_c,q_85,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg" alt="K'ETHEREALITY" loading="lazy">
+      <div class="br-col-card-overlay">
+        <div class="br-col-card-cat">Jewelry · Q4 2025 · 005</div>
+        <div class="br-col-card-name">K'ETHEREALITY</div>
+        <div class="br-col-card-arrow">→</div>
+      </div>
+    </a>
+    <a href="collection-kharmonics.html" class="br-col-card reveal reveal-delay-2">
+      <img src="https://static.wixstatic.com/media/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg/v1/crop/x_0,y_0,w_762,h_1000/fill/w_500,h_660,al_c,q_85,enc_avif,quality_auto/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg" alt="K'HARMONICS" loading="lazy">
+      <div class="br-col-card-overlay">
+        <div class="br-col-card-cat">Jewelry · Q4 2025 · 006</div>
+        <div class="br-col-card-name">K'HARMONICS</div>
+        <div class="br-col-card-arrow">→</div>
+      </div>
+    </a>
+    <a href="collection-kboutegon.html" class="br-col-card reveal reveal-delay-3">
+      <img src="https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/crop/x_0,y_0,w_907,h_1200/fill/w_500,h_660,al_c,q_85,enc_avif,quality_auto/536553245_1658062488450681_1675531161089091145_n.jpg" alt="K'BOUTEGON" loading="lazy">
+      <div class="br-col-card-overlay">
+        <div class="br-col-card-cat">Jewelry · Q4 2025 · 007</div>
+        <div class="br-col-card-name">K'BOUTEGON</div>
+        <div class="br-col-card-arrow">→</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ── PRODUCTION PROCESS ── -->
+<section class="br-process">
+  <div class="br-process-header">
+    <div>
+      <div class="br-process-eyebrow reveal">Quy Trình Sản Xuất</div>
+      <h2 class="br-process-heading reveal reveal-delay-1">Từ ý tưởng<br>đến tác phẩm.</h2>
+    </div>
+    <p class="br-process-intro reveal-right">Mỗi sản phẩm MKT trải qua 6 giai đoạn thủ công nghiêm ngặt, từ cuộc tư vấn đầu tiên đến khi tác phẩm hoàn thiện được trao tận tay khách hàng. Không có bước tắt. Không có ngoại lệ.</p>
+  </div>
+  <div class="br-process-steps">
+    <div class="br-process-step reveal">
+      <div class="br-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <div class="br-step-num">01</div>
+      <div class="br-step-title">Tư Vấn & Thiết Kế</div>
+      <div class="br-step-body">Cuộc trò chuyện riêng tư để hiểu phong cách, mong muốn và ngân sách của khách hàng. Từ đó phác thảo concept độc quyền.</div>
+    </div>
+    <div class="br-process-step reveal reveal-delay-1">
+      <div class="br-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg></div>
+      <div class="br-step-num">02</div>
+      <div class="br-step-title">Lấy Khuôn Răng</div>
+      <div class="br-step-body">Impression kit được gửi đến khách hàng hoặc thực hiện trực tiếp tại xưởng. Mỗi khuôn đúc đảm bảo độ vừa vặn hoàn hảo — không điều chỉnh sau khi hoàn thiện.</div>
+    </div>
+    <div class="br-process-step reveal reveal-delay-2">
+      <div class="br-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+      <div class="br-step-num">03</div>
+      <div class="br-step-title">Đúc & Gia Công</div>
+      <div class="br-step-body">Kim loại quý được chọn lọc, nung chảy và đúc theo khuôn. Thợ thủ công tỉ mỉ mài dũa từng đường nét theo bản thiết kế đã duyệt.</div>
+    </div>
+    <div class="br-process-step reveal reveal-delay-3">
+      <div class="br-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <div class="br-step-num">04</div>
+      <div class="br-step-title">Gắn Đá Quý</div>
+      <div class="br-step-body">Mỗi viên đá — từ moissanite đến kim cương tự nhiên — được đặt thủ công bằng nhíp chuyên dụng. Micro-pavé yêu cầu kỹ thuật cao và sự kiên nhẫn tuyệt đối.</div>
+    </div>
+    <div class="br-process-step reveal reveal-delay-4">
+      <div class="br-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <div class="br-step-num">05</div>
+      <div class="br-step-title">Kiểm Tra Chất Lượng</div>
+      <div class="br-step-body">Tác phẩm trải qua kiểm tra toàn diện: độ vừa vặn, độ bóng, độ chắc của từng viên đá và tính thẩm mỹ tổng thể. Chỉ đạt 100% mới được giao.</div>
+    </div>
+    <div class="br-process-step reveal reveal-delay-5">
+      <div class="br-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zm-9 5H7m4 0h2m3 0h-2"/></svg></div>
+      <div class="br-step-num">06</div>
+      <div class="br-step-title">Bàn Giao & Chứng Nhận</div>
+      <div class="br-step-body">Tác phẩm hoàn thiện được đóng gói trong hộp cao cấp, kèm chứng nhận authenticity và hướng dẫn bảo quản. Mỗi piece là duy nhất — không bao giờ tái tạo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section class="br-stats">
+  <span class="br-stats-eyebrow reveal">MKT · By The Numbers</span>
+  <div class="br-stats-grid">
+    <div class="br-stat-item reveal">
+      <div class="br-stat-num">7<span class="br-stat-unit" style="font-size:.5em;color:#4169E1"> col.</span></div>
+      <div class="br-stat-lbl">Collections</div>
+      <div class="br-stat-desc">3 Grillz series + 4 Jewelry — mỗi series mang một ngôn ngữ thiết kế riêng.</div>
+    </div>
+    <div class="br-stat-item reveal reveal-delay-1">
+      <div class="br-stat-num">100<span class="br-stat-unit">%</span></div>
+      <div class="br-stat-lbl">Thủ Công</div>
+      <div class="br-stat-desc">Không có máy móc nào thay thế đôi tay của thợ thủ công trong quá trình sản xuất.</div>
+    </div>
+    <div class="br-stat-item reveal reveal-delay-2">
+      <div class="br-stat-num">0</div>
+      <div class="br-stat-lbl">Remake Accepted</div>
+      <div class="br-stat-desc">Mỗi sản phẩm là độc nhất. Chúng tôi không tái tạo lại bất kỳ thiết kế nào đã giao.</div>
+    </div>
+    <div class="br-stat-item reveal reveal-delay-3">
+      <div class="br-stat-num">1<span class="br-stat-unit">/1</span></div>
+      <div class="br-stat-lbl">Each Piece</div>
+      <div class="br-stat-desc">Không serial. Không phiên bản. Tác phẩm của bạn là duy nhất trên thế giới.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MANIFESTO ── -->
+<section class="br-manifesto">
+  <div class="br-manifesto-bg"></div>
+  <div class="br-manifesto-content">
+    <span class="br-manifesto-eyebrow reveal-up">MKT · Manifesto</span>
+    <blockquote class="br-manifesto-quote reveal-up reveal-delay-1">
+      "Wear grillz not only to flex —<br>wear them because they are <em>yours,</em><br>because they carry <em>your story,</em><br>because nothing else could."
+    </blockquote>
+    <span class="br-manifesto-author reveal-up reveal-delay-2">— Mai Kim Thanh, Founder of MKT</span>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="br-cta">
+  <div>
+    <div class="br-cta-eyebrow reveal">Begin Your Journey</div>
+    <h2 class="br-cta-title reveal reveal-delay-1">Sẵn sàng tạo ra tác phẩm của riêng bạn?</h2>
+  </div>
+  <div class="br-cta-actions reveal-right">
+    <a href="#" class="btn-primary nav-cta">Book a Consultation</a>
+    <a href="collection.html" class="btn-ghost">View Collections</a>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
 <footer><div class="footer-inner">
   <div class="footer-top">
     <div class="footer-brand">
@@ -248,47 +587,50 @@ footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(
       <p class="footer-tagline">"Wear grillz not only to flex" — Premium Custom Grillz &amp; Jewelry, crafted in Vietnam for the world.</p>
       <div class="footer-socials"><a href="https://www.instagram.com/mkt.worldwide/" class="footer-social" target="_blank">IG</a><a href="https://www.facebook.com/mktgrillz" class="footer-social" target="_blank">FB</a><a href="https://www.tiktok.com/@mkt.worldwide" class="footer-social" target="_blank">TK</a></div>
     </div>
-    <div class="footer-col"><h4>Navigate</h4><ul><li><a href="index.html#main">Home</a></li><li><a href="brand.html">The Brand</a></li><li><a href="collection.html">Collection</a></li><li><a href="index.html#clients">Clients</a></li></ul></div>
-    <div class="footer-col"><h4>Services</h4><ul><li><a href="collection.html">Collections</a></li><li><a href="contact.html">Book Appointment</a></li><li><a href="store.html">Store Locator</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
-    <div class="footer-col"><h4>Contact</h4><ul><li><a href="events.html">Events</a></li><li><a href="contact.html">Friend &amp; Partner</a></li><li><a href="contact.html">Press</a></li><li><a href="https://www.instagram.com/mkt.worldwide/" target="_blank">Instagram</a></li></ul></div>
+    <div class="footer-col"><h4>Navigate</h4><ul><li><a href="index.html#main">Home</a></li><li><a href="brand.html">The Brand</a></li><li><a href="collection.html">Collection</a></li><li><a href="store.html">Store Locator</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="contact.html">Book Appointment</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="events.html">Events</a></li><li><a href="contact.html">Custom Order</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="contact.html">Friend &amp; Partner</a></li><li><a href="contact.html">Press</a></li><li><a href="https://www.instagram.com/mkt.worldwide/" target="_blank">Instagram</a></li><li><a href="https://www.tiktok.com/@mkt.worldwide" target="_blank">TikTok</a></li></ul></div>
   </div>
   <div class="footer-bottom"><div class="footer-copy">© 2025 <span>MKT</span> — Wear Grillz Not Only To Flex. All rights reserved.</div><div class="footer-copy">Tanoshivietnam x VMST Vietnam</div></div>
 </div></footer>
-</main>
+
 <script>
 function toggleMenu(){document.getElementById('menu-overlay').classList.toggle('open');document.getElementById('menu-btn').classList.toggle('open');}
 function closeMenu(){document.getElementById('menu-overlay').classList.remove('open');document.getElementById('menu-btn').classList.remove('open');}
-window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);});
-(function(){const c=document.getElementById('cursor'),r=document.getElementById('cursorRing');document.addEventListener('mousemove',e=>{c.style.left=r.style.left=e.clientX+'px';c.style.top=r.style.top=e.clientY+'px';});document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{c.style.width=c.style.height='16px';r.style.width=r.style.height='56px';});el.addEventListener('mouseleave',()=>{c.style.width=c.style.height='8px';r.style.width=r.style.height='36px';});});})();
 
-  // ── SCROLL REVEAL ──
-  (function(){
-    var selectors = [
-      'h1','h2','h3',
-      '.cs-eyebrow','.cs-tagline','.cs-badge','.cs-line',
-      '.ql-item','.ql-label',
-      '.footer-col',
-      '.store-story-block','.store-story-hd','.store-story-dd',
-      '.store-map-section','.store-map-heading',
-      '.contact-form','.contact-info-block','.contact-hours-block',
-      '.contact-social-link',
-      '.pricing-card','.pricing-filter',
-      'blockquote','cite',
-      'p.footer-tagline'
-    ].join(',');
-    var els = document.querySelectorAll(selectors);
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-    els.forEach(function(el, i){
-      if(!el.classList.contains('reveal') && !el.classList.contains('reveal-right')){
-        el.classList.add(i % 2 === 0 ? 'reveal' : 'reveal-right');
-      }
-      io.observe(el);
+// Navbar scroll
+window.addEventListener('scroll',function(){document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);},{passive:true});
+
+// Cursor
+(function(){
+  var c=document.getElementById('cursor'),r=document.getElementById('cursorRing');
+  document.addEventListener('mousemove',function(e){c.style.left=r.style.left=e.clientX+'px';c.style.top=r.style.top=e.clientY+'px';});
+  document.querySelectorAll('a,button').forEach(function(el){
+    el.addEventListener('mouseenter',function(){c.style.width=c.style.height='16px';r.style.width=r.style.height='56px';});
+    el.addEventListener('mouseleave',function(){c.style.width=c.style.height='8px';r.style.width=r.style.height='36px';});
+  });
+})();
+
+// Scroll Reveal
+(function(){
+  var els=document.querySelectorAll('.reveal,.reveal-right,.reveal-up,.br-process-step');
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
     });
-  })();
+  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){io.observe(el);});
+})();
+
+// Book CTA
+document.querySelectorAll('.nav-cta').forEach(function(el){
+  el.addEventListener('click',function(e){
+    e.preventDefault();
+    if(window.openBooking){window.openBooking();}else{window.location.href='contact.html';}
+  });
+});
+var menuBookBtn=document.getElementById('menu-book-btn');
+if(menuBookBtn){menuBookBtn.addEventListener('click',function(e){e.preventDefault();if(window.openBooking){window.openBooking();}else{window.location.href='contact.html';}});}
 </script>
 
 <!-- ═══ BOOKING MODAL ═══ -->
@@ -433,4 +775,5 @@ window.addEventListener('scroll',()=>{document.getElementById('navbar').classLis
   window.openBooking=openBooking;
 })();
 </script>
-</body></html>
+</body>
+</html>
