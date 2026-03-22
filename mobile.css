@@ -6,8 +6,15 @@
 
 /* ────────────────────────────────────────────────────────────
    0. PREVENT HORIZONTAL SCROLL (all devices)
+   NOTE: overflow-x:hidden on BOTH html+body breaks
+   IntersectionObserver (reveal animations stay opacity:0).
+   Fix: use overflow-x:clip on html (no new scroll context)
+   and overflow-x:hidden only on body.
 ──────────────────────────────────────────────────────────── */
-html, body {
+html {
+  overflow-x: clip; /* clip ≠ hidden — does NOT break IntersectionObserver */
+}
+body {
   overflow-x: hidden;
   max-width: 100%;
 }
