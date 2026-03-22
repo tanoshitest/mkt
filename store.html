@@ -429,17 +429,17 @@
 
   /* ══ MAP SECTION ══ */
   .store-map-section {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
+    display: flex;
+    flex-direction: column;
     border-top: 1px solid rgba(65,105,225,.08);
-    min-height: 600px;
   }
   .store-map-info {
     padding: 80px;
-    display: flex; flex-direction: column; gap: 40px;
-    justify-content: center;
+    display: flex; flex-direction: row; gap: 80px;
+    align-items: flex-start;
     background: var(--dark);
-    border-right: 1px solid rgba(65,105,225,.08);
+    border-top: 1px solid rgba(65,105,225,.08);
+    flex-wrap: wrap;
   }
   .store-map-eyebrow {
     font-size: 9px; letter-spacing: .4em; text-transform: uppercase; color: var(--gold);
@@ -450,8 +450,9 @@
     font-weight: 300; font-style: italic;
     color: var(--white); line-height: 1.15;
   }
+  .store-map-info-heading { flex: 0 0 320px; }
   .store-map-details {
-    display: flex; flex-direction: column; gap: 28px;
+    display: flex; flex-direction: row; gap: 48px; flex: 1; flex-wrap: wrap; align-items: flex-start; padding-top: 4px;
   }
   .map-detail-item {
     display: flex; gap: 20px; align-items: flex-start;
@@ -481,8 +482,9 @@
   .store-map-embed {
     position: relative;
     background: var(--off-black);
-    min-height: 600px;
+    height: 520px;
     overflow: hidden;
+    order: -1;
   }
   .store-map-embed iframe {
     width: 100%; height: 100%;
@@ -857,9 +859,19 @@
 
 <!-- ══ MAP ══ -->
 <section class="store-map-section">
+  <div class="store-map-embed">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4945!2d106.6986!3d10.7717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3a9d8d1bb5%3A0xaee19d74a03e0d17!2sBen%20Thanh%20Market!5e0!3m2!1sen!2s!4v1"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen>
+    </iframe>
+  </div>
   <div class="store-map-info">
-    <div class="store-map-eyebrow">Find Us</div>
-    <h2 class="store-map-heading">How to reach<br>the studio</h2>
+    <div class="store-map-info-heading">
+      <div class="store-map-eyebrow">Find Us</div>
+      <h2 class="store-map-heading">How to reach<br>the studio</h2>
+    </div>
     <div class="store-map-details">
       <div class="map-detail-item">
         <div class="map-detail-icon">
@@ -892,14 +904,6 @@
     <a href="https://maps.google.com/?q=Ho+Chi+Minh+City+District+1" target="_blank" class="store-map-cta">
       Get Directions <span>→</span>
     </a>
-  </div>
-  <div class="store-map-embed">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4945!2d106.6986!3d10.7717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3a9d8d1bb5%3A0xaee19d74a03e0d17!2sBen%20Thanh%20Market!5e0!3m2!1sen!2s!4v1"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      allowfullscreen>
-    </iframe>
   </div>
 </section>
 
