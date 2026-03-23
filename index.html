@@ -2245,7 +2245,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
-        <span class="login-label">Đăng Nhập</span>
+        <span class="login-label">Login</span>
       </button>
     </div>
   </nav>
@@ -2254,17 +2254,17 @@
   <div id="login-overlay" onclick="closeLoginOutside(event)">
     <div id="login-modal">
       <button id="login-close" onclick="closeLogin()" aria-label="Đóng">✕</button>
-      <h2>Đăng Nhập</h2>
-      <p class="login-sub">Vui lòng nhập thông tin tài khoản của bạn</p>
+      <h2>Login</h2>
+      <p class="login-sub">Please enter your account information</p>
       <div class="login-field">
         <label for="login-id">ID</label>
-        <input type="text" id="login-id" placeholder="Nhập ID của bạn" autocomplete="off">
+        <input type="text" id="login-id" placeholder="Enter your ID" autocomplete="off">
       </div>
       <div class="login-field">
-        <label for="login-account">Tài Khoản</label>
-        <input type="text" id="login-account" placeholder="Nhập tài khoản" autocomplete="off">
+        <label for="login-account">Account</label>
+        <input type="text" id="login-account" placeholder="Enter your account" autocomplete="off">
       </div>
-      <button id="login-submit" onclick="handleLogin()">Xác Nhận</button>
+      <button id="login-submit" onclick="handleLogin()">Confirm</button>
     </div>
   </div>
 
@@ -2867,10 +2867,10 @@
     document.getElementById('login-account').style.borderColor = '';
     // placeholder: replace with real auth
     const btn = document.getElementById('login-submit');
-    btn.textContent = 'Đang xử lý...';
+    btn.textContent = 'Processing...';
     btn.disabled = true;
     setTimeout(() => {
-      btn.textContent = 'Xác Nhận';
+      btn.textContent = 'Confirm';
       btn.disabled = false;
       closeLogin();
     }, 1200);
