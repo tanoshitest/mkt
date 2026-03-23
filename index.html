@@ -564,6 +564,26 @@
 
 
   /* ── FULLSCREEN MENU OVERLAY — transparent glass ── */
+  #menu-close-btn {
+    position: absolute;
+    top: 28px; right: 36px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.7);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+    z-index: 1;
+  }
+  #menu-close-btn:hover {
+    border-color: rgba(255,255,255,0.7);
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+  }
   #menu-overlay {
     position: fixed;
     inset: 0;
@@ -2151,6 +2171,7 @@
 
 <!-- MENU OVERLAY (Richard Mille style) -->
 <div id="menu-overlay">
+  <button id="menu-close-btn" onclick="closeMenu()" aria-label="Close menu">&#x2715;</button>
   <nav>
     <ul class="menu-links">
       <li><a href="index.html"><span class="link-num">00</span>Home</a></li>
