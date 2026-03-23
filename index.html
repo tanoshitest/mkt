@@ -109,7 +109,7 @@
     align-items: center;
     text-decoration: none;
   }
-  .intro-logo-img { height: 50px; width: auto; }
+  .intro-logo-img { height: 100px; width: auto; }
   .intro-nav-book {
     background: none;
     border: 1px solid rgba(255,255,255,0.28);
@@ -130,7 +130,7 @@
   }
   @media (max-width: 768px) {
     #intro-navbar { padding: 20px 20px; }
-    .intro-logo-img { height: 38px; }
+    .intro-logo-img { height: 60px; }
     .intro-nav-book { display: none; }
   }
 
@@ -253,32 +253,28 @@
     to { width: 200px; }
   }
 
-  /* explore button — bottom-left, styled like intro-nav-book × 2 */
+  /* explore button — bottom-left, no border */
   #intro-btn {
     background: none;
-    border: 1px solid rgba(255,255,255,0.28);
-    color: rgba(255,255,255,0.8);
-    font-size: 18px;
+    border: none;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
-    padding: 20px 40px;
-    border-radius: 0;
+    padding: 0;
     cursor: pointer;
     font-family: inherit;
     opacity: 0;
     animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 1.8s forwards;
-    transition: border-color 0.3s, color 0.3s, background 0.3s;
+    transition: color 0.3s;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
   }
-  #intro-btn:hover {
-    border-color: rgba(255,255,255,0.8);
-    color: #fff;
-    background: rgba(255,255,255,0.06);
-  }
-  .btn-arrow { font-size: 18px; }
+  #intro-btn:hover { color: #fff; }
+  .btn-arrow { font-size: 14px; transition: transform 0.3s; }
+  #intro-btn:hover .btn-arrow { transform: translateX(5px); }
 
   /* scroll hint at bottom */
   #intro-bottom {
@@ -2095,7 +2091,7 @@
       <span></span><span></span><span></span>
     </button>
     <a href="index.html" class="intro-nav-logo">
-      <img src="indentify/mkt final white.png" alt="MKT" class="intro-logo-img">
+      <img src="indentify/logo mkt xoa nen den.png" alt="MKT" class="intro-logo-img">
     </a>
     <button class="intro-nav-book" onclick="window.openBooking ? window.openBooking() : (window.location.href='contact.html')">
       Book Appointment
