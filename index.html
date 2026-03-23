@@ -1367,105 +1367,109 @@
     /* stack context */
   }
 
-  /* each card — sized & centered by JS */
+  /* each card — full viewport, flex column */
   .coop-card {
     position: absolute;
     overflow: hidden;
     border-radius: 0;
     transform-origin: center center;
     will-change: transform;
+    display: flex;
+    flex-direction: column;
+    background: #0c0c0c;
   }
-
-  .coop-img {
-    position: absolute;
-    inset: 0;
+  /* top: large hero image */
+  .cc-top {
+    flex: 0 0 58%;
+    overflow: hidden;
+    position: relative;
+  }
+  .cc-top img {
     width: 100%; height: 100%;
     object-fit: cover;
     object-position: center 30%;
     display: block;
-    will-change: transform;
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
   }
-
-  .coop-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to top,
-      rgba(8,8,8,0.92) 0%,
-      rgba(8,8,8,0.25) 40%,
-      transparent 65%
-    );
+  .coop-card:hover .cc-top img { transform: scale(1.03); }
+  /* bottom: text left, image right */
+  .cc-bottom {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 0.65fr;
+    gap: 56px;
+    padding: 32px 72px;
+    align-items: center;
+    background: #0c0c0c;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .cc-info {}
+  .cc-meta {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 60px 80px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
   }
-
-  .coop-num {
-    position: absolute;
-    top: 52px; right: 72px;
+  .cc-num {
     font-family: var(--serif);
-    font-size: 108px;
-    font-weight: 300;
+    font-size: 11px;
     font-style: italic;
-    color: rgba(65,105,225,0.10);
-    line-height: 1;
-    pointer-events: none;
+    color: rgba(65,105,225,0.45);
+    letter-spacing: 0.1em;
   }
-
-  .coop-tag {
-    font-size: 9px;
-    font-weight: 400;
+  .cc-tag {
+    font-size: 8px;
+    font-weight: 500;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
   }
-  .coop-tag::before {
-    content: '';
-    width: 24px; height: 1px;
-    background: var(--gold);
-    opacity: 0.7;
-    flex-shrink: 0;
+  .cc-title {
+    font-size: clamp(16px, 1.8vw, 24px);
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 12px;
+    line-height: 1.25;
   }
-  .coop-title {
-    font-family: var(--serif);
-    font-size: clamp(36px, 4.5vw, 68px);
+  .cc-desc {
+    font-size: 13px;
     font-weight: 300;
-    color: var(--white);
-    line-height: 1.05;
+    line-height: 1.75;
+    color: rgba(184,180,174,0.7);
     margin-bottom: 20px;
-    letter-spacing: -0.01em;
+    max-width: 420px;
   }
-  .coop-desc {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.85;
-    color: rgba(184,180,174,0.85);
-    max-width: 520px;
-  }
-  .coop-explore {
+  .cc-discover {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    margin-top: 32px;
+    gap: 10px;
     font-size: 9px;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--white);
+    color: rgba(255,255,255,0.65);
     text-decoration: none;
-    padding: 14px 28px;
-    border: 1px solid rgba(245,240,234,0.22);
-    border-radius: 40px;
-    transition: border-color 0.3s ease, color 0.3s ease;
-    width: fit-content;
+    border-bottom: 1px solid rgba(255,255,255,0.22);
+    padding-bottom: 5px;
+    transition: color 0.3s, border-color 0.3s;
   }
-  .coop-explore:hover { border-color: var(--gold); color: var(--gold); }
-  .coop-explore-arrow { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
-  .coop-explore:hover .coop-explore-arrow { transform: translateX(4px); }
+  .cc-discover:hover { color: #fff; border-color: rgba(255,255,255,0.7); }
+  .cc-discover span { transition: transform 0.3s; }
+  .cc-discover:hover span { transform: translateX(4px); }
+  /* right side image */
+  .cc-side {
+    height: 100%;
+    overflow: hidden;
+    max-height: 200px;
+  }
+  .cc-side img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .coop-card:hover .cc-side img { transform: scale(1.04); }
 
   /* progress dots — right side */
   .coop-dots {
@@ -2514,43 +2518,73 @@
 
       <!-- Card 1 -->
       <div class="coop-card" id="coopCard0">
-        <img class="coop-img"
-          src="https://static.wixstatic.com/media/bbdef6_2d7f0fd954de485da7f97e8c0aec682b~mv2.jpg/v1/crop/x_0,y_45,w_2048,h_861/fill/w_1600,h_900,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/503431277_23990548667237579_6772425281413023399_n.jpg"
-          alt="Heritage Fashion x Suboi">
-        <div class="coop-overlay">
-          <div class="coop-num">01</div>
-          <div class="coop-tag">Campaign · Magazine</div>
-          <div class="coop-title">Heritage Fashion<br>× Suboi</div>
-          <p class="coop-desc">A bold intersection of contemporary street culture and Vietnam's cultural heritage — grillz introduced within the context of Vietnam Airlines. Vietnamese identity is dynamic, creative, ready for the world.</p>
-          <a href="#" class="coop-explore">Explore <span class="coop-explore-arrow">→</span></a>
+        <div class="cc-top">
+          <img src="https://static.wixstatic.com/media/bbdef6_2d7f0fd954de485da7f97e8c0aec682b~mv2.jpg/v1/crop/x_0,y_45,w_2048,h_861/fill/w_1600,h_900,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/503431277_23990548667237579_6772425281413023399_n.jpg" alt="Heritage Fashion x Suboi">
+        </div>
+        <div class="cc-bottom">
+          <div class="cc-info">
+            <div class="cc-meta"><span class="cc-num">01</span><span class="cc-tag">Campaign · Magazine</span></div>
+            <div class="cc-title">Heritage Fashion × Suboi</div>
+            <p class="cc-desc">A bold intersection of contemporary street culture and Vietnam's cultural heritage — grillz introduced within the context of Vietnam Airlines. Vietnamese identity is dynamic, creative, ready for the world.</p>
+            <a href="#" class="cc-discover">Discover <span>→</span></a>
+          </div>
+          <div class="cc-side">
+            <img src="https://static.wixstatic.com/media/bbdef6_aa422822202c4123bbb9ba92540dc7b5~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_aa422822202c4123bbb9ba92540dc7b5~mv2.jpg" alt="">
+          </div>
         </div>
       </div>
 
       <!-- Card 2 -->
       <div class="coop-card" id="coopCard1">
-        <img class="coop-img"
-          src="https://static.wixstatic.com/media/bbdef6_5b4d91904c394d6bae69ec68d4a5f46e~mv2.jpg/v1/crop/x_0,y_83,w_1509,h_1917/fill/w_1200,h_900,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/481918088_1525534978370100_2355981287889479134_n.jpg"
-          alt="Cong Ty Tu">
-        <div class="coop-overlay">
-          <div class="coop-num">02</div>
-          <div class="coop-tag">Music Video</div>
-          <div class="coop-title">Công Ty Tư<br>ft. Andree</div>
-          <p class="coop-desc">The first Invisible Grillz Set ever introduced in Vietnam. Subtle yet powerful — quiet luxury in contemporary Vietnamese hip-hop culture.</p>
-          <a href="#" class="coop-explore">Explore <span class="coop-explore-arrow">→</span></a>
+        <div class="cc-top">
+          <img src="https://static.wixstatic.com/media/bbdef6_5b4d91904c394d6bae69ec68d4a5f46e~mv2.jpg/v1/crop/x_0,y_83,w_1509,h_1917/fill/w_1200,h_900,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/481918088_1525534978370100_2355981287889479134_n.jpg" alt="Cong Ty Tu ft Andree">
+        </div>
+        <div class="cc-bottom">
+          <div class="cc-info">
+            <div class="cc-meta"><span class="cc-num">02</span><span class="cc-tag">Music Video</span></div>
+            <div class="cc-title">Công Ty Tư ft. Andree</div>
+            <p class="cc-desc">The first Invisible Grillz Set ever introduced in Vietnam. Subtle yet powerful — quiet luxury in contemporary Vietnamese hip-hop culture.</p>
+            <a href="#" class="cc-discover">Discover <span>→</span></a>
+          </div>
+          <div class="cc-side">
+            <img src="https://static.wixstatic.com/media/bbdef6_74ac7893dbfb4b3e9503c59a49974bef~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_74ac7893dbfb4b3e9503c59a49974bef~mv2.jpg" alt="">
+          </div>
         </div>
       </div>
 
       <!-- Card 3 -->
       <div class="coop-card" id="coopCard2">
-        <img class="coop-img"
-          src="https://static.wixstatic.com/media/bbdef6_af20ed25d65e47f4910746bf144de580~mv2.jpg/v1/crop/x_0,y_77,w_1080,h_454/fill/w_1600,h_900,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/%C4%90%C6%AF%E1%BB%9CNG%20%C4%90UA%20T%E1%BB%94NG%20L%E1%BB%B0CS%C3%A2n%20kh%E1%BA%A5u-%20SHOWTi%E1%BA%BFt%20m%E1%BB%A5c-%20M%E1%BB%99ng%20H%C3%B3aCh%E1%BB%8B%20%C4%90%E1%BA%B9p-%20T%C3%B3c%20Ti%C3%AAn%2C%20Minh%20Tuy%E1%BA%BFt%2C%20Minh%20H%E1%BA%B1ng.jpg"
-          alt="Chi Dep">
-        <div class="coop-overlay">
-          <div class="coop-num">03</div>
-          <div class="coop-tag">TV Live Show</div>
-          <div class="coop-title">Mộng Hòa<br>Chị Đẹp × Tóc Tiên</div>
-          <p class="coop-desc">MKT grillz on Vietnam's most prestigious television stage — the moment grillz entered mainstream culture through music, fashion, and performance.</p>
-          <a href="#" class="coop-explore">Explore <span class="coop-explore-arrow">→</span></a>
+        <div class="cc-top">
+          <img src="https://static.wixstatic.com/media/bbdef6_af20ed25d65e47f4910746bf144de580~mv2.jpg/v1/crop/x_0,y_77,w_1080,h_454/fill/w_1600,h_900,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/%C4%90%C6%AF%E1%BB%9CNG%20%C4%90UA%20T%E1%BB%94NG%20L%E1%BB%B0CS%C3%A2n%20kh%E1%BA%A5u-%20SHOWTi%E1%BA%BFt%20m%E1%BB%A5c-%20M%E1%BB%99ng%20H%C3%B3aCh%E1%BB%8B%20%C4%90%E1%BA%B9p-%20T%C3%B3c%20Ti%C3%AAn%2C%20Minh%20Tuy%E1%BA%BFt%2C%20Minh%20H%E1%BA%B1ng.jpg" alt="Chi Dep">
+        </div>
+        <div class="cc-bottom">
+          <div class="cc-info">
+            <div class="cc-meta"><span class="cc-num">03</span><span class="cc-tag">TV Live Show</span></div>
+            <div class="cc-title">Mộng Hòa — Chị Đẹp × Tóc Tiên</div>
+            <p class="cc-desc">MKT grillz on Vietnam's most prestigious television stage — the moment grillz entered mainstream culture through music, fashion, and performance.</p>
+            <a href="#" class="cc-discover">Discover <span>→</span></a>
+          </div>
+          <div class="cc-side">
+            <img src="https://static.wixstatic.com/media/bbdef6_b8ac1de40ad44c64b6dcc99d074cb9de~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_b8ac1de40ad44c64b6dcc99d074cb9de~mv2.jpg" alt="">
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="coop-card" id="coopCard3">
+        <div class="cc-top">
+          <img src="https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/fill/w_1920,h_1080,al_c,q_85,enc_avif,quality_auto/img.jpg" alt="Private Commission">
+        </div>
+        <div class="cc-bottom">
+          <div class="cc-info">
+            <div class="cc-meta"><span class="cc-num">04</span><span class="cc-tag">Private Commission</span></div>
+            <div class="cc-title">Custom Masterpiece</div>
+            <p class="cc-desc">Each piece begins with a conversation — a personal story translated into precious metal and stone. No two commissions have ever been alike, and no two ever will be.</p>
+            <a href="#" class="cc-discover">Discover <span>→</span></a>
+          </div>
+          <div class="cc-side">
+            <img src="https://static.wixstatic.com/media/bbdef6_9c3c908d159f49af86c3838c382b5549~mv2.jpg/v1/fill/w_420,h_520,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_9c3c908d159f49af86c3838c382b5549~mv2.jpg" alt="">
+          </div>
         </div>
       </div>
 
@@ -2563,6 +2597,7 @@
   <div class="coop-dot active" data-i="0"></div>
   <div class="coop-dot" data-i="1"></div>
   <div class="coop-dot" data-i="2"></div>
+  <div class="coop-dot" data-i="3"></div>
 </div>
 
 <!-- MARQUEE — Clients -->
@@ -3217,20 +3252,13 @@
     const N      = cards.length;
     const TRANSITION = 'transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease, border-radius 0.5s ease';
 
-    // Calculate card dimensions: 16:9, max width = vw-120px, max height = vh-80px
+    // Full-viewport cards
     function getMetrics(){
-      const winW = window.innerWidth;
-      const winH = window.innerHeight;
-      let w = winW - 120;          // 60px margin each side
-      let h = w * 9 / 16;
-      if(h > winH - 80){           // too tall → constrain by height
-        h = winH - 80;
-        w = h * 16 / 9;
-      }
       return {
-        w, h,
-        left: (winW - w) / 2,
-        top:  (winH - h) / 2
+        w:    window.innerWidth,
+        h:    window.innerHeight,
+        left: 0,
+        top:  0
       };
     }
 
