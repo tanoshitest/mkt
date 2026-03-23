@@ -2662,7 +2662,7 @@
       title.textContent   = c.title;
       tagline.textContent = c.tagline;
       link.href           = c.href;
-      requestAnimationFrame(() => requestAnimationFrame(() => colInfo.classList.add('text-in')));
+      setTimeout(() => colInfo.classList.add('text-in'), 30);
     }
 
     /* Auto-advance progress bar */
