@@ -1252,6 +1252,7 @@
     overflow: hidden;
     transition: background 0.5s ease;
   }
+  /* gold top line */
   .pillar::before {
     content: '';
     position: absolute;
@@ -1261,9 +1262,33 @@
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    z-index: 2;
   }
   .pillar:hover::before { transform: scaleX(1); }
-  .pillar:hover { background: rgba(22,21,20,0.9); }
+  /* hover bg image layer */
+  .pillar-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    transform: scale(1.05);
+    z-index: 0;
+  }
+  .pillar-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(8,8,8,0.58);
+  }
+  .pillar:hover .pillar-img {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .pillar:hover { background: var(--dark); }
+  /* keep text above image */
+  .pillar-num, .pillar-title, .pillar-body { position: relative; z-index: 1; }
   .pillar-num {
     font-family: var(--serif);
     font-size: 52px;
@@ -1274,7 +1299,7 @@
     font-style: italic;
     transition: color 0.5s ease;
   }
-  .pillar:hover .pillar-num { color: rgba(65,105,225,0.25); }
+  .pillar:hover .pillar-num { color: rgba(65,105,225,0.3); }
   .pillar-title {
     font-size: 9px;
     font-weight: 500;
@@ -1288,7 +1313,9 @@
     font-weight: 300;
     line-height: 1.8;
     color: var(--gray);
+    transition: color 0.4s ease;
   }
+  .pillar:hover .pillar-body { color: rgba(245,240,234,0.8); }
 
   /* ── COOPERATION — OVERLAP STACK ── */
   .coop {
@@ -2440,16 +2467,19 @@
     </div>
     <div class="vision-pillars">
       <div class="pillar reveal">
+        <div class="pillar-img" style="background-image:url('https://static.wixstatic.com/media/bbdef6_872e463be1404854ba3701bded9ee010~mv2.jpg/v1/crop/x_73,y_0,w_1829,h_2048/fill/w_875,h_980,al_c,q_85,enc_avif,quality_auto/452929829_2599130003606884_6002212986055116049_n.jpg')"></div>
         <div class="pillar-num">01</div>
         <div class="pillar-title">Story Telling</div>
         <p class="pillar-body">Every detail is purposeful. We craft through a deep understanding of the person behind the smile — their style, journey, and irreplaceable personal mark.</p>
       </div>
       <div class="pillar reveal reveal-delay-1">
+        <div class="pillar-img" style="background-image:url('https://static.wixstatic.com/media/bbdef6_5b4d91904c394d6bae69ec68d4a5f46e~mv2.jpg/v1/crop/x_0,y_83,w_1509,h_1917/fill/w_1200,h_900,al_c,q_85,enc_avif,quality_auto/481918088_1525534978370100_2355981287889479134_n.jpg')"></div>
         <div class="pillar-num">02</div>
         <div class="pillar-title">Meticulous Craft</div>
         <p class="pillar-body">Anglage by hand. Burnished pivots. Each surface treated with obsessive precision — the same standards found in the finest Swiss ateliers.</p>
       </div>
       <div class="pillar reveal-right reveal-delay-2">
+        <div class="pillar-img" style="background-image:url('https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/fill/w_1920,h_1080,al_c,q_85,enc_avif,quality_auto/img.jpg')"></div>
         <div class="pillar-num">03</div>
         <div class="pillar-title">Unique Masterpiece</div>
         <p class="pillar-body">Every masterpiece is carefully crafted down to every detail. Limited production ensures that no two pieces are ever the same.</p>
