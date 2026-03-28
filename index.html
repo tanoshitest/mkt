@@ -2297,100 +2297,121 @@
     .bm-cal-dow span { width: 36px; }
   }
 
-  /* ══ WORN BY — SINGLE PORTRAIT CAROUSEL ══ */
+  /* ══ WORN BY — SPLIT LAYOUT ══ */
   .worn-by-section {
     background: var(--black);
     min-height: 100vh;
-    padding: 60px 24px;
-    box-sizing: border-box;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
+    padding: 80px;
+    box-sizing: border-box;
     overflow: hidden;
   }
-  .wb-label {
-    text-align: center;
-    font-size: 9px;
-    letter-spacing: 0.45em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.7;
-  }
-  /* arrows + portrait row */
-  .wb-stage-wrap {
-    display: flex;
+  .wb-inner {
+    display: grid;
+    grid-template-columns: 42% 1fr;
+    gap: 80px;
     align-items: center;
-    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
   }
-  /* portrait stage — height-driven so it fits the viewport */
+  /* portrait */
   .wb-stage {
     position: relative;
-    height: clamp(220px, 44vh, 400px);
-    aspect-ratio: 3 / 4;
+    height: clamp(380px, 70vh, 680px);
     overflow: hidden;
     background: #111;
-    flex-shrink: 0;
   }
   .wb-slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.75s cubic-bezier(0.4,0,0.2,1);
+    transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1);
   }
   .wb-slide.active { opacity: 1; }
   .wb-slide img {
     width: 100%; height: 100%;
     object-fit: cover;
+    object-position: center top;
     display: block;
   }
-  /* nav buttons */
-  .wb-btn {
+  /* right content */
+  .wb-content {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    background: none;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.6);
-    font-size: 15px;
-    cursor: pointer;
-    transition: border-color 0.3s, color 0.3s;
+    flex-direction: column;
+    gap: 0;
   }
-  .wb-btn:hover:not(:disabled) {
-    border-color: rgba(255,255,255,0.5);
-    color: var(--white);
+  .wb-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 36px;
   }
-  .wb-btn:disabled { opacity: 0.2; cursor: default; }
-  /* info block */
-  .wb-info { text-align: center; }
   .wb-name {
     font-family: var(--serif);
-    font-size: clamp(20px, 2.4vw, 36px);
+    font-size: clamp(36px, 4vw, 68px);
     font-weight: 300;
     font-style: italic;
     color: var(--white);
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.4,0,0.2,1);
   }
   .wb-role {
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: 0.42em;
     text-transform: uppercase;
     color: var(--gold);
     opacity: 0.65;
-    margin-top: 7px;
-    transition: opacity 0.3s ease;
+    margin-bottom: 44px;
+    transition: opacity 0.35s ease;
+  }
+  .wb-quote {
+    font-family: var(--serif);
+    font-size: clamp(16px, 1.6vw, 24px);
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    border-left: 1px solid rgba(255,255,255,0.15);
+    padding-left: 28px;
+    margin: 0 0 52px;
+    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .wb-footer {
+    display: flex;
+    align-items: center;
+    gap: 28px;
   }
   .wb-counter {
     font-size: 10px;
     letter-spacing: 0.22em;
-    color: rgba(255,255,255,0.3);
-    margin-top: 14px;
+    color: rgba(255,255,255,0.28);
+  }
+  .wb-nav { display: flex; gap: 8px; }
+  .wb-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px; height: 44px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.55);
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s;
+    flex-shrink: 0;
+  }
+  .wb-btn:hover:not(:disabled) { border-color: rgba(255,255,255,0.5); color: var(--white); }
+  .wb-btn:disabled { opacity: 0.2; cursor: default; }
+  @media (max-width: 900px) {
+    .worn-by-section { padding: 60px 24px; }
+    .wb-inner { grid-template-columns: 1fr; gap: 36px; }
+    .wb-stage { height: clamp(260px, 55vw, 400px); }
   }
 
   /* ── TYPOGRAPHY REFINEMENTS — Richard Mille scale ── */
@@ -2785,21 +2806,27 @@
 
 <!-- MARQUEE — Clients -->
 <section class="worn-by-section" id="clients">
-  <div class="wb-label">Worn By</div>
+  <div class="wb-inner">
 
-  <!-- arrows flank the portrait -->
-  <div class="wb-stage-wrap">
-    <button class="wb-btn" id="wbPrev" aria-label="Previous" disabled>&#8592;</button>
+    <!-- Left: portrait -->
     <div class="wb-stage" id="wbStage"><!-- slides injected by JS --></div>
-    <button class="wb-btn" id="wbNext" aria-label="Next">&#8594;</button>
-  </div>
 
-  <div class="wb-info">
-    <div class="wb-name" id="wbName">Quynh Anh Shyn</div>
-    <div class="wb-role" id="wbRole">Fashionista</div>
-    <div class="wb-counter" id="wbCounter">01 / 23</div>
-  </div>
+    <!-- Right: info + quote + nav -->
+    <div class="wb-content">
+      <div class="wb-eyebrow">Worn By</div>
+      <div class="wb-name" id="wbName">Quynh Anh Shyn</div>
+      <div class="wb-role" id="wbRole">Fashionista</div>
+      <blockquote class="wb-quote" id="wbQuote">"Style is not what you wear — it's how you own it."</blockquote>
+      <div class="wb-footer">
+        <div class="wb-counter" id="wbCounter">01 / 23</div>
+        <div class="wb-nav">
+          <button class="wb-btn" id="wbPrev" aria-label="Previous" disabled>&#8592;</button>
+          <button class="wb-btn" id="wbNext" aria-label="Next">&#8594;</button>
+        </div>
+      </div>
+    </div>
 
+  </div>
 </section>
 
 <!-- QUICK LINKS -->
@@ -3485,29 +3512,29 @@
   // ── WORN BY — PORTRAIT CAROUSEL ──
   (function(){
     const WB_CLIENTS = [
-      { name: 'Quynh Anh Shyn',    role: 'Fashionista', img: 'bbdef6_74ac7893dbfb4b3e9503c59a49974bef' },
-      { name: 'Big Daddy',          role: 'Rapper',      img: 'bbdef6_aa422822202c4123bbb9ba92540dc7b5' },
-      { name: 'B-ray',              role: 'Rapper',      img: 'bbdef6_b8ac1de40ad44c64b6dcc99d074cb9de' },
-      { name: 'Addree Right Hand',  role: 'Rapper',      img: 'bbdef6_791ad54c1cb9495b99301c2b5cb3b909' },
-      { name: 'Soobin Hoang Son',   role: 'Singer',      img: 'bbdef6_9c3c908d159f49af86c3838c382b5549' },
-      { name: 'Phuong My Chi',      role: 'Singer',      img: 'bbdef6_e17b4bb39c244e959d784aaa50557314' },
-      { name: 'Ricky Star',         role: 'Rapper',      img: 'bbdef6_60ae8b16be23418d8e4dbe494cb4ee36' },
-      { name: 'Suboi',              role: 'Rapper',      img: 'bbdef6_80ad29561ed844a4bde36620922ac9b0' },
-      { name: 'Phuong Vu',          role: 'Director',    img: 'bbdef6_520be8ab268c4816b1f2e3977380ecd4' },
-      { name: 'Lam Bao Ngoc',       role: 'Singer',      img: 'bbdef6_f4eb7c8c8be74c418f6b0e6e46037298' },
-      { name: 'Fabo Nguyen',        role: 'Youtuber',    img: 'bbdef6_9acddd7075b340a8b5a3d8b81353acf8' },
-      { name: 'Saabirose',          role: 'Rapper',      img: 'bbdef6_4d0cfc9db56747d1b12878d64e5f37ab' },
-      { name: 'Doan Nguyen',        role: 'Artist',      img: 'bbdef6_9ce8894faf744f7b864d37d843de0a9a' },
-      { name: 'Tlinh',              role: 'Rapper',      img: 'bbdef6_24e3d059e1a64e18ab725f9dfb135273' },
-      { name: 'Duy Khanh Zhou Zhou',role: 'Actor',       img: 'bbdef6_298d03748e6143e2a395b7256c2aacae' },
-      { name: 'Low-G',              role: 'Rapper',      img: 'bbdef6_cb751163318a45d59b8e4d2c2e92a0eb' },
-      { name: 'Wrxdie',             role: 'Rapper',      img: 'bbdef6_4dad42539d7249eea6adb715917d148f' },
-      { name: 'Duy Manh',           role: 'Singer',      img: 'bbdef6_de913b69268842e694046c0f80e99101' },
-      { name: 'Cuong Seven',        role: 'Singer',      img: 'bbdef6_32b2bd3bc7734e6abefe5d10ee7d1217' },
-      { name: 'Blacka',             role: 'Rapper',      img: 'bbdef6_3177e1ca40b84b85a04e2b72bf042517' },
-      { name: 'Can Nguyen',         role: 'Singer',      img: 'bbdef6_0124d4ed0c124fd19905ff661941600b' },
-      { name: 'Lil Wyhn',           role: 'Rapper',      img: 'bbdef6_5179e4160ad9424284795518720d3bdf' },
-      { name: 'Gil Le',             role: 'Actor',       img: 'bbdef6_72994c2032f74621a08f31b6ca03746a' },
+      { name: 'Quynh Anh Shyn',    role: 'Fashionista', img: 'bbdef6_74ac7893dbfb4b3e9503c59a49974bef', quote: '"Style is not what you wear — it\'s how you own it."' },
+      { name: 'Big Daddy',          role: 'Rapper',      img: 'bbdef6_aa422822202c4123bbb9ba92540dc7b5', quote: '"Grillz aren\'t jewelry. They\'re a statement you make before you even speak."' },
+      { name: 'B-ray',              role: 'Rapper',      img: 'bbdef6_b8ac1de40ad44c64b6dcc99d074cb9de', quote: '"Every detail on me is intentional. MKT understands that."' },
+      { name: 'Addree Right Hand',  role: 'Rapper',      img: 'bbdef6_791ad54c1cb9495b99301c2b5cb3b909', quote: '"When the light hits different, you know it\'s MKT."' },
+      { name: 'Soobin Hoang Son',   role: 'Singer',      img: 'bbdef6_9c3c908d159f49af86c3838c382b5549', quote: '"I wear what represents who I am — nothing more, nothing less."' },
+      { name: 'Phuong My Chi',      role: 'Singer',      img: 'bbdef6_e17b4bb39c244e959d784aaa50557314', quote: '"True luxury is singular. MKT crafts that for you."' },
+      { name: 'Ricky Star',         role: 'Rapper',      img: 'bbdef6_60ae8b16be23418d8e4dbe494cb4ee36', quote: '"No remakes, no mass production — just my story in gold."' },
+      { name: 'Suboi',              role: 'Rapper',      img: 'bbdef6_80ad29561ed844a4bde36620922ac9b0', quote: '"Identity over imitation. Always."' },
+      { name: 'Phuong Vu',          role: 'Director',    img: 'bbdef6_520be8ab268c4816b1f2e3977380ecd4', quote: '"The details you don\'t notice are the ones that matter most."' },
+      { name: 'Lam Bao Ngoc',       role: 'Singer',      img: 'bbdef6_f4eb7c8c8be74c418f6b0e6e46037298', quote: '"Wearing MKT is wearing a piece of someone\'s dedication."' },
+      { name: 'Fabo Nguyen',        role: 'Youtuber',    img: 'bbdef6_9acddd7075b340a8b5a3d8b81353acf8', quote: '"Raw luxury. You feel it the moment you put it on."' },
+      { name: 'Saabirose',          role: 'Rapper',      img: 'bbdef6_4d0cfc9db56747d1b12878d64e5f37ab', quote: '"This isn\'t just bling — this is craftsmanship."' },
+      { name: 'Doan Nguyen',        role: 'Artist',      img: 'bbdef6_9ce8894faf744f7b864d37d843de0a9a', quote: '"MKT exists to elevate. Every piece proves it."' },
+      { name: 'Tlinh',              role: 'Rapper',      img: 'bbdef6_24e3d059e1a64e18ab725f9dfb135273', quote: '"I don\'t wear trends. I wear what\'s made for me."' },
+      { name: 'Duy Khanh Zhou Zhou',role: 'Actor',       img: 'bbdef6_298d03748e6143e2a395b7256c2aacae', quote: '"The confidence it gives you — that\'s the real piece."' },
+      { name: 'Low-G',              role: 'Rapper',      img: 'bbdef6_cb751163318a45d59b8e4d2c2e92a0eb', quote: '"Zero compromise on craft. That\'s why I choose MKT."' },
+      { name: 'Wrxdie',             role: 'Rapper',      img: 'bbdef6_4dad42539d7249eea6adb715917d148f', quote: '"Wear grillz not only to flex — wear them because you earned it."' },
+      { name: 'Duy Manh',           role: 'Singer',      img: 'bbdef6_de913b69268842e694046c0f80e99101', quote: '"Handcrafted for those who understand that true luxury is singular."' },
+      { name: 'Cuong Seven',        role: 'Singer',      img: 'bbdef6_32b2bd3bc7734e6abefe5d10ee7d1217', quote: '"When something is made specifically for you, you carry it differently."' },
+      { name: 'Blacka',             role: 'Rapper',      img: 'bbdef6_3177e1ca40b84b85a04e2b72bf042517', quote: '"No one else has what I have. That\'s MKT."' },
+      { name: 'Can Nguyen',         role: 'Singer',      img: 'bbdef6_0124d4ed0c124fd19905ff661941600b', quote: '"Art you wear. Story you tell."' },
+      { name: 'Lil Wyhn',           role: 'Rapper',      img: 'bbdef6_5179e4160ad9424284795518720d3bdf', quote: '"Every stone placed is a decision. That precision is everything."' },
+      { name: 'Gil Le',             role: 'Actor',       img: 'bbdef6_72994c2032f74621a08f31b6ca03746a', quote: '"MKT doesn\'t just make grillz — they make you unforgettable."' },
     ];
     const BASE = 'https://static.wixstatic.com/media/';
     const PARAMS = '~mv2.jpg/v1/fill/w_460,h_615,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/';
@@ -3515,6 +3542,7 @@
     const stage    = document.getElementById('wbStage');
     const nameEl   = document.getElementById('wbName');
     const roleEl   = document.getElementById('wbRole');
+    const quoteEl  = document.getElementById('wbQuote');
     const counter  = document.getElementById('wbCounter');
     const prevBtn  = document.getElementById('wbPrev');
     const nextBtn  = document.getElementById('wbNext');
@@ -3547,17 +3575,22 @@
 
       /* fade text out */
       nameEl.style.opacity   = '0';
-      nameEl.style.transform = 'translateY(7px)';
+      nameEl.style.transform = 'translateY(8px)';
+      quoteEl.style.opacity  = '0';
+      quoteEl.style.transform= 'translateY(8px)';
       roleEl.style.opacity   = '0';
 
       setTimeout(() => {
         nameEl.textContent     = WB_CLIENTS[next].name;
         roleEl.textContent     = WB_CLIENTS[next].role;
+        quoteEl.textContent    = WB_CLIENTS[next].quote;
         counter.textContent    = pad(next + 1) + ' / ' + pad(N);
         prevBtn.disabled       = next === 0;
         nextBtn.disabled       = next === N - 1;
         nameEl.style.opacity   = '1';
         nameEl.style.transform = 'translateY(0)';
+        quoteEl.style.opacity  = '1';
+        quoteEl.style.transform= 'translateY(0)';
         roleEl.style.opacity   = '1';
         cur  = next;
         busy = false;
