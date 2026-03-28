@@ -334,10 +334,42 @@
     left: 60px;
     z-index: 5;
     opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
     animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 2s forwards;
   }
   @media (max-width: 768px) {
     #intro-circle-wrap { bottom: 80px; left: 24px; }
+  }
+
+  /* ── VIDEO STATE TEXT (shown only on video slide) ── */
+  #intro-video-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #intro-video-text.hidden { display: none; }
+  .ivt-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .ivt-heading {
+    font-family: var(--sans);
+    font-size: clamp(32px, 4.5vw, 64px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    max-width: 520px;
+  }
+  @media (max-width: 768px) {
+    .ivt-heading { font-size: clamp(26px, 8vw, 42px); }
   }
 
   /* top nav bar inside intro */
@@ -2453,6 +2485,10 @@
 
   <!-- Circle auto-advance button — always visible -->
   <div id="intro-circle-wrap">
+    <div id="intro-video-text">
+      <span class="ivt-label">Our Mission</span>
+      <div class="ivt-heading">Wear Grillz<br>Not Only To Flex</div>
+    </div>
     <button id="intro-btn">
       <svg id="ibtn-ring" viewBox="0 0 84 84">
         <circle class="ibtn-track"    cx="42" cy="42" r="40"/>
@@ -2959,6 +2995,8 @@
 
       // Explore button: only on video state
       document.getElementById('intro-content').classList.toggle('hidden', !isVideo);
+      const videoText = document.getElementById('intro-video-text');
+      if(videoText) videoText.classList.toggle('hidden', !isVideo);
 
       // Disable ↓ on last collection
       document.getElementById('intro-next').style.opacity = isLast ? '0.25' : '1';
