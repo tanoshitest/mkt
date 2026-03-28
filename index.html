@@ -3010,7 +3010,7 @@
       eyebrowEl.textContent = c.eyebrow;
       titleEl.textContent   = c.title;
       taglineEl.textContent = c.tagline;
-      linkEl.href           = c.href;
+      if(linkEl) linkEl.href = c.href;
       setTimeout(() => colInfo.classList.add('text-in'), 30);
     }
 
