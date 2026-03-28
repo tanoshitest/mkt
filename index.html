@@ -334,10 +334,6 @@
     left: 60px;
     z-index: 5;
     opacity: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 28px;
     animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 2s forwards;
   }
   @media (max-width: 768px) {
@@ -346,11 +342,20 @@
 
   /* ── VIDEO STATE TEXT (shown only on video slide) ── */
   #intro-video-text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 60px;
+    z-index: 5;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 2s both;
   }
   #intro-video-text.hidden { display: none; }
+  @media (max-width: 768px) {
+    #intro-video-text { left: 24px; }
+  }
   .ivt-label {
     font-size: 11px;
     font-weight: 500;
@@ -516,10 +521,11 @@
   /* body locked while intro shows */
   body.intro-active { overflow: hidden; }
 
-  /* ── COLLECTION INFO (bottom-left) ── */
+  /* ── COLLECTION INFO (center-left) ── */
   #intro-col-info {
     position: absolute;
-    bottom: 80px;
+    top: 50%;
+    transform: translateY(-50%);
     left: 60px;
     z-index: 5;
   }
@@ -646,7 +652,7 @@
 
   /* mobile intro col-info */
   @media (max-width: 768px) {
-    #intro-col-info { left: 24px; bottom: 100px; }
+    #intro-col-info { left: 24px; }
     #intro-right-nav { right: 20px; }
   }
 
@@ -2483,12 +2489,14 @@
   <!-- EXPLORE text — video state only -->
   <div id="intro-content"></div>
 
-  <!-- Circle auto-advance button — always visible -->
+  <!-- Video state text — center-left, video only -->
+  <div id="intro-video-text">
+    <span class="ivt-label">Our Mission</span>
+    <div class="ivt-heading">Wear Grillz<br>Not Only To Flex</div>
+  </div>
+
+  <!-- Circle auto-advance button — bottom-left, always visible -->
   <div id="intro-circle-wrap">
-    <div id="intro-video-text">
-      <span class="ivt-label">Our Mission</span>
-      <div class="ivt-heading">Wear Grillz<br>Not Only To Flex</div>
-    </div>
     <button id="intro-btn">
       <svg id="ibtn-ring" viewBox="0 0 84 84">
         <circle class="ibtn-track"    cx="42" cy="42" r="40"/>
