@@ -347,34 +347,35 @@
     transform: translateY(-50%);
     left: 60px;
     z-index: 5;
+    opacity: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 2s both;
+    gap: 14px;
+    animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 2s forwards;
   }
   #intro-video-text.hidden { display: none; }
   @media (max-width: 768px) {
     #intro-video-text { left: 24px; }
   }
   .ivt-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
+    color: #fff;
   }
   .ivt-heading {
     font-family: var(--sans);
-    font-size: clamp(32px, 4.5vw, 64px);
+    font-size: clamp(42px, 5.5vw, 80px);
     font-weight: 700;
     text-transform: uppercase;
     color: #fff;
     line-height: 0.95;
     letter-spacing: -0.02em;
-    max-width: 520px;
+    white-space: nowrap;
   }
   @media (max-width: 768px) {
-    .ivt-heading { font-size: clamp(26px, 8vw, 42px); }
+    .ivt-heading { font-size: clamp(28px, 9vw, 48px); white-space: normal; }
   }
 
   /* top nav bar inside intro */
@@ -2492,7 +2493,7 @@
   <!-- Video state text — center-left, video only -->
   <div id="intro-video-text">
     <span class="ivt-label">Our Mission</span>
-    <div class="ivt-heading">Wear Grillz<br>Not Only To Flex</div>
+    <div class="ivt-heading">Wear Grillz Not Only To Flex</div>
   </div>
 
   <!-- Circle auto-advance button — bottom-left, always visible -->
