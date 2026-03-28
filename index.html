@@ -1438,34 +1438,56 @@
     font-style: italic;
   }
 
-  /* prev / next nav — bottom centre */
-  .coop-nav {
+  /* circular up/down nav — right side */
+  .coop-ring-nav {
     position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 600;
     display: flex;
-    gap: 14px;
+    flex-direction: column;
+    gap: 12px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
   }
-  .coop-nav.visible { opacity: 1; pointer-events: auto; }
-  .coop-nav-btn {
+  .coop-ring-nav.visible { opacity: 1; pointer-events: auto; }
+  .coop-ring-btn {
+    position: relative;
+    width: 60px; height: 60px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px; height: 44px;
-    background: none;
-    border: 1px solid rgba(255,255,255,0.22);
-    color: rgba(255,255,255,0.65);
-    font-size: 16px;
-    cursor: pointer;
-    transition: border-color 0.3s, color 0.3s, background 0.3s;
   }
-  .coop-nav-btn:hover { border-color: rgba(255,255,255,0.8); color: #fff; background: rgba(255,255,255,0.06); }
-  .coop-nav-btn:disabled { opacity: 0.25; cursor: default; }
+  .coop-ring-btn:disabled { opacity: 0.25; cursor: default; }
+  .crb-ring {
+    position: absolute;
+    inset: 0;
+    width: 60px; height: 60px;
+  }
+  .crb-track {
+    fill: none;
+    stroke: rgba(255,255,255,0.22);
+    stroke-width: 1;
+    transition: stroke 0.3s;
+  }
+  .coop-ring-btn:hover .crb-track { stroke: rgba(255,255,255,0.7); }
+  .crb-arrow {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s, transform 0.3s;
+  }
+  .coop-ring-btn:hover .crb-arrow { color: #fff; }
+  #coopPrev:hover .crb-arrow { transform: translateY(-3px); }
+  #coopNext:hover .crb-arrow { transform: translateY(3px); }
 
   /* ── STACK WRAPPER ── */
   /* tall enough to let all cards scroll through — set by JS */
@@ -1590,31 +1612,6 @@
   }
   .coop-card:hover .cc-side img { transform: scale(1.04); }
 
-  /* progress dots — right side */
-  .coop-dots {
-    position: fixed;
-    right: 36px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 500;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-  }
-  .coop-dots.visible { opacity: 1; pointer-events: auto; }
-  .coop-dot {
-    width: 3px; height: 20px;
-    border-radius: 2px;
-    background: rgba(245,240,234,0.18);
-    transition: background 0.4s ease, height 0.4s cubic-bezier(0.16,1,0.3,1);
-  }
-  .coop-dot.active {
-    background: var(--gold);
-    height: 36px;
-  }
 
     /* ── MARQUEE ── */
   .marquee-section {
@@ -2393,22 +2390,43 @@
     letter-spacing: 0.22em;
     color: rgba(255,255,255,0.28);
   }
-  .wb-nav { display: flex; gap: 8px; }
+  .wb-nav { display: flex; gap: 12px; }
   .wb-btn {
+    position: relative;
+    width: 60px; height: 60px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px; height: 44px;
-    background: none;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.55);
-    font-size: 15px;
-    cursor: pointer;
-    transition: border-color 0.3s, color 0.3s;
     flex-shrink: 0;
   }
-  .wb-btn:hover:not(:disabled) { border-color: rgba(255,255,255,0.5); color: var(--white); }
   .wb-btn:disabled { opacity: 0.2; cursor: default; }
+  .wb-btn svg {
+    position: absolute;
+    inset: 0;
+    width: 60px; height: 60px;
+  }
+  .wb-btn .wb-ring {
+    fill: none;
+    stroke: rgba(255,255,255,0.22);
+    stroke-width: 1;
+    transition: stroke 0.3s;
+  }
+  .wb-btn:hover:not(:disabled) .wb-ring { stroke: rgba(255,255,255,0.7); }
+  .wb-btn .wb-arrow {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s, transform 0.3s;
+  }
+  .wb-btn:hover:not(:disabled) .wb-arrow { color: #fff; }
+  #wbPrev:hover:not(:disabled) .wb-arrow { transform: translateX(-3px); }
+  #wbNext:hover:not(:disabled) .wb-arrow { transform: translateX(3px); }
   @media (max-width: 900px) {
     .worn-by-section { padding: 60px 24px; }
     .wb-inner { grid-template-columns: 1fr; gap: 36px; }
@@ -2563,7 +2581,7 @@
   <button id="menu-close-btn" onclick="closeMenu()" aria-label="Close menu">&#x2715;</button>
   <nav>
     <ul class="menu-links">
-      <li><a href="index.html"><span class="link-num">00</span>Home</a></li>
+      <li><a href="index.html" id="menu-home-link"><span class="link-num">00</span>Home</a></li>
       <li><a href="brand.html"><span class="link-num">01</span>The Brand</a></li>
       <li><a href="collection.html"><span class="link-num">02</span>Collection</a></li>
       <li><a href="store.html"><span class="link-num">03</span>Store Locator</a></li>
@@ -2791,18 +2809,20 @@
   </div><!-- /coop-stack -->
 </section>
 
-<!-- Progress dots -->
-<div class="coop-dots" id="coopDots">
-  <div class="coop-dot active" data-i="0"></div>
-  <div class="coop-dot" data-i="1"></div>
-  <div class="coop-dot" data-i="2"></div>
-  <div class="coop-dot" data-i="3"></div>
-</div>
-
-<!-- Prev / Next nav -->
-<div class="coop-nav" id="coopNav">
-  <button class="coop-nav-btn" id="coopPrev" aria-label="Previous">&#8592;</button>
-  <button class="coop-nav-btn" id="coopNext" aria-label="Next">&#8594;</button>
+<!-- Circular up/down nav — right side -->
+<div class="coop-ring-nav" id="coopRingNav">
+  <button class="coop-ring-btn" id="coopPrev" aria-label="Previous">
+    <svg class="crb-ring" viewBox="0 0 60 60">
+      <circle class="crb-track" cx="30" cy="30" r="28"/>
+    </svg>
+    <span class="crb-arrow">↑</span>
+  </button>
+  <button class="coop-ring-btn" id="coopNext" aria-label="Next">
+    <svg class="crb-ring" viewBox="0 0 60 60">
+      <circle class="crb-track" cx="30" cy="30" r="28"/>
+    </svg>
+    <span class="crb-arrow">↓</span>
+  </button>
 </div>
 
 <!-- MARQUEE — Clients -->
@@ -2821,8 +2841,14 @@
       <div class="wb-footer">
         <div class="wb-counter" id="wbCounter">01 / 23</div>
         <div class="wb-nav">
-          <button class="wb-btn" id="wbPrev" aria-label="Previous" disabled>&#8592;</button>
-          <button class="wb-btn" id="wbNext" aria-label="Next">&#8594;</button>
+          <button class="wb-btn" id="wbPrev" aria-label="Previous" disabled>
+            <svg viewBox="0 0 60 60"><circle class="wb-ring" cx="30" cy="30" r="28"/></svg>
+            <span class="wb-arrow">←</span>
+          </button>
+          <button class="wb-btn" id="wbNext" aria-label="Next">
+            <svg viewBox="0 0 60 60"><circle class="wb-ring" cx="30" cy="30" r="28"/></svg>
+            <span class="wb-arrow">→</span>
+          </button>
         </div>
       </div>
     </div>
@@ -2978,6 +3004,16 @@
   }
   // close on Escape
   document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+
+  // Home link: always reload index.html with intro showing
+  const menuHomeLink = document.getElementById('menu-home-link');
+  if(menuHomeLink){
+    menuHomeLink.addEventListener('click', function(e){
+      e.preventDefault();
+      sessionStorage.removeItem('mkt_entered');
+      window.location.href = 'index.html';
+    });
+  }
 
   // ── INTRO SCREEN ──
   document.body.classList.add('intro-active');
@@ -3326,9 +3362,7 @@
   (function(){
     const stack   = document.getElementById('coopStack');
     const cards   = Array.from(document.querySelectorAll('.coop-card'));
-    const dots    = document.getElementById('coopDots');
-    const dotEls  = Array.from(dots.querySelectorAll('.coop-dot'));
-    const nav     = document.getElementById('coopNav');
+    const ringNav = document.getElementById('coopRingNav');
     const prevBtn = document.getElementById('coopPrev');
     const nextBtn = document.getElementById('coopNext');
     const N       = cards.length;
@@ -3364,9 +3398,24 @@
     }
 
     function syncUI(){
-      dotEls.forEach((d, i) => d.classList.toggle('active', i === cur));
       if(prevBtn) prevBtn.disabled = cur === 0;
       if(nextBtn) nextBtn.disabled = cur === N - 1;
+    }
+
+    /* ── instant jump (no animation) — used for scroll-position sync ── */
+    function jumpTo(index){
+      if(index < 0 || index >= N) return;
+      cards.forEach((c, i) => {
+        c.style.transition  = 'none';
+        c.style.transform   = 'translateY(0) scale(1)';
+        c.style.opacity     = i === index ? '1' : '0';
+        c.style.visibility  = i === index ? 'visible' : 'hidden';
+        c.style.zIndex      = i === index ? String(N + 1) : '1';
+      });
+      cur = index;
+      lastDesired = index;
+      busy = false;
+      syncUI();
     }
 
     /* ── RM transition ── */
@@ -3451,17 +3500,15 @@
       const scrolled = -r.top;
       const winH    = window.innerHeight;
       const active  = scrolled > -winH * 0.4 && scrolled < N * winH;
-      dots.classList.toggle('visible', active);
-      if(nav) nav.classList.toggle('visible', active);
+      if(ringNav) ringNav.classList.toggle('visible', active);
       if(scrolled < 0) return;
       const desired = Math.min(N - 1, Math.max(0, Math.round(scrolled / winH)));
-      if(desired !== lastDesired){ lastDesired = desired; goTo(desired); }
+      if(desired !== lastDesired){ jumpTo(desired); }
     }
 
     /* ── buttons & dots ── */
     if(prevBtn) prevBtn.addEventListener('click', () => navigate(cur - 1));
     if(nextBtn) nextBtn.addEventListener('click', () => navigate(cur + 1));
-    dotEls.forEach((d, i) => d.addEventListener('click', () => navigate(i)));
 
     /* ── init ── */
     applyLayout();
@@ -3626,9 +3673,24 @@
       if(wbSnapping) return;
 
       const wbRect = wbSection.getBoundingClientRect();
-      /* section is entering viewport from below (partially visible at bottom) */
-      const partiallyVisible = wbRect.top > 0 && wbRect.top < window.innerHeight * 0.6;
 
+      function coopEndPos(){
+        /* absolute page position of last coop card */
+        return coopStack.getBoundingClientRect().top + window.scrollY + coopStack.offsetHeight - window.innerHeight;
+      }
+
+      /* ── at top of wb section, scrolling up → re-enter coop from last card ── */
+      const atWbTop = wbRect.top >= -30 && wbRect.top <= 30;
+      if(atWbTop && e.deltaY < 0){
+        e.preventDefault();
+        wbSnapping = true;
+        window.scrollTo({ top: coopEndPos(), behavior: 'instant' });
+        setTimeout(() => { wbSnapping = false; }, 200);
+        return;
+      }
+
+      /* ── section partially entering from below ── */
+      const partiallyVisible = wbRect.top > 0 && wbRect.top < window.innerHeight * 0.6;
       if(partiallyVisible){
         e.preventDefault();
         wbSnapping = true;
@@ -3637,8 +3699,7 @@
           window.scrollTo({ top: wbSection.offsetTop, behavior: 'smooth' });
         } else {
           /* scroll up → snap back to cooperation last card */
-          const coopEnd = coopStack.offsetTop + coopStack.offsetHeight - window.innerHeight;
-          window.scrollTo({ top: coopEnd, behavior: 'smooth' });
+          window.scrollTo({ top: coopEndPos(), behavior: 'instant' });
         }
         setTimeout(() => { wbSnapping = false; }, 700);
       }
