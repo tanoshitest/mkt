@@ -1125,6 +1125,23 @@
   }
 
   /* scroll indicator — bottom right */
+  .hero-caption {
+    position: absolute;
+    bottom: 28px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 4;
+    color: #fff;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    font-style: italic;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.8s forwards;
+    pointer-events: none;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+  }
+
   .hero-scroll {
     position: absolute;
     bottom: 44px;
@@ -2628,6 +2645,7 @@
   <div class="hero-vignette"></div>
   <div class="hero-content">
   </div>
+  <div class="hero-caption">Doan Nguyen: "Wear grillz not only to FLEX !!!"</div>
   <div class="hero-scroll">
     <span>Scroll</span>
     <div class="scroll-line"></div>
