@@ -331,14 +331,13 @@
   #intro-circle-wrap {
     position: absolute;
     bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 60px;
     z-index: 5;
     opacity: 0;
     animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 2s forwards;
   }
   @media (max-width: 768px) {
-    #intro-circle-wrap { bottom: 80px; }
+    #intro-circle-wrap { bottom: 80px; left: 24px; }
   }
 
   /* top nav bar inside intro */
@@ -2446,7 +2445,6 @@
     <span class="icol-eyebrow" id="icol-eyebrow"></span>
     <span class="icol-title"   id="icol-title"></span>
     <span class="icol-tagline" id="icol-tagline"></span>
-    <a    class="icol-link"    id="icol-link" href="#">Discover →</a>
   </div>
 
   <!-- EXPLORE text — video state only -->
@@ -3117,11 +3115,11 @@
       window._introAutoTimer = setTimeout(() => {
         const intro = document.getElementById('intro');
         if (!intro || intro.classList.contains('hide')) return;
-        // Advance: video(-1)→0→1→2→enterSite
+        // Advance: video(-1)→0→1→2→video(-1) loop
         if (cur < slides.length - 1) {
           goToWithRing(cur + 1);
         } else {
-          window.enterSite();
+          goToWithRing(-1); // loop back to video
         }
       }, RING_DUR);
     }
@@ -3149,7 +3147,7 @@
       circleBtn.onclick = () => {
         clearTimeout(window._introAutoTimer);
         if (cur < slides.length - 1) goToWithRing(cur + 1);
-        else window.enterSite();
+        else goToWithRing(-1);
       };
     }
 
