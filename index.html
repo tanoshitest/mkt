@@ -57,18 +57,19 @@
   /* ── VIDEO BG ── */
   #intro-video {
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%) scale(1.15);
-    width: 100%; height: 100%;
+    top: -15%;
+    left: 0;
+    width: 100%;
+    height: 130%;
     object-fit: cover;
-    object-position: center center;
+    object-position: center 40%;
     opacity: 0;
     z-index: 0;
     transition: opacity 2s ease;
   }
   #intro-video.loaded { opacity: 1; }
   #intro-video.pushed {
-    transform: translate(-50%, -53%) scale(0.95);
+    transform: scale(0.95) translateY(-3%);
     opacity: 0 !important;
     transition: transform 0.9s cubic-bezier(0.76,0,0.24,1), opacity 0.7s ease !important;
   }
