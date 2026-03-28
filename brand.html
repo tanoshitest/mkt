@@ -301,7 +301,10 @@ footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(
 <nav id="navbar">
   <button id="menu-btn" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
   <a href="index.html#main" class="nav-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--nav" alt="MKT"></span></a>
-  <a href="#" class="nav-cta">Book Appointment</a>
+  <button class="nav-login-btn" onclick="openLogin()" aria-label="Login">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    <span>Login</span>
+  </button>
 </nav>
 
 <div id="menu-overlay">
@@ -775,6 +778,32 @@ if(menuBookBtn){menuBookBtn.addEventListener('click',function(e){e.preventDefaul
   ['menu-book-btn','footer-book-btn','ql-book-btn'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('click',function(e){e.preventDefault();openBooking();});});
   window.openBooking=openBooking;
 })();
+
+  function openLogin(){var o=document.getElementById('login-overlay');o.classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){var el=document.getElementById('login-id');if(el)el.focus();},400);}
+  function closeLogin(){document.getElementById('login-overlay').classList.remove('open');document.body.style.overflow='';}
+  function handleLogin(){
+    var id=document.getElementById('login-id').value.trim();
+    var acc=document.getElementById('login-account').value.trim();
+    if(!id||!acc){document.getElementById('login-id').style.borderColor=!id?'rgba(255,80,80,0.6)':'';document.getElementById('login-account').style.borderColor=!acc?'rgba(255,80,80,0.6)':'';return;}
+    document.getElementById('login-id').style.borderColor='';document.getElementById('login-account').style.borderColor='';
+    var btn=document.getElementById('login-submit');btn.textContent='Processing...';btn.disabled=true;
+    setTimeout(function(){btn.textContent='Confirm';btn.disabled=false;closeLogin();},1200);
+  }
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLogin();});
+
 </script>
+
+<!-- LOGIN MODAL -->
+<div id="login-overlay" onclick="if(event.target===this)closeLogin()">
+  <div id="login-modal">
+    <button id="login-close" onclick="closeLogin()">&#x2715;</button>
+    <h2>Login</h2>
+    <p class="login-sub">Please enter your account information</p>
+    <div class="login-field"><label for="login-id">ID</label><input type="text" id="login-id" placeholder="Enter your ID" autocomplete="off"></div>
+    <div class="login-field"><label for="login-account">Account</label><input type="text" id="login-account" placeholder="Enter your account" autocomplete="off"></div>
+    <button id="login-submit" onclick="handleLogin()">Confirm</button>
+  </div>
+</div>
+
 </body>
 </html>

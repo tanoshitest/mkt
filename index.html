@@ -2614,7 +2614,12 @@
     <span></span>
   </button>
   <a href="#home" class="nav-logo"><span class="logo-wrap"><img src="logo.png" class="logo-img logo-img--nav" alt="MKT"></span></a>
-  <a href="#contact" class="nav-cta">Book Appointment</a>
+  <button class="intro-nav-login" onclick="openLogin()" aria-label="Đăng Nhập">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+    </svg>
+    <span class="login-label">Login</span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -3005,13 +3010,21 @@
   // close on Escape
   document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
 
-  // Home link: always reload index.html with intro showing
+  // Home link: go to main content (skip intro) from any page/state
   const menuHomeLink = document.getElementById('menu-home-link');
   if(menuHomeLink){
     menuHomeLink.addEventListener('click', function(e){
       e.preventDefault();
-      sessionStorage.removeItem('mkt_entered');
-      window.location.href = 'index.html';
+      sessionStorage.setItem('mkt_entered', '1');
+      const onIndex = location.pathname.endsWith('index.html') || location.pathname.endsWith('/') || location.pathname.endsWith('/MKT/');
+      if(onIndex){
+        // Already on index.html — dismiss intro if visible, scroll to top
+        if(window.enterSite) window.enterSite();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        closeMenu();
+      } else {
+        window.location.href = 'index.html';
+      }
     });
   }
 
@@ -3679,13 +3692,13 @@
         return coopStack.getBoundingClientRect().top + window.scrollY + coopStack.offsetHeight - window.innerHeight;
       }
 
-      /* ── at top of wb section, scrolling up → re-enter coop from last card ── */
+      /* ── at top of wb section, scrolling up → smoothly re-enter coop from last card ── */
       const atWbTop = wbRect.top >= -30 && wbRect.top <= 30;
       if(atWbTop && e.deltaY < 0){
         e.preventDefault();
         wbSnapping = true;
-        window.scrollTo({ top: coopEndPos(), behavior: 'instant' });
-        setTimeout(() => { wbSnapping = false; }, 200);
+        window.scrollTo({ top: coopEndPos(), behavior: 'smooth' });
+        setTimeout(() => { wbSnapping = false; }, 700);
         return;
       }
 
@@ -3698,8 +3711,8 @@
           /* scroll down → snap worn-by to top */
           window.scrollTo({ top: wbSection.offsetTop, behavior: 'smooth' });
         } else {
-          /* scroll up → snap back to cooperation last card */
-          window.scrollTo({ top: coopEndPos(), behavior: 'instant' });
+          /* scroll up → smoothly enter coop last card */
+          window.scrollTo({ top: coopEndPos(), behavior: 'smooth' });
         }
         setTimeout(() => { wbSnapping = false; }, 700);
       }
