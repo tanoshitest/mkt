@@ -3106,12 +3106,12 @@
     function startRingAuto() {
       const prog = document.querySelector('.ibtn-progress');
       if (!prog) return;
-      // Reset ring to empty
+      // Use inline styles exclusively — avoids class override conflict
       prog.style.transition = 'none';
-      prog.classList.remove('spinning');
+      prog.style.strokeDashoffset = '251.3';
       prog.getBoundingClientRect(); // force reflow
-      // Start drawing
-      prog.classList.add('spinning');
+      prog.style.transition = 'stroke-dashoffset 5s linear';
+      prog.style.strokeDashoffset = '0';
 
       clearTimeout(window._introAutoTimer);
       window._introAutoTimer = setTimeout(() => {
@@ -3119,7 +3119,7 @@
         if (!intro || intro.classList.contains('hide')) return;
         // Advance: video(-1)→0→1→2→enterSite
         if (cur < slides.length - 1) {
-          goTo(cur + 1);
+          goToWithRing(cur + 1);
         } else {
           window.enterSite();
         }
