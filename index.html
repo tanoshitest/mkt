@@ -328,13 +328,14 @@
   /* content */
   #intro-content {
     position: absolute;
-    bottom: 48px;
-    left: 48px;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 5;
     display: flex;
   }
   @media (max-width: 768px) {
-    #intro-content { bottom: 100px; left: 24px; }
+    #intro-content { bottom: 80px; }
   }
 
   /* top nav bar inside intro */
@@ -400,28 +401,61 @@
     to { width: 200px; }
   }
 
-  /* explore button — bottom-left, no border */
+  /* ── CIRCLE AUTO-ADVANCE BUTTON ── */
   #intro-btn {
+    position: relative;
+    width: 84px;
+    height: 84px;
     background: none;
     border: none;
-    color: rgba(255,255,255,0.75);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
     padding: 0;
     cursor: pointer;
-    font-family: inherit;
-    opacity: 0;
-    animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 1.8s forwards;
-    transition: color 0.3s;
     display: flex;
     align-items: center;
-    gap: 14px;
+    justify-content: center;
+    opacity: 0;
+    animation: introLogoIn 1s cubic-bezier(0.16,1,0.3,1) 2s forwards;
   }
-  #intro-btn:hover { color: #fff; }
-  .btn-arrow { font-size: 14px; transition: transform 0.3s; }
-  #intro-btn:hover .btn-arrow { transform: translateX(5px); }
+  #intro-btn:hover .ibtn-arrow { color: #fff; transform: translateY(3px); }
+
+  /* SVG ring */
+  #ibtn-ring {
+    position: absolute;
+    inset: 0;
+    width: 84px;
+    height: 84px;
+    transform: rotate(-90deg); /* start from top */
+    overflow: visible;
+  }
+  .ibtn-track {
+    fill: none;
+    stroke: rgba(255,255,255,0.18);
+    stroke-width: 1;
+  }
+  .ibtn-progress {
+    fill: none;
+    stroke: rgba(255,255,255,0.85);
+    stroke-width: 1;
+    stroke-linecap: round;
+    /* circumference of r=40: 2*PI*40 ≈ 251.3 */
+    stroke-dasharray: 251.3;
+    stroke-dashoffset: 251.3; /* fully hidden */
+    transition: none;
+  }
+  .ibtn-progress.spinning {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 5s linear;
+  }
+
+  /* Arrow inside circle */
+  .ibtn-arrow {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s, transform 0.3s;
+  }
 
   /* scroll hint at bottom */
   #intro-bottom {
@@ -2417,8 +2451,11 @@
   <!-- EXPLORE button — center -->
   <div id="intro-content">
     <button id="intro-btn" onclick="enterSite()">
-      <span>Explore</span>
-      <span class="btn-arrow">→</span>
+      <svg id="ibtn-ring" viewBox="0 0 84 84">
+        <circle class="ibtn-track"    cx="42" cy="42" r="40"/>
+        <circle class="ibtn-progress" cx="42" cy="42" r="40"/>
+      </svg>
+      <span class="ibtn-arrow">↓</span>
     </button>
   </div>
 
@@ -2867,8 +2904,44 @@
     document.body.classList.remove('intro-active');
     sessionStorage.setItem('mkt_entered', '1');
     clearTimeout(window._introTimer);
+    clearTimeout(window._introAutoTimer);
     setTimeout(() => { if (intro.parentNode) intro.remove(); }, 1400);
   };
+
+  // ── CIRCLE RING AUTO-ADVANCE ──
+  (function(){
+    const RING_DUR   = 5000;  // ms for one full rotation
+    const START_DELAY = 2400; // ms after page load before ring begins
+
+    function startRing() {
+      const prog = document.querySelector('.ibtn-progress');
+      if (!prog) return;
+      // Force reflow so transition fires
+      prog.getBoundingClientRect();
+      prog.classList.add('spinning');
+      window._introAutoTimer = setTimeout(() => {
+        // Only auto-advance if still in video state (not clicked away)
+        if (!document.getElementById('intro').classList.contains('hide')) {
+          window.enterSite();
+        }
+      }, RING_DUR);
+    }
+
+    window._introAutoTimer = setTimeout(startRing, START_DELAY);
+
+    // If user manually clicks a collection (goTo), cancel auto-advance
+    window._cancelIntroAuto = function() {
+      clearTimeout(window._introAutoTimer);
+      const prog = document.querySelector('.ibtn-progress');
+      if (prog) {
+        prog.style.transition = 'none';
+        prog.classList.remove('spinning');
+      }
+      // Hide the button too since we're now in collection slide state
+      const btn = document.getElementById('intro-btn');
+      if (btn) btn.style.opacity = '0';
+    };
+  })();
 
   // ── INTRO CAROUSEL (manual, video-first) ──
   (function(){
@@ -2963,7 +3036,9 @@
         }, DUR + 50);
 
       } else if(cur === -1){
-        // Video → collection 0: slide collection up from below
+        // Video → collection 0: cancel auto-advance ring
+        if(typeof window._cancelIntroAuto === 'function') window._cancelIntroAuto();
+        // slide collection up from below
         const to = slides[next];
         to.style.transition = 'none';
         to.style.transform  = 'translateY(100%)';
