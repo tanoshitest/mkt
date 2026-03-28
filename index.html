@@ -2319,7 +2319,8 @@
   /* portrait */
   .wb-stage {
     position: relative;
-    height: clamp(380px, 70vh, 680px);
+    aspect-ratio: 3 / 4;
+    max-height: 78vh;
     overflow: hidden;
     background: #111;
   }
@@ -2411,7 +2412,7 @@
   @media (max-width: 900px) {
     .worn-by-section { padding: 60px 24px; }
     .wb-inner { grid-template-columns: 1fr; gap: 36px; }
-    .wb-stage { height: clamp(260px, 55vw, 400px); }
+    .wb-stage { aspect-ratio: 3/4; max-height: 60vw; }
   }
 
   /* ── TYPOGRAPHY REFINEMENTS — Richard Mille scale ── */
