@@ -362,40 +362,29 @@
   .ivt-label {
     font-size: 11px;
     font-weight: 400;
-    letter-spacing: 0.32em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.85);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 8px;
-  }
-  .ivt-label::before {
-    content: '';
-    display: inline-block;
-    width: 28px; height: 1px;
-    background: rgba(255,255,255,0.55);
-    flex-shrink: 0;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 16px;
   }
   .ivt-heading {
     font-family: var(--sans);
-    font-size: clamp(56px, 7.5vw, 120px);
-    font-weight: 800;
+    font-size: clamp(64px, 8.5vw, 132px);
+    font-weight: 900;
     text-transform: uppercase;
     color: #fff;
-    line-height: 0.92;
+    line-height: 0.9;
     letter-spacing: -0.03em;
   }
   .ivt-sub {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 300;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.05em;
-    margin-top: 14px;
-    font-style: italic;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.02em;
+    margin-top: 18px;
   }
   @media (max-width: 768px) {
-    .ivt-heading { font-size: clamp(36px, 10vw, 60px); }
+    .ivt-heading { font-size: clamp(40px, 11vw, 64px); }
   }
 
   /* top nav bar inside intro */
@@ -461,43 +450,46 @@
     to { width: 200px; }
   }
 
-  /* ── CIRCLE AUTO-ADVANCE BUTTON ── */
+  /* ── CIRCLE AUTO-ADVANCE BUTTON (RM style: 52px, dark fill) ── */
   #intro-btn {
     position: relative;
-    width: 84px;
-    height: 84px;
-    background: none;
+    width: 52px;
+    height: 52px;
+    background: rgba(18,18,18,0.75);
     border: none;
+    border-radius: 50%;
     padding: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 0.3s;
   }
+  #intro-btn:hover { background: rgba(30,30,30,0.92); }
   #intro-btn:hover .ibtn-arrow { color: #fff; transform: translateY(3px); }
 
   /* SVG ring */
   #ibtn-ring {
     position: absolute;
     inset: 0;
-    width: 84px;
-    height: 84px;
-    transform: rotate(-90deg); /* start from top */
+    width: 52px;
+    height: 52px;
+    transform: rotate(-90deg);
     overflow: visible;
   }
   .ibtn-track {
     fill: none;
-    stroke: rgba(255,255,255,0.18);
-    stroke-width: 1;
+    stroke: rgba(255,255,255,0.35);
+    stroke-width: 1.2;
   }
   .ibtn-progress {
     fill: none;
-    stroke: rgba(255,255,255,0.85);
-    stroke-width: 1;
+    stroke: rgba(255,255,255,0.9);
+    stroke-width: 1.2;
     stroke-linecap: round;
-    /* circumference of r=40: 2*PI*40 ≈ 251.3 */
-    stroke-dasharray: 251.3;
-    stroke-dashoffset: 251.3; /* fully hidden */
+    /* circumference of r=24: 2*PI*24 ≈ 150.8 */
+    stroke-dasharray: 150.8;
+    stroke-dashoffset: 150.8;
     transition: none;
   }
   .ibtn-progress.spinning {
@@ -507,8 +499,8 @@
 
   /* Arrow inside circle */
   .ibtn-arrow {
-    font-size: 15px;
-    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
     line-height: 1;
     position: relative;
     z-index: 1;
@@ -1051,12 +1043,7 @@
     transform: translateY(20px);
     animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
   }
-  .hero-eyebrow::before {
-    content: '';
-    width: 28px; height: 1px;
-    background: rgba(255,255,255,0.5);
-    flex-shrink: 0;
-  }
+  .hero-eyebrow::before { display: none; }
   .hero-title {
     font-family: var(--sans);
     font-size: clamp(60px, 8.5vw, 130px);
@@ -2596,9 +2583,9 @@
   <!-- Circle auto-advance button — bottom-left, always visible -->
   <div id="intro-circle-wrap">
     <button id="intro-btn">
-      <svg id="ibtn-ring" viewBox="0 0 84 84">
-        <circle class="ibtn-track"    cx="42" cy="42" r="40"/>
-        <circle class="ibtn-progress" cx="42" cy="42" r="40"/>
+      <svg id="ibtn-ring" viewBox="0 0 52 52">
+        <circle class="ibtn-track"    cx="26" cy="26" r="24"/>
+        <circle class="ibtn-progress" cx="26" cy="26" r="24"/>
       </svg>
       <span class="ibtn-arrow">↓</span>
     </button>
@@ -3296,7 +3283,7 @@
       if (!prog) return;
       // Use inline styles exclusively — avoids class override conflict
       prog.style.transition = 'none';
-      prog.style.strokeDashoffset = '251.3';
+      prog.style.strokeDashoffset = '150.8';
       prog.getBoundingClientRect(); // force reflow
       prog.style.transition = 'stroke-dashoffset 5s linear';
       prog.style.strokeDashoffset = '0';
