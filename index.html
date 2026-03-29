@@ -369,22 +369,24 @@
   }
   .ivt-heading {
     font-family: var(--sans);
-    font-size: clamp(64px, 8.5vw, 132px);
-    font-weight: 900;
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 800;
     text-transform: uppercase;
     color: #fff;
-    line-height: 0.9;
-    letter-spacing: -0.03em;
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+    max-width: 700px;
   }
   .ivt-sub {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 300;
     color: rgba(255,255,255,0.55);
     letter-spacing: 0.02em;
-    margin-top: 18px;
+    margin-top: 16px;
+    max-width: 480px;
   }
   @media (max-width: 768px) {
-    .ivt-heading { font-size: clamp(40px, 11vw, 64px); }
+    .ivt-heading { font-size: clamp(28px, 7vw, 48px); }
   }
 
   /* top nav bar inside intro */
@@ -1046,13 +1048,14 @@
   .hero-eyebrow::before { display: none; }
   .hero-title {
     font-family: var(--sans);
-    font-size: clamp(60px, 8.5vw, 130px);
+    font-size: clamp(36px, 5vw, 72px);
     font-weight: 800;
-    line-height: 0.92;
-    letter-spacing: -0.03em;
+    line-height: 0.93;
+    letter-spacing: -0.02em;
     text-transform: uppercase;
     color: var(--white);
-    margin-bottom: 28px;
+    margin-bottom: 20px;
+    max-width: 700px;
     opacity: 0;
     transform: translateY(40px);
     animation: fadeUp 1.3s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
@@ -1060,10 +1063,10 @@
   .hero-title em { font-style: normal; color: var(--white); }
   .hero-title .line2 {
     display: block;
-    font-size: clamp(44px, 6vw, 90px);
-    color: rgba(255,255,255,0.45);
+    font-size: clamp(28px, 3.8vw, 56px);
+    color: rgba(255,255,255,0.4);
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     margin-top: 4px;
   }
   .hero-sub {
