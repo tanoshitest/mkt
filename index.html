@@ -110,7 +110,7 @@
     align-items: center;
     text-decoration: none;
   }
-  .intro-logo-img { height: 100px; width: auto; filter: brightness(0) invert(1); }
+  .intro-logo-img { height: 150px; width: auto; filter: brightness(0) invert(1); }
   .intro-nav-book {
     background: none;
     border: 1px solid rgba(255,255,255,0.28);
@@ -133,21 +133,22 @@
   .intro-nav-login {
     background: none;
     border: none;
-    color: rgba(255,255,255,0.65);
-    font-size: 9px;
+    color: rgba(255,255,255,0.75);
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    padding: 10px 16px;
+    padding: 8px 8px;
     cursor: pointer;
     font-family: inherit;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     transition: color 0.3s;
+    min-height: 30px;
   }
   .intro-nav-login:hover { color: #fff; }
-  .intro-nav-login svg { width: 14px; height: 14px; opacity: 0.7; }
+  .intro-nav-login svg { width: 22px; height: 22px; opacity: 0.8; }
   .intro-nav-login:hover svg { opacity: 1; }
   .intro-nav-right {
     display: flex;
@@ -275,7 +276,7 @@
 
   @media (max-width: 768px) {
     #intro-navbar { padding: 20px 20px; }
-    .intro-logo-img { height: 60px; }
+    .intro-logo-img { height: 80px; }
     .intro-nav-book { display: none; }
     .intro-nav-login span.login-label { display: none; }
     #login-modal { padding: 44px 28px 36px; }
