@@ -116,14 +116,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   display: flex;
   align-items: center;
   justify-content: center;
-  /* image shows through at very top, then darkens quickly for text */
-  background: linear-gradient(
-    to bottom,
-    rgba(8,8,8,0.15) 0%,
-    rgba(8,8,8,0.85) 12%,
-    rgba(8,8,8,0.97) 35%,
-    rgba(8,8,8,1) 100%
-  );
+  background: var(--black);
   padding: 120px 80px 140px;
 }
 .s2-text-inner {
@@ -652,11 +645,17 @@ window.addEventListener('scroll',function(){
   if (!s2Hero || !s3Video || !textSection) return;
 
   function updateReveal() {
-    var textBottom = textSection.getBoundingClientRect().bottom;
-    var textPast = textBottom <= 0;
-    // Video fades in when text has fully scrolled past viewport
+    var vh = window.innerHeight;
+    var textRect = textSection.getBoundingClientRect();
+    var textPast = textRect.bottom <= 0;
+
+    // Hero fades out as text section scrolls up into view:
+    // opacity 1 when text top = vh (just entering), 0 when text top = 0 (fully in)
+    var heroOpacity = Math.max(0, Math.min(1, textRect.top / vh));
+    s2Hero.style.opacity = heroOpacity;
+
+    // Video fades in only after text has completely scrolled past
     s3Video.classList.toggle('visible', textPast);
-    s2Hero.style.opacity = textPast ? '0' : '1';
   }
 
   window.addEventListener('scroll', updateReveal, { passive: true });
