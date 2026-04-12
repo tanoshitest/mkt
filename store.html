@@ -82,13 +82,63 @@ body::before { content:''; position:fixed; inset:0; background-image:url("data:i
 #map-container iframe {
   width: 100%; height: 100%;
   border: none;
-  filter: invert(92%) hue-rotate(180deg) brightness(0.88) contrast(0.9) grayscale(20%);
+  filter: grayscale(100%) brightness(0.75) contrast(1.1);
 }
+
+/* Map pins overlay */
+#map-pins {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.map-pin {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  pointer-events: all;
+  cursor: none;
+  transform: translate(-50%, -100%);
+}
+.map-pin-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(65,105,225,.25), 0 0 16px rgba(65,105,225,.5);
+  transition: transform .3s;
+}
+.map-pin:hover .map-pin-dot { transform: scale(1.4); }
+.map-pin-tail {
+  width: 2px; height: 16px;
+  background: var(--gold);
+  opacity: .6;
+}
+.map-pin-label {
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(8,8,8,.85);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(65,105,225,.3);
+  padding: 6px 12px;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--white);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+.map-pin:hover .map-pin-label { opacity: 1; }
 
 /* ── SEARCH BAR ── */
 .map-search {
   position: fixed;
-  top: 100px;
+  top: 92px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
@@ -129,31 +179,33 @@ body::before { content:''; position:fixed; inset:0; background-image:url("data:i
   padding-right: 48px;
 }
 
-/* ── STORE CARDS RAIL ── */
+/* ── STORE CARDS GRID (centered) ── */
 .store-rail {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 100;
   display: flex;
-  gap: 0;
+  gap: 2px;
   overflow-x: auto;
   scrollbar-width: none;
+  max-width: calc(100vw - 48px);
 }
-.store-rail::-webkit-scrollbar { display: none; }
 
 .store-card {
   flex: 0 0 380px;
   display: grid;
-  grid-template-columns: 220px 1fr;
-  background: var(--black);
-  border-right: 1px solid rgba(255,255,255,0.07);
+  grid-template-columns: 200px 1fr;
+  background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.07);
   border-top: 2px solid transparent;
   cursor: none;
-  transition: border-top-color .3s;
-  min-height: 200px;
+  transition: border-top-color .3s, box-shadow .3s;
+  min-height: 220px;
 }
+.store-card:hover { border-top-color: var(--gold); box-shadow: 0 8px 40px rgba(0,0,0,.6); }
 .store-card:hover { border-top-color: var(--gold); }
 .store-card:last-child { border-right: none; }
 
@@ -259,11 +311,27 @@ body::before { content:''; position:fixed; inset:0; background-image:url("data:i
 <!-- FULL-SCREEN MAP -->
 <div id="map-container">
   <iframe
-    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d62706.49!2d106.6983!3d10.7769!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3e0f0a87a7%3A0x1bc4d6fe26f44a1d!2zSOG7kyBDaMOtIE1pbmggQ2l0eQ!5e0!3m2!1sen!2s!4v1700000000000"
+    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d31353.24!2d106.6983!3d10.7769!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3e0f0a87a7%3A0x1bc4d6fe26f44a1d!2zSOG7kyBDaMOtIE1pbmggQ2l0eQ!5e0!3m2!1sen!2s!4v1700000000000"
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade"
     allowfullscreen>
   </iframe>
+</div>
+
+<!-- MAP PINS -->
+<div id="map-pins">
+  <!-- Pin 1: District 1 ~53% from left, ~48% from top -->
+  <div class="map-pin" style="left:53%;top:48%;" onclick="location.href='store-detail.html?store=1'">
+    <div class="map-pin-label">MKT Studio · D1</div>
+    <div class="map-pin-dot"></div>
+    <div class="map-pin-tail"></div>
+  </div>
+  <!-- Pin 2: District 3 ~50% from left, ~44% from top -->
+  <div class="map-pin" style="left:50%;top:44%;" onclick="location.href='store-detail.html?store=2'">
+    <div class="map-pin-label">MKT Showroom · D3</div>
+    <div class="map-pin-dot"></div>
+    <div class="map-pin-tail"></div>
+  </div>
 </div>
 
 <!-- NAV -->
