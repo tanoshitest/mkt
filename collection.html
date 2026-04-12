@@ -70,12 +70,12 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .menu-socials a:hover{color:var(--white);}
 
 /* ── SCROLL REVEAL: S3 fixed video, S2 curtain, S1 slides over ── */
-/* ── S2 HERO: truly fixed, always in background ── */
+/* ── S2 HERO BG: truly fixed image — no text ── */
 .s2-hero {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100vh;
-  z-index: 8;
+  z-index: 3;
   overflow: hidden;
   transition: opacity 0.9s ease;
 }
@@ -85,10 +85,16 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   object-position: center;
   filter: brightness(0.45);
 }
+
+/* ── S2 SPACER: in normal flow — title scrolls up with page ── */
+.s2-spacer {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+}
 .s2-hero-content {
   position: absolute;
   bottom: 80px; left: 80px;
-  z-index: 2;
 }
 .s2-hero-eyebrow {
   font-size: 9px; font-weight: 500; letter-spacing: .5em;
@@ -102,9 +108,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   color: var(--white); margin-bottom: 0;
 }
 
-/* Spacer so user "rests" on hero before text arrives */
-.s2-spacer { height: 100vh; position: relative; z-index: 0; }
-
 /* ── TEXT SECTION: scrolls up over fixed hero ── */
 .s2-text-section {
   position: relative;
@@ -113,12 +116,12 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   display: flex;
   align-items: center;
   justify-content: center;
-  /* gradient: transparent at top (hero shows) → dark for text readability */
+  /* image shows through at very top, then darkens quickly for text */
   background: linear-gradient(
     to bottom,
-    transparent 0%,
-    rgba(8,8,8,0.88) 18%,
-    rgba(8,8,8,0.96) 50%,
+    rgba(8,8,8,0.15) 0%,
+    rgba(8,8,8,0.85) 12%,
+    rgba(8,8,8,0.97) 35%,
     rgba(8,8,8,1) 100%
   );
   padding: 120px 80px 140px;
@@ -463,19 +466,20 @@ footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(
 
 <main>
 
-<!-- S2: Hero image — truly fixed in background -->
+<!-- S2: Hero image — truly fixed, image only -->
 <div class="s2-hero" id="s2Hero">
   <img class="s2-hero-img"
     src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=1920&q=90&fit=crop"
     alt="MKT Collection">
+</div>
+
+<!-- Spacer: in normal flow — title scrolls up as user scrolls -->
+<div class="s2-spacer">
   <div class="s2-hero-content">
     <div class="s2-hero-eyebrow">2025 · Handcrafted in Vietnam</div>
     <h1 class="s2-hero-title">THE<br>COLLECTION</h1>
   </div>
 </div>
-
-<!-- Spacer: user views hero initially -->
-<div class="s2-spacer"></div>
 
 <!-- Text section: scrolls up over fixed hero, user reads before video -->
 <section class="s2-text-section" id="s2TextSection">
