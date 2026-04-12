@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/collection", "destination": "/collection.html" },
+    { "source": "/OurTechnique", "destination": "/OurTechnique.html" },
+    { "source": "/universe", "destination": "/universe.html" },
+    { "source": "/store", "destination": "/store.html" },
+    { "source": "/store-detail", "destination": "/store-detail.html" },
+    { "source": "/brand", "destination": "/brand.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/events", "destination": "/events.html" },
+    { "source": "/pricing", "destination": "/pricing.html" }
+  ]
+}
