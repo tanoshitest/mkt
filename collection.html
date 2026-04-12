@@ -408,6 +408,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   overflow: hidden;
   opacity: 0;
   transition: opacity 0.9s ease;
+  background: #0a0a0a;
 }
 .s5-video-wrap.visible { opacity: 1; }
 .s5-video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
@@ -736,7 +737,7 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 <div class="s4-spacer"></div>
 
 <!-- Feature section: slides over s4 fixed image -->
-<section class="feat-section">
+<section class="feat-section" id="featSection1">
   <div class="feat-left">
     <div class="feat-eyebrow">The Process</div>
     <h2 class="feat-title">BUILT FOR<br>THOSE WHO<br>DEMAND<br>MORE</h2>
@@ -757,8 +758,9 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 <!-- S5: Final fixed video — revealed after first feat scrolls past -->
 <div class="s5-video-wrap" id="s5VideoWrap">
   <video class="s5-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/5077543/5077543-uhd_2560_1440_25fps.mp4" type="video/mp4">
-    <source src="https://videos.pexels.com/video-files/4763824/4763824-hd_1920_1080_25fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/6765967/6765967-uhd_2560_1440_24fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/2278095/2278095-hd_1920_1080_24fps.mp4" type="video/mp4">
   </video>
 </div>
 
@@ -888,7 +890,7 @@ window.addEventListener('scroll',function(){
   var s5Video   = document.getElementById('s5VideoWrap');
   var textSection  = document.getElementById('s2TextSection');
   var cdSection    = document.querySelector('.cd-section');
-  var featSection  = document.querySelector('.feat-section');
+  var featSection  = document.getElementById('featSection1');
   var featReverse  = document.getElementById('featReverse');
   if (!s2Hero || !s3Video || !textSection) return;
 
