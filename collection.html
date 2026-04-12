@@ -323,6 +323,84 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 }
 .s4-spacer { height: 100vh; position: relative; z-index: 0; }
 
+/* ── STANDARDS SECTION ── */
+.std-section {
+  position: relative;
+  z-index: 20;
+  background: #0a0a0a;
+  display: grid;
+  grid-template-columns: 38% 62%;
+  min-height: 60vh;
+}
+.std-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px 80px 80px;
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+.std-eyebrow {
+  font-size: 9px; font-weight: 500; letter-spacing: .45em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 28px; opacity: .8;
+  display: flex; align-items: center; gap: 16px;
+}
+.std-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+.std-title {
+  font-size: clamp(28px, 3.5vw, 52px);
+  font-weight: 700; line-height: 1.05;
+  letter-spacing: -.02em; text-transform: uppercase;
+  color: var(--white); margin-bottom: 28px;
+}
+.std-body {
+  font-size: 13px; font-weight: 300; line-height: 1.9;
+  color: rgba(245,240,234,.45); max-width: 380px;
+  letter-spacing: .015em;
+}
+.std-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 48px 40px 40px;
+  overflow: hidden;
+}
+.std-slider-wrap { overflow: hidden; cursor: none; user-select: none; }
+.std-slider {
+  display: flex; gap: 16px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -ms-overflow-style: none;
+  padding-bottom: 4px;
+}
+.std-slider::-webkit-scrollbar { display: none; }
+.std-slide {
+  flex: 0 0 calc(50% - 8px);
+  aspect-ratio: 4 / 3;
+  scroll-snap-align: start;
+  overflow: hidden; position: relative;
+  background: #111; border-radius: 2px;
+  flex-shrink: 0;
+}
+.std-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .7s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+  filter: grayscale(30%) brightness(0.85);
+}
+.std-slide:hover img { transform: scale(1.04); }
+.std-slide-lbl {
+  position: absolute; bottom: 12px; left: 14px;
+  font-size: 8px; font-weight: 500; letter-spacing: .32em;
+  text-transform: uppercase; color: rgba(255,255,255,.5);
+  background: rgba(0,0,0,.35); padding: 3px 8px;
+  backdrop-filter: blur(4px);
+}
+@media(max-width:768px){
+  .std-section{grid-template-columns:1fr;}
+  .std-left{padding:60px 32px 40px;}
+  .std-right{padding:0 32px 60px;}
+}
+
 /* ── FEATURE SECTION ── */
 .feat-section {
   position: relative;
@@ -738,6 +816,37 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 </div>
 
 <!-- Spacer: user views s4 fixed image -->
+<!-- Standards section: dark bg, text left + image slider right -->
+<section class="std-section">
+  <div class="std-left">
+    <div class="std-eyebrow">Material Excellence</div>
+    <h2 class="std-title">ETERNAL<br>STANDARDS</h2>
+    <p class="std-body">18K gold is chosen by MKT as the foundation of every design, achieving the perfect balance between durability, refined golden brilliance, and exceptional craftsmanship. Paired with meticulously selected natural diamonds, each creation reflects pure light and timeless value. More than materials, this is the standard MKT upholds in crafting masterpieces of personal expression.</p>
+  </div>
+  <div class="std-right">
+    <div class="std-slider-wrap" id="stdSliderWrap">
+      <div class="std-slider" id="stdSlider">
+        <div class="std-slide">
+          <img src="https://images.unsplash.com/photo-1601121141461-9d6647bef0a1?w=900&q=85&fit=crop&auto=format" alt="Craftsmanship" loading="lazy">
+          <span class="std-slide-lbl">Craftsmanship</span>
+        </div>
+        <div class="std-slide">
+          <img src="https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=900&q=85&fit=crop&auto=format" alt="18K Gold" loading="lazy">
+          <span class="std-slide-lbl">18K Gold</span>
+        </div>
+        <div class="std-slide">
+          <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=85&fit=crop&auto=format" alt="Natural Diamond" loading="lazy">
+          <span class="std-slide-lbl">Natural Diamond</span>
+        </div>
+        <div class="std-slide">
+          <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=900&q=85&fit=crop&auto=format" alt="Precision" loading="lazy">
+          <span class="std-slide-lbl">Precision</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="s4-spacer"></div>
 
 <!-- Feature section: slides over s4 fixed image -->
@@ -906,6 +1015,18 @@ window.addEventListener('scroll',function(){
 
   window.addEventListener('scroll', updateReveal, { passive: true });
   updateReveal();
+})();
+
+/* Drag-scroll for standards slider */
+(function(){
+  var wrap = document.getElementById('stdSliderWrap');
+  var slider = document.getElementById('stdSlider');
+  if (!wrap || !slider) return;
+  var isDown = false, startX, scrollLeft;
+  wrap.addEventListener('mousedown', function(e){ isDown = true; startX = e.pageX - wrap.offsetLeft; scrollLeft = slider.scrollLeft; e.preventDefault(); });
+  wrap.addEventListener('mouseleave', function(){ isDown = false; });
+  wrap.addEventListener('mouseup', function(){ isDown = false; });
+  wrap.addEventListener('mousemove', function(e){ if (!isDown) return; e.preventDefault(); slider.scrollLeft = scrollLeft - (e.pageX - wrap.offsetLeft - startX) * 1.5; });
 })();
 
 /* Drag-scroll for collection slider */
