@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Technique — MKT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream:   #f5f0eb;
+      --cream2:  #ede7df;
+      --dark:    #0c0a08;
+      --dark2:   #161210;
+      --lavender:#c4a8c9;
+      --gold:    #b89460;
+      --text:    #1a1614;
+      --muted:   #7a7068;
+      --border:  rgba(26,22,20,0.1);
+      --serif:   'Cormorant Garamond', Georgia, serif;
+      --sans:    'Montserrat', sans-serif;
+    }
+
+    html, body { scroll-behavior: smooth; background: var(--cream); color: var(--text); font-family: var(--sans); }
+
+    /* ── NAVBAR ── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 60px;
+      transition: background .4s, padding .4s;
+    }
+    #navbar.scrolled {
+      background: rgba(245,240,235,0.95);
+      backdrop-filter: blur(12px);
+      padding: 16px 60px;
+      border-bottom: 1px solid var(--border);
+    }
+    #menu-btn {
+      display: flex; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 8px; z-index: 1100;
+    }
+    #menu-btn span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--text); border-radius: 1px; transition: all 0.3s;
+    }
+    #menu-btn.open span:nth-child(1) { transform: rotate(38deg) scaleX(1.1); }
+    #menu-btn.open span:nth-child(2) { opacity: 0; width: 0; }
+    #menu-btn.open span:nth-child(3) { transform: rotate(-38deg) scaleX(1.1); }
+
+    .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); text-decoration: none; }
+    .nav-logo img { height: 60px; width: auto; }
+
+    .nav-login-btn {
+      background: none; border: none; color: var(--text);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase;
+      padding: 8px; cursor: pointer; font-family: var(--sans);
+      display: flex; align-items: center; gap: 7px; transition: opacity 0.3s;
+    }
+    .nav-login-btn svg { width: 18px; height: 18px; }
+    .nav-login-btn:hover { opacity: 0.6; }
+
+    /* ── MENU OVERLAY ── */
+    #menu-overlay {
+      position: fixed; inset: 0; z-index: 900;
+      background: rgba(245,240,235,0.97); backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 80px 64px;
+      opacity: 0; visibility: hidden;
+      transition: opacity .5s, visibility .5s;
+    }
+    #menu-overlay.open { opacity: 1; visibility: visible; }
+    .menu-links { list-style: none; }
+    .menu-links li { margin-bottom: 4px; }
+    .menu-links a {
+      font-family: var(--serif); font-size: clamp(36px,5vw,72px);
+      font-weight: 400; font-style: italic; letter-spacing: -.01em;
+      color: var(--text); text-decoration: none;
+      transition: color .3s, opacity .3s;
+    }
+    .menu-links a:hover { color: var(--gold); }
+
+    /* ── LOGIN MODAL ── */
+    #login-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(12,10,8,0.7); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+    }
+    #login-overlay.open { opacity: 1; visibility: visible; }
+    #login-modal {
+      background: var(--cream); border: 1px solid var(--border);
+      padding: 52px 44px; width: 380px; position: relative;
+    }
+    #login-close {
+      position: absolute; top: 18px; right: 18px;
+      background: none; border: none; color: var(--muted); font-size: 16px; cursor: pointer;
+    }
+    #login-modal h2 { font-family: var(--serif); font-size: 24px; font-weight: 400; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .login-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 36px; }
+    .login-field { margin-bottom: 20px; }
+    .login-field label { display: block; font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .login-field input {
+      width: 100%; background: transparent; border: 1px solid var(--border);
+      color: var(--text); padding: 12px 14px; font-family: var(--sans); font-size: 13px;
+      outline: none; transition: border-color 0.3s;
+    }
+    .login-field input:focus { border-color: var(--gold); }
+    #login-submit {
+      width: 100%; background: var(--text); color: var(--cream); border: none;
+      padding: 15px; font-size: 10px; font-weight: 600; letter-spacing: 0.25em;
+      text-transform: uppercase; cursor: pointer; font-family: var(--sans);
+      transition: background 0.3s;
+    }
+    #login-submit:hover { background: var(--gold); }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SCROLL ARCHITECTURE
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+    /* S1: hero light — acts as top white mask, scrolls away */
+    .s1 {
+      position: relative;
+      z-index: 20;
+      background: var(--cream);
+      min-height: 100vh;
+    }
+
+    /* S3: truly fixed background image — never moves */
+    .s3 {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      z-index: 5;
+      overflow: hidden;
+    }
+    .s3-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* S2: covers S3 at start, scrolls away revealing S3 */
+    .s2 {
+      position: relative;
+      z-index: 15;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .s2-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* spacer: reserve 100vh scroll space for S3 to be "seen" before S1 arrives */
+    .s3-spacer {
+      height: 100vh;
+      position: relative;
+      z-index: 0;
+    }
+
+    /* S4: second truly fixed bg — same mechanic as S3, fades in via JS */
+    .s4 {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      z-index: 4;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .s4.visible { opacity: 1; }
+    .s4-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* spacer for S4 */
+    .s4-spacer {
+      height: 100vh;
+      position: relative;
+      z-index: 0;
+    }
+
+    /* ── SECTION CRAFT PROCESS ── */
+    .s-process {
+      position: relative;
+      z-index: 20;
+      background: #0c0c0c;
+      display: flex;
+    }
+
+    /* LEFT: sticky title column */
+    .process-left {
+      flex: 0 0 33.333%;
+      width: 33.333%;
+    }
+    .process-left-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 80px 80px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .process-eyebrow {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .42em;
+      text-transform: uppercase;
+      color: var(--accent, #4169E1);
+      margin-bottom: 32px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .process-eyebrow::before {
+      content: ''; width: 28px; height: 1px;
+      background: var(--accent, #4169E1);
+    }
+    .process-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 3.2vw, 52px);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #f5f0ea;
+      margin-bottom: 28px;
+    }
+    .process-desc {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(245,240,234,.45);
+      letter-spacing: .02em;
+      max-width: 320px;
+    }
+    .process-counter {
+      margin-top: 56px;
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.18);
+    }
+    .process-counter span {
+      color: var(--accent, #4169E1);
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: -.01em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* RIGHT: stacking cards column */
+    .process-right {
+      flex: 0 0 66.667%;
+      width: 66.667%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Each card stacks on scroll */
+    .proc-card {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    /* Z-index stacking: each card above the previous */
+    .proc-card:nth-child(1) { z-index: 1; }
+    .proc-card:nth-child(2) { z-index: 2; }
+    .proc-card:nth-child(3) { z-index: 3; }
+    .proc-card:nth-child(4) { z-index: 4; }
+    .proc-card:nth-child(5) { z-index: 5; }
+    .proc-card:nth-child(6) { z-index: 6; }
+    .proc-card:nth-child(7) { z-index: 7; }
+    .proc-card:nth-child(8) { z-index: 8; }
+
+    .proc-card-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 48px 60px 56px;
+    }
+    .proc-step-num {
+      font-size: 9px; font-weight: 500; letter-spacing: .38em;
+      text-transform: uppercase; color: rgba(245,240,234,.25);
+      margin-bottom: 28px;
+    }
+    .proc-step-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 2.8vw, 42px);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: #f5f0ea;
+      margin-bottom: 20px;
+    }
+    .proc-step-body {
+      font-size: 13px; font-weight: 300;
+      line-height: 1.85; letter-spacing: .015em;
+      color: rgba(245,240,234,.5);
+      max-width: 320px;
+    }
+
+    .proc-card-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid rgba(255,255,255,.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .proc-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      opacity: .85;
+    }
+    .proc-icon svg {
+      width: 72px; height: 72px;
+      stroke-width: 1;
+    }
+    .proc-icon-label {
+      font-size: 9px; letter-spacing: .35em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.3);
+    }
+
+    /* 8 distinct backgrounds */
+    .proc-card:nth-child(1) { background: #0c0c0c; }
+    .proc-card:nth-child(2) { background: #0f0f14; }
+    .proc-card:nth-child(3) { background: #110a08; }
+    .proc-card:nth-child(4) { background: #08100f; }
+    .proc-card:nth-child(5) { background: #0e0c14; }
+    .proc-card:nth-child(6) { background: #12080e; }
+    .proc-card:nth-child(7) { background: #090e14; }
+    .proc-card:nth-child(8) { background: #0c1008; }
+
+    /* accent color per card */
+    .proc-card:nth-child(1) .proc-step-title { color: #f5f0ea; }
+    .proc-card:nth-child(1) .proc-icon svg { stroke: #6b8ef0; }
+    .proc-card:nth-child(2) .proc-icon svg { stroke: #7b9ef8; }
+    .proc-card:nth-child(3) .proc-icon svg { stroke: #e8a87c; }
+    .proc-card:nth-child(4) .proc-icon svg { stroke: #b8c4cc; }
+    .proc-card:nth-child(5) .proc-icon svg { stroke: #a8d8c8; }
+    .proc-card:nth-child(6) .proc-icon svg { stroke: #d4a8c8; }
+    .proc-card:nth-child(7) .proc-icon svg { stroke: #f0d080; }
+    .proc-card:nth-child(8) .proc-icon svg { stroke: #90c890; }
+
+    /* diagonal grid line decoration */
+    .proc-card-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,.018) 40px,
+        rgba(255,255,255,.018) 41px
+      );
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .s-process { flex-direction: column; }
+      .process-left { width: 100%; flex: none; }
+      .process-left-sticky { position: relative; height: auto; padding: 80px 32px 60px; }
+      .process-right { width: 100%; flex: none; }
+      .proc-card { position: relative; grid-template-columns: 1fr; min-height: auto; }
+      .proc-card-text { padding: 60px 32px 40px; }
+      .proc-card-visual { min-height: 220px; border-left: none; border-top: 1px solid rgba(255,255,255,.06); }
+    }
+
+    /* ── SECTION 1: TWO-COLUMN LIGHT ── */
+    .s1 {
+      position: relative;
+      z-index: 20;
+      background: #fff;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 38% 62%;
+    }
+    .s1-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 60px 80px 80px;
+      border-right: 1px solid rgba(0,0,0,0.06);
+    }
+    .eyebrow {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .s1-title {
+      font-family: var(--serif);
+      font-size: clamp(52px, 5.5vw, 86px);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 36px;
+    }
+    .s1-body {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      max-width: 400px;
+    }
+    .s1-right {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .s1-tabs {
+      display: flex;
+      align-items: flex-end;
+      padding: 120px 60px 0;
+      justify-content: flex-end;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+    .s1-tab {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(100,96,92,0.5);
+      padding: 0 24px 16px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      position: relative;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+    .s1-tab::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 24px; right: 24px;
+      height: 1.5px;
+      background: var(--text);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .s1-tab.active { color: var(--text); font-weight: 500; }
+    .s1-tab.active::after { transform: scaleX(1); }
+    .s1-tab:hover:not(.active) { color: var(--text); }
+    .s1-slider-wrap {
+      flex: 1;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      min-height: 0;
+    }
+    .s1-slider-wrap:active { cursor: grabbing; }
+    .s1-slider {
+      display: flex;
+      height: 100%;
+      gap: 4px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 4px 0 0 4px;
+    }
+    .s1-slider::-webkit-scrollbar { display: none; }
+    .s1-slide {
+      flex: 0 0 calc(50% - 2px);
+      scroll-snap-align: start;
+      overflow: hidden;
+      position: relative;
+      background: #111;
+    }
+    .s1-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+    }
+    .s1-slide:hover img { transform: scale(1.04); }
+    .s1-slide-lbl {
+      position: absolute;
+      bottom: 16px; left: 16px;
+      font-size: 8px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      font-weight: 500;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px; left: 80px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+      color: rgba(26,22,20,0.3); pointer-events: none;
+    }
+    .scroll-hint-line {
+      width: 36px; height: 1px;
+      background: rgba(26,22,20,0.2);
+      position: relative; overflow: hidden;
+    }
+    .scroll-hint-line::after {
+      content: '';
+      position: absolute; left: -100%; top: 0; bottom: 0; width: 100%;
+      background: var(--gold);
+      animation: lineSlide 2s ease-in-out infinite;
+    }
+    @keyframes lineSlide { 0%{left:-100%} 50%{left:0%} 100%{left:100%} }
+
+    /* ── SECTION 2: FULL-BLEED SHOWROOM (z-20) ── */
+    .s2-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* ── SECTION 3: STICKY IMAGE BEHIND S1 (z-10) ── */
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--text);
+      padding: 20px 52px;
+      text-decoration: none;
+      transition: background 0.4s, transform 0.3s;
+    }
+    .cta-btn:hover { background: var(--gold); transform: translateY(-2px); }
+    .cta-btn-arrow {
+      width: 20px; height: 1px;
+      background: currentColor;
+      position: relative;
+      transition: width 0.3s;
+    }
+    .cta-btn-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0; top: -3px;
+      width: 6px; height: 6px;
+      border-top: 1px solid currentColor;
+      border-right: 1px solid currentColor;
+      transform: rotate(45deg);
+    }
+    .cta-btn:hover .cta-btn-arrow { width: 30px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 80px 80px 40px;
+      position: relative;
+      z-index: 20;
+    }
+    .footer-inner { max-width: 1400px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px; margin-bottom: 80px;
+    }
+    .footer-logo { margin-bottom: 16px; }
+    .footer-logo img { height: 50px; width: auto; }
+    .footer-tagline {
+      font-size: 12px; font-weight: 300; font-style: italic;
+      color: rgba(245,240,235,0.4); line-height: 1.7; max-width: 280px;
+    }
+    .footer-socials { display: flex; gap: 12px; margin-top: 28px; }
+    .footer-social {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(245,240,235,0.4); font-size: 11px; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .footer-social:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-col h4 {
+      font-size: 9px; font-weight: 500; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a {
+      font-size: 13px; font-weight: 300; color: rgba(245,240,235,0.45);
+      text-decoration: none; letter-spacing: 0.04em; transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: rgba(245,240,235,0.9); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-copy { font-size: 11px; font-weight: 300; letter-spacing: 0.1em; color: rgba(245,240,235,0.25); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      #navbar { padding: 18px 24px; }
+      .nav-logo img { height: 50px; }
+      .nav-login-btn span { display: none; }
+      .s1-left { padding: 60px 24px 40px; }
+      .s1-tabs { padding: 24px 24px 0; justify-content: flex-start; }
+      .color-nav { flex-wrap: wrap; }
+
+      .cta-btn { padding: 16px 32px; font-size: 9px; }
+      footer { padding: 60px 24px 32px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .scroll-hint { right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <button id="menu-btn" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="MKT">
+  </a>
+  <button class="nav-login-btn" onclick="openLogin()" aria-label="Login">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+    </svg>
+    <span>Login</span>
+  </button>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div id="menu-overlay">
+  <ul class="menu-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="OurTechnique.html">MKT Universe</a></li>
+    <li><a href="collection.html">Collections</a></li>
+    <li><a href="brand.html">The Brand</a></li>
+    <li><a href="store.html">Store</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="OurTechnique.html">Events</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="login-overlay" onclick="if(event.target===this)closeLogin()">
+  <div id="login-modal">
+    <button id="login-close" onclick="closeLogin()">&#x2715;</button>
+    <h2>Login</h2>
+    <p class="login-sub">Please enter your account information</p>
+    <div class="login-field"><label>ID</label><input type="text" id="login-id" placeholder="Enter your ID" autocomplete="off"></div>
+    <div class="login-field"><label>Account</label><input type="text" id="login-account" placeholder="Enter your account" autocomplete="off"></div>
+    <button id="login-submit" onclick="handleLogin()">Confirm</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION 3 — Truly fixed background image (always fixed, never moves)
+════════════════════════════════════════ -->
+<section class="s3">
+  <img
+    class="s3-img"
+    src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=1920&q=90&fit=crop"
+    alt="MKT Showroom Interior"
+    loading="lazy"
+  >
+</section>
+
+<!-- ════════════════════════════════════════
+     SECTION 2 — Curtain image (z:15, covers S3, scrolls away to reveal S3)
+════════════════════════════════════════ -->
+<section class="s2">
+  <img
+    class="s2-img"
+    src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=1920&q=90&fit=crop"
+    alt="MKT Showroom"
+    loading="lazy"
+  >
+</section>
+
+<!-- spacer: creates scroll room for S3 to be fully visible before S1 arrives -->
+<div class="s3-spacer"></div>
+
+<!-- ════════════════════════════════════════
+     SECTION 1 — Two-column: text + slider (z:20, slides up over fixed S3)
+════════════════════════════════════════ -->
+<section class="s1">
+
+  <!-- Left: text -->
+  <div class="s1-left">
+    <span class="eyebrow">RM 07-01 · Coloured Ceramics</span>
+    <h1 class="s1-title">LAVENDER<br>PINK</h1>
+    <p class="s1-body">
+      Every reflection emanating from the new RM 07-01 Coloured Ceramics awakens the memory, brilliantly sealing the creativity of an object that has become truly symbolic. The dials radiate, textures come to life, and colours vibrate as the world undergoes a metamorphosis: the shades compose a dreamlike universe where technical mastery diffracts the ordinary. The diamond, placed upon the material like an eternal snowflake, immortalises this moment.
+    </p>
+  </div>
+
+  <!-- Right: tabs + draggable image slider -->
+  <div class="s1-right">
+    <div class="s1-tabs">
+      <button class="s1-tab active" data-tab="lavender">Lavender Pink</button>
+      <button class="s1-tab" data-tab="blue">Powder Blue</button>
+      <button class="s1-tab" data-tab="blush">Blush Pink</button>
+    </div>
+    <div class="s1-slider-wrap" id="s1SliderWrap">
+      <div class="s1-slider" id="s1Slider">
+        <div class="s1-slide">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=85&fit=crop" alt="Front view" loading="lazy">
+          <span class="s1-slide-lbl">Front view</span>
+        </div>
+        <div class="s1-slide">
+          <img src="https://images.unsplash.com/photo-1619134778706-7015533a6150?w=900&q=85&fit=crop" alt="Side view" loading="lazy">
+          <span class="s1-slide-lbl">Side view</span>
+        </div>
+        <div class="s1-slide">
+          <img src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=900&q=85&fit=crop" alt="Movement" loading="lazy">
+          <span class="s1-slide-lbl">Movement</span>
+        </div>
+        <div class="s1-slide">
+          <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=900&q=85&fit=crop" alt="Detail" loading="lazy">
+          <span class="s1-slide-lbl">Detail</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    Scroll to explore
+  </div>
+
+</section>
+
+<!-- ════════════════════════════════════════
+     SECTION 4 — Fixed bg #2 (revealed after S1 scrolls away)
+════════════════════════════════════════ -->
+<section class="s4">
+  <img
+    class="s4-img"
+    src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1920&q=90&fit=crop"
+    alt="MKT Lifestyle"
+    loading="lazy"
+  >
+</section>
+
+<!-- spacer: S4 visible while user "rests" before process section arrives -->
+<div class="s4-spacer"></div>
+
+<!-- ════════════════════════════════════════
+     SECTION CRAFT PROCESS — sticky split screen
+════════════════════════════════════════ -->
+<section class="s-process">
+
+  <!-- LEFT: sticky label -->
+  <div class="process-left">
+    <div class="process-left-sticky">
+      <div class="process-eyebrow">The Craft</div>
+      <h2 class="process-title">Jewelry<br>Crafting<br>Process</h2>
+      <p class="process-desc">A step-by-step visual guide on how fine jewelry is created, from initial concept to the final polished piece.</p>
+      <div class="process-counter">
+        <span id="procNum">01</span>
+        of 08
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: 8 stacking cards -->
+  <div class="process-right">
+
+    <!-- Card 1: 2D Design -->
+    <div class="proc-card">
+      <div class="proc-card-text">
+        <div class="proc-step-num">Step 01</div>
+        <h3 class="proc-step-title">2D Design</h3>
+        <p class="proc-step-body">Conceptualizing the idea. Hand sketching and digital illustrations defining the shape, dimensions, and gemstone placement.</p>
+      </div>
+      <div class="proc-card-visual">
+        <div class="proc-icon">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#6b8ef0" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="12" width="56" height="56" rx="2"/>
+            <line x1="20" y1="55" x2="35" y2="35"/>
+            <line x1="35" y1="35" x2="50" y2="45"/>
+            <line x1="50" y1="45" x2="62" y2="28"/>
+            <circle cx="62" cy="24" r="3" fill="#6b8ef0" stroke="none"/>
+          </svg>
+          <span class="proc-icon-label">Sketch &amp; Illustration</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: 3D Design -->
+    <div class="proc-card">
+      <div class="proc-card-text">
+        <div class="proc-step-num">Step 02</div>
+        <h3 class="proc-step-title">3D Design</h3>
+        <p class="proc-step-body">CAD modeling. Creating a highly precise 3D digital representation to calculate metal weight and view the piece from all angles.</p>
+      </div>
+      <div class="proc-card-visual">
+        <div class="proc-icon">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#7b9ef8" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="40,10 68,24 68,56 40,70 12,56 12,24"/>
+            <polygon points="40,10 40,70" stroke-dasharray="4 3"/>
+            <polygon points="12,24 68,24" stroke-dasharray="4 3"/>
+            <polygon points="12,56 68,56" stroke-dasharray="4 3"/>
+            <line x1="40" y1="10" x2="68" y2="24"/>
+            <line x1="40" y1="10" x2="12" y2="24"/>
+          </svg>
+          <span class="proc-icon-label">CAD Wireframe</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Gold Casting -->
+    <div class="proc-card">
+      <div class="proc-card-text">
+        <div class="proc-step-num">Step 03</div>
+        <h3 class="proc-step-title">Gold Casting</h3>
+        <p class="proc-step-body">The lost-wax process. Molten gold is poured into a plaster mold created from a 3D printed resin prototype.</p>
+      </div>
+      <div class="proc-card-visual">
+        <div class="proc-icon">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#e8a87c" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 20 Q20 10 30 10 L50 10 Q60 10 60 20 L56 48 Q56 54 50 54 L30 54 Q24 54 24 48 Z"/>
+            <path d="M32 54 Q28 62 24 72 M48 54 Q52 62 56 72" stroke-width="1.5"/>
+            <path d="M36 54 Q36 64 40 72 Q44 64 44 54" stroke-width="1.5"/>
+            <ellipse cx="40" cy="20" rx="14" ry="5" fill="rgba(232,168,124,.15)"/>
+          </svg>
+          <span class="proc-icon-label">Lost-Wax Casting</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Jewelry Filling -->
+    <div class="proc-card">
+      <div class="proc-card-text">
+        <div class="proc-step-num">Step 04</div>
+        <h3 class="proc-step-title">Jewelry Filling</h3>
+        <p class="proc-step-body">Refining the raw casting. Removing imperfections, smoothing surfaces, and shaping the metal component using precise files and tools.</p>
+      </div>
+      <div class="proc-card-visual">
+        <div class="proc-icon">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#b8c4cc" xmlns="http://www.w3.org/2000/svg">
+            <rect x="14" y="34" width="36" height="10" rx="2"/>
+            <line x1="50" y1="39" x2="68" y2="32"/>
+            <rect x="62" y="28" width="8" height="8" rx="1"/>
+            <line x1="18" y1="44" x2="16" y2="60"/>
+            <line x1="28" y1="44" x2="28" y2="62"/>
+            <line x1="38" y1="44" x2="40" y2="60"/>
+          </svg>
+          <span class="proc-icon-label">Filing &amp; Smoothing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: Stone Cutting -->
+    <div class="proc-card">
+      <div class="proc-card-text">
+        <div class="proc-step-num">Step 05</div>
+        <h3 class="proc-step-title">Stone Cutting</h3>
+        <p class="proc-step-body">Gemstone faceting. Transforming raw rough minerals into sparkling gemstones by cutting precise facets at mathematical angles.</p>
+      </div>
+      <div class="proc-card-visual">
+        <div class="proc-icon">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#a8d8c8" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="40,10 62,30 52,64 28,64 18,30"/>
+            <polygon points="40,10 62,30 40,38 18,30"/>
+            <line x1="40" y1="38" x2="52" y2="64"/>
+            <line x1="40" y1="38" x2="28" y2="64"/>
+            <line x1="40" y1="10" x2="40" y2="38"/>
+          </svg>
+          <span class="proc-icon-label">Gemstone Faceting</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: Stone Setting -->
+    <div class="proc-card">
+      <div class="proc-card-text">
+        <div class="proc-step-num">Step 06</div>
+        <h3 class="proc-step-title">Stone Setting</h3>
+        <p class="proc-step-body">Securing the gems. Master setters precisely set each gemstone into the metal, using techniques like prong, bezel, or pavé setting.</p>
+      </div>
+      <div class="proc-card-visual">
+        <div class="proc-icon">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#d4a8c8" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="46" r="14"/>
+            <line x1="40" y1="14" x2="40" y2="30"/>
+            <line x1="30" y1="17" x2="34" y2="32"/>
+            <line x1="22" y1="25" x2="30" y2="36"/>
+            <path d="M30 14 Q40 10 48 16" stroke-dasharray="3 2"/>
+            <path d="M28 46 Q34 40 40 44 Q46 40 52 46" fill="rgba(212,168,200,.12)"/>
+          </svg>
+          <span class="proc-icon-label">Prong · Bezel · Pavé</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7: Polish -->
+    <div class="proc-card">
+      <div class="proc-card-text">
+        <div class="proc-step-num">Step 07</div>
+        <h3 class="proc-step-title">Polish</h3>
+        <p class="proc-step-body">Final shine. Using high-speed polishing wheels and various abrasive compounds to give the gold a mirror-like finish.</p>
+      </div>
+      <div class="proc-card-visual">
+        <div class="proc-icon">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#f0d080" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="44" r="18"/>
+            <circle cx="40" cy="44" r="10" stroke-dasharray="5 3"/>
+            <line x1="40" y1="12" x2="40" y2="20"/>
+            <line x1="58" y1="18" x2="53" y2="24"/>
+            <line x1="65" y1="34" x2="57" y2="36"/>
+            <line x1="22" y1="18" x2="27" y2="24"/>
+            <line x1="15" y1="34" x2="23" y2="36"/>
+          </svg>
+          <span class="proc-icon-label">Mirror Finish</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 8: Plating -->
+    <div class="proc-card">
+      <div class="proc-card-text">
+        <div class="proc-step-num">Step 08</div>
+        <h3 class="proc-step-title">Plating</h3>
+        <p class="proc-step-body">Finishing touch. Rhodium plating for brilliant white gold, or electroplating for yellow/rose gold to enhance durability and color.</p>
+      </div>
+      <div class="proc-card-visual">
+        <div class="proc-icon">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#90c890" xmlns="http://www.w3.org/2000/svg">
+            <rect x="16" y="40" width="48" height="24" rx="4"/>
+            <path d="M28 40 L28 32 Q28 20 40 20 Q52 20 52 32 L52 40"/>
+            <ellipse cx="40" cy="40" rx="8" ry="4" fill="rgba(144,200,144,.2)"/>
+            <line x1="40" y1="20" x2="40" y2="14"/>
+            <circle cx="40" cy="12" r="3" fill="#90c890" stroke="none"/>
+          </svg>
+          <span class="proc-icon-label">Electroplating</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /process-right -->
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><img src="indentify/mkt final white.png" alt="MKT"></div>
+        <p class="footer-tagline">"Wear grillz not only to flex" — Premium Custom Grillz & Jewelry, crafted in Vietnam for the world.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/mkt.worldwide/" class="footer-social" target="_blank">IG</a>
+          <a href="https://www.facebook.com/mktgrillz" class="footer-social" target="_blank">FB</a>
+          <a href="https://www.tiktok.com/@mkt.worldwide" class="footer-social" target="_blank">TK</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="OurTechnique.html">MKT Universe</a></li>
+          <li><a href="collection.html">Collections</a></li>
+          <li><a href="brand.html">The Brand</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="collection.html">Collections</a></li>
+          <li><a href="store.html">Store Locator</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="OurTechnique.html">Events</a></li>
+          <li><a href="contact.html">Partner & Press</a></li>
+          <li><a href="https://www.instagram.com/mkt.worldwide/" target="_blank">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 MKT — Wear Grillz Not Only To Flex. All rights reserved.</div>
+      <div class="footer-copy">Tanoshiviet</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Navbar scroll */
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* Menu */
+  function toggleMenu() {
+    document.getElementById('menu-btn').classList.toggle('open');
+    document.getElementById('menu-overlay').classList.toggle('open');
+  }
+  document.getElementById('menu-overlay').addEventListener('click', function(e) {
+    if (e.target === this) toggleMenu();
+  });
+
+  /* Color nav */
+  document.querySelectorAll('.color-nav-item').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.color-nav-item').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  /* Login */
+  function openLogin() { document.getElementById('login-overlay').classList.add('open'); }
+  function closeLogin() { document.getElementById('login-overlay').classList.remove('open'); }
+  function handleLogin() {
+    const id = document.getElementById('login-id').value.trim();
+    const acc = document.getElementById('login-account').value.trim();
+    if (id && acc) { alert('Login successful!'); closeLogin(); }
+    else { alert('Please fill in all fields.'); }
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLogin(); });
+
+  /* S1 drag-to-scroll slider */
+  (function(){
+    const wrap = document.getElementById('s1SliderWrap');
+    const slider = document.getElementById('s1Slider');
+    if (!wrap || !slider) return;
+    let isDown = false, startX, scrollLeft;
+    wrap.addEventListener('mousedown', e => {
+      isDown = true;
+      wrap.style.cursor = 'grabbing';
+      startX = e.pageX - wrap.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+      e.preventDefault();
+    });
+    wrap.addEventListener('mouseleave', () => { isDown = false; wrap.style.cursor = 'grab'; });
+    wrap.addEventListener('mouseup', () => { isDown = false; wrap.style.cursor = 'grab'; });
+    wrap.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - wrap.offsetLeft;
+      slider.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+
+    /* Touch support */
+    let touchStartX, touchScrollLeft;
+    wrap.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].pageX;
+      touchScrollLeft = slider.scrollLeft;
+    }, { passive: true });
+    wrap.addEventListener('touchmove', e => {
+      const dx = touchStartX - e.touches[0].pageX;
+      slider.scrollLeft = touchScrollLeft + dx;
+    }, { passive: true });
+
+    /* Tab switching */
+    document.querySelectorAll('.s1-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.s1-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  })();
+
+  /* Process card counter */
+  (function(){
+    const cards = document.querySelectorAll('.proc-card');
+    const num = document.getElementById('procNum');
+    if (!cards.length || !num) return;
+    function update() {
+      let active = 0;
+      cards.forEach((card, i) => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.5) active = i;
+      });
+      num.textContent = String(active + 1).padStart(2, '0');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  /* Fixed bg swap: S3 visible during S1 zone, S4 visible during process zone */
+  (function(){
+    const s3  = document.querySelector('.s3');
+    const s4  = document.querySelector('.s4');
+    const s1  = document.querySelector('.s1');
+    const sMaster = document.querySelector('.s-process');
+    if (!s3 || !s4 || !s1 || !sMaster) return;
+
+    function update() {
+      const s1Rect = s1.getBoundingClientRect();
+      const masterRect = sMaster.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // S4 fades in when MASTERPIECE is coming into view (bottom of master enters viewport)
+      // and fades out when MASTERPIECE has fully passed
+      const masterVisible = masterRect.top < vh && masterRect.bottom > 0;
+      s4.classList.toggle('visible', masterVisible);
+
+      // S3 is always-on (z:5), S4 sits at z:4 — so S4 fading in has no effect unless
+      // we also fade S3 out when S4 should dominate
+      if (masterVisible) {
+        s3.style.opacity = '0';
+      } else {
+        s3.style.opacity = '1';
+      }
+    }
+
+    // Smooth opacity transition on S3 too
+    s3.style.transition = 'opacity 0.6s ease';
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  (function(){
+    // placeholder to maintain closure structure
+    void 0;
+  })();
+
+</script>
+</body>
+</html>
