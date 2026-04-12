@@ -128,10 +128,24 @@
       min-height: 100vh;
     }
 
-    /* S2: showroom image — scrolls away normally */
+    /* S3: truly fixed background image — never moves */
+    .s3 {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      z-index: 5;
+      overflow: hidden;
+    }
+    .s3-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* S2: covers S3 at start, scrolls away revealing S3 */
     .s2 {
       position: relative;
-      z-index: 20;
+      z-index: 15;
       height: 100vh;
       overflow: hidden;
     }
@@ -141,18 +155,11 @@
       object-position: center;
     }
 
-    /* S3: sticky image — pins while S1 slides over it */
-    .s3 {
-      position: sticky;
-      top: 0;
+    /* spacer: reserve 100vh scroll space for S3 to be "seen" before S1 arrives */
+    .s3-spacer {
       height: 100vh;
-      z-index: 10;
-      overflow: hidden;
-    }
-    .s3-img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
+      position: relative;
+      z-index: 0;
     }
 
     /* ── SECTION 1: TWO-COLUMN LIGHT ── */
@@ -449,19 +456,7 @@
 </div>
 
 <!-- ════════════════════════════════════════
-     SECTION 2 — Full-bleed showroom image (scrolls away first)
-════════════════════════════════════════ -->
-<section class="s2">
-  <img
-    class="s2-img"
-    src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=1920&q=90&fit=crop"
-    alt="MKT Showroom"
-    loading="lazy"
-  >
-</section>
-
-<!-- ════════════════════════════════════════
-     SECTION 3 — Sticky full-bleed image (fixed while S1 slides over)
+     SECTION 3 — Truly fixed background image (always fixed, never moves)
 ════════════════════════════════════════ -->
 <section class="s3">
   <img
@@ -473,7 +468,22 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     SECTION 1 — Two-column: text + slider (slides over sticky S3)
+     SECTION 2 — Curtain image (z:15, covers S3, scrolls away to reveal S3)
+════════════════════════════════════════ -->
+<section class="s2">
+  <img
+    class="s2-img"
+    src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=1920&q=90&fit=crop"
+    alt="MKT Showroom"
+    loading="lazy"
+  >
+</section>
+
+<!-- spacer: creates scroll room for S3 to be fully visible before S1 arrives -->
+<div class="s3-spacer"></div>
+
+<!-- ════════════════════════════════════════
+     SECTION 1 — Two-column: text + slider (z:20, slides up over fixed S3)
 ════════════════════════════════════════ -->
 <section class="s1">
 
