@@ -395,10 +395,30 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   display: block;
   filter: brightness(0.88);
 }
+/* Reversed: image left, text right */
+.feat-section--reverse .feat-left { order: 2; padding: 120px 80px 120px 60px; }
+.feat-section--reverse .feat-right { order: 1; }
+
+/* ── S5 FINAL FIXED VIDEO ── */
+.s5-video-wrap {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  z-index: 7;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.s5-video-wrap.visible { opacity: 1; }
+.s5-video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.s5-spacer { height: 100vh; position: relative; z-index: 0; }
+
 @media(max-width:768px){
   .feat-section{grid-template-columns:1fr;}
   .feat-left{padding:80px 32px 60px;}
   .feat-right{min-height:55vw;}
+  .feat-section--reverse .feat-left{order:2;padding:60px 32px 80px;}
+  .feat-section--reverse .feat-right{order:1;}
 }
 
 /* ── FOOTER ── */
@@ -734,6 +754,36 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
   </div>
 </section>
 
+<!-- S5: Final fixed video — revealed after first feat scrolls past -->
+<div class="s5-video-wrap" id="s5VideoWrap">
+  <video class="s5-video" autoplay muted loop playsinline>
+    <source src="https://videos.pexels.com/video-files/5077543/5077543-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/4763824/4763824-hd_1920_1080_25fps.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- Reversed feat section: image left, text right — slides over s5 video -->
+<section class="feat-section feat-section--reverse" id="featReverse">
+  <div class="feat-left">
+    <div class="feat-eyebrow">The Standard</div>
+    <h2 class="feat-title">NO TWO<br>PIECES<br>ARE EVER<br>THE SAME</h2>
+    <p class="feat-body">
+      From the first sketch to the final polish, every MKT creation passes through the hands of a single craftsman — ensuring that each piece carries one consistent vision. We reject the factory. We reject the template. What you receive is not a product; it is an original.
+      <br><br>
+      This is what it means to wear MKT.
+    </p>
+  </div>
+  <div class="feat-right">
+    <img
+      src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1200&q=90&fit=crop"
+      alt="MKT Unique Piece"
+      loading="lazy">
+  </div>
+</section>
+
+<!-- Spacer: user views s5 video before footer -->
+<div class="s5-spacer"></div>
+
 <!-- ═══ FOOTER ═══ -->
 <footer><div class="footer-inner">
   <div class="footer-top">
@@ -835,22 +885,30 @@ window.addEventListener('scroll',function(){
   var s2Hero    = document.getElementById('s2Hero');
   var s3Video   = document.getElementById('s3VideoWrap');
   var s4Img     = document.getElementById('s4ImgWrap');
-  var textSection = document.getElementById('s2TextSection');
-  var cdSection   = document.querySelector('.cd-section');
+  var s5Video   = document.getElementById('s5VideoWrap');
+  var textSection  = document.getElementById('s2TextSection');
+  var cdSection    = document.querySelector('.cd-section');
+  var featSection  = document.querySelector('.feat-section');
+  var featReverse  = document.getElementById('featReverse');
   if (!s2Hero || !s3Video || !textSection) return;
 
   function updateReveal() {
-    var textPast = textSection.getBoundingClientRect().bottom <= 0;
-    var cdPast   = cdSection ? cdSection.getBoundingClientRect().bottom <= 0 : false;
+    var textPast  = textSection.getBoundingClientRect().bottom <= 0;
+    var cdPast    = cdSection    ? cdSection.getBoundingClientRect().bottom    <= 0 : false;
+    var featPast  = featSection  ? featSection.getBoundingClientRect().bottom  <= 0 : false;
+    var feat2Past = featReverse  ? featReverse.getBoundingClientRect().bottom  <= 0 : false;
 
-    // Hero image: visible until text section enters
+    // s2 hero → off after text
     s2Hero.style.opacity = textPast ? '0' : '1';
 
-    // Ocean video: visible after text past; hidden when s4 image takes over
+    // s3 ocean video → on after text, off when s4 takes over
     s3Video.classList.toggle('visible', textPast && !cdPast);
 
-    // S4 fixed image: visible after cd-section fully scrolled past
-    if (s4Img) s4Img.classList.toggle('visible', cdPast);
+    // s4 craft image → on after cd-section, off when s5 takes over
+    if (s4Img) s4Img.classList.toggle('visible', cdPast && !featPast);
+
+    // s5 final video → on after first feat-section scrolls past
+    if (s5Video) s5Video.classList.toggle('visible', featPast);
   }
 
   window.addEventListener('scroll', updateReveal, { passive: true });
