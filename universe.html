@@ -129,20 +129,21 @@
       min-height: 100vh;
     }
 
-    /* S2: sticky dark — pins when S1 scrolls away, hidden by S3 when S3 arrives */
+    /* S2: full-bleed showroom image — pure photo, no text */
     .s2 {
-      position: sticky;
-      top: 0;
+      position: relative;
       height: 100vh;
-      z-index: 10;
-      background: var(--dark);
       overflow: hidden;
     }
+    .s2-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
 
-    /* S3: detail light — acts as bottom white mask, slides UP over S2 */
+    /* S3: detail light */
     .s3 {
       position: relative;
-      z-index: 20;
       background: var(--cream);
     }
 
@@ -296,65 +297,7 @@
       width: 100%; height: 100%;
       object-fit: cover;
       object-position: center;
-      filter: brightness(0.7) contrast(1.1);
     }
-
-    .s2-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(12,10,8,0.5) 0%, rgba(12,10,8,0.1) 40%, rgba(12,10,8,0.6) 100%),
-        linear-gradient(to right, rgba(12,10,8,0.4) 0%, transparent 60%);
-    }
-
-    .s2-text {
-      position: absolute;
-      bottom: 60px;
-      left: 80px;
-      z-index: 2;
-    }
-    .s2-tag {
-      font-size: 8px;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: rgba(245,240,235,0.5);
-      margin-bottom: 12px;
-      font-weight: 500;
-    }
-    .s2-title {
-      font-family: var(--serif);
-      font-size: clamp(40px, 5vw, 72px);
-      font-weight: 300;
-      font-style: italic;
-      color: rgba(245,240,235,0.9);
-      line-height: 1;
-      letter-spacing: 0.02em;
-    }
-
-    .s2-scroll-hint {
-      position: absolute;
-      right: 60px;
-      bottom: 60px;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .s2-scroll-text {
-      font-size: 8px;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: rgba(245,240,235,0.4);
-      writing-mode: vertical-rl;
-    }
-    .s2-scroll-line {
-      width: 1px;
-      height: 60px;
-      background: linear-gradient(to bottom, rgba(184,148,96,0.8), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse { 0%,100%{opacity:0.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(0.7)} }
 
     /* ── SECTION 3: DETAIL CONTENT ── */
     .s3-inner {
@@ -589,7 +532,7 @@
       .s1-left { padding: 60px 24px 40px; }
       .s1-tabs { padding: 24px 24px 0; justify-content: flex-start; }
       .color-nav { flex-wrap: wrap; }
-      .s2-text { left: 24px; bottom: 40px; }
+
       .s3-inner { padding: 80px 24px; }
       .s3-cta-title { font-size: 28px; }
       .cta-btn { padding: 16px 32px; font-size: 9px; }
@@ -694,27 +637,7 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     SECTION 2 — Sticky dark hero image
-════════════════════════════════════════ -->
-<section class="s2">
-  <img
-    class="s2-img"
-    src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=1920&q=90&fit=crop"
-    alt="RM 07-01 Hero — Dramatic Dark"
-  >
-  <div class="s2-overlay"></div>
-  <div class="s2-text">
-    <p class="s2-tag">Richard Mille · 2024</p>
-    <h2 class="s2-title">An icon,<br>reimagined.</h2>
-  </div>
-  <div class="s2-scroll-hint">
-    <div class="s2-scroll-line"></div>
-    <span class="s2-scroll-text">Continue</span>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════
-     SECTION 3 — Detail content (slides over S2)
+     SECTION 3 — Detail content
 ════════════════════════════════════════ -->
 <section class="s3">
   <div class="s3-inner">
@@ -794,6 +717,18 @@
     </div>
 
   </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     SECTION 2 — Full-bleed showroom image
+════════════════════════════════════════ -->
+<section class="s2">
+  <img
+    class="s2-img"
+    src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=1920&q=90&fit=crop"
+    alt="MKT Showroom"
+    loading="lazy"
+  >
 </section>
 
 <!-- FOOTER -->
