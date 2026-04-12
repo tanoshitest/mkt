@@ -77,7 +77,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   width: 100%; height: 100vh;
   z-index: 3;
   overflow: hidden;
-  transition: opacity 0.9s ease;
 }
 .s2-hero-img {
   width: 100%; height: 100%;
@@ -154,7 +153,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   z-index: 5;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.9s ease;
 }
 .s3-video-wrap.visible { opacity: 1; }
 .s3-video {
@@ -928,16 +926,27 @@ window.addEventListener('scroll',function(){
   if (!s2Hero || !s3Video || !textSection) return;
 
   function updateReveal() {
-    var textPast  = textSection.getBoundingClientRect().bottom <= 0;
-    var cdPast    = cdSection    ? cdSection.getBoundingClientRect().bottom    <= 0 : false;
-    var featPast  = featSection  ? featSection.getBoundingClientRect().bottom  <= 0 : false;
-    var feat2Past = featReverse  ? featReverse.getBoundingClientRect().bottom  <= 0 : false;
+    var vh = window.innerHeight;
+    var textRect = textSection.getBoundingClientRect();
+    var cdPast   = cdSection   ? cdSection.getBoundingClientRect().bottom   <= 0 : false;
+    var featPast = featSection ? featSection.getBoundingClientRect().bottom <= 0 : false;
+    var feat2Past = featReverse ? featReverse.getBoundingClientRect().bottom <= 0 : false;
 
-    // s2 hero → off after text
-    s2Hero.style.opacity = textPast ? '0' : '1';
+    // Smooth crossfade: hero fades out / video fades in
+    // as text section bottom travels from viewport bottom → viewport top
+    var crossfade;
+    if (textRect.bottom >= vh) {
+      crossfade = 0;          // text not started scrolling out yet
+    } else if (textRect.bottom <= 0) {
+      crossfade = 1;          // text fully past viewport
+    } else {
+      crossfade = 1 - (textRect.bottom / vh);
+    }
 
-    // s3 ocean video → on after text, off when s4 takes over
-    s3Video.classList.toggle('visible', textPast && !cdPast);
+    s2Hero.style.opacity  = 1 - crossfade;
+    s3Video.style.opacity = crossfade;
+    // keep s3 visible only until cd-section takes over
+    if (cdPast) s3Video.style.opacity = 0;
 
     // s4 craft image → on after cd-section, off when s5 takes over
     if (s4Img) s4Img.classList.toggle('visible', cdPast && !featPast);
