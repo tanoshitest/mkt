@@ -580,9 +580,6 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .s1-inner { grid-template-columns: 1fr; }
-      .s1-left { padding: 60px 40px 40px; border-right: none; border-bottom: 1px solid var(--border); }
-      .s1-right { padding: 40px 40px 60px; }
       .s3-header { grid-template-columns: 1fr; gap: 40px; }
       .s3-cols { grid-template-columns: 1fr; gap: 60px; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -591,17 +588,15 @@
       #navbar { padding: 18px 24px; }
       .nav-logo img { height: 50px; }
       .nav-login-btn span { display: none; }
-      .s1-left { padding: 40px 24px 32px; }
-      .s1-right { padding: 32px 24px 40px; }
+      .s1-content { padding: 0 24px 60px; }
       .color-nav { flex-wrap: wrap; }
-      .watch-duo { gap: 8px; }
       .s2-text { left: 24px; bottom: 40px; }
       .s3-inner { padding: 80px 24px; }
       .s3-cta-title { font-size: 28px; }
       .cta-btn { padding: 16px 32px; font-size: 9px; }
       footer { padding: 60px 24px 32px; }
       .footer-top { grid-template-columns: 1fr; }
-      .scroll-hint { left: 24px; }
+      .scroll-hint { right: 24px; }
     }
   </style>
 </head>
@@ -650,45 +645,31 @@
 </div>
 
 <!-- ════════════════════════════════════════
-     SECTION 1 — Hero (light, scrolls up)
+     SECTION 1 — Full-bleed hero image
 ════════════════════════════════════════ -->
 <section class="s1">
-  <div class="s1-inner">
-
-    <!-- Left: text -->
-    <div class="s1-left">
-      <span class="eyebrow">RM 07-01 · Coloured Ceramics</span>
-      <h1 class="s1-title">LAVENDER<br>PINK</h1>
-      <p class="s1-body">
-        Every reflection emanating from the new RM 07-01 Coloured Ceramics awakens the memory, brilliantly sealing the creativity of an object that has become truly symbolic. The dials radiate, textures come to life, and colours vibrate as the world undergoes a metamorphosis: the shades compose a dreamlike universe where technical mastery diffracts the ordinary. The diamond, placed upon the material like an eternal snowflake, immortalises this moment.
-      </p>
+  <img
+    class="s1-bg"
+    src="https://static.wixstatic.com/media/bbdef6_a59e50ab8b80412392908cdb89bc54dc~mv2.jpg/v1/fill/w_1920,h_1080,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_3939.jpg"
+    alt="MKT Showroom"
+  >
+  <div class="s1-overlay"></div>
+  <div class="s1-content">
+    <span class="eyebrow">MKT Universe · Our Space</span>
+    <h1 class="s1-title">LAVENDER<br>PINK</h1>
+    <p class="s1-body">
+      Every reflection emanating from the new RM 07-01 Coloured Ceramics awakens the memory, brilliantly sealing the creativity of an object that has become truly symbolic. The dials radiate, textures come to life, and colours vibrate as the world undergoes a metamorphosis: the shades compose a dreamlike universe where technical mastery diffracts the ordinary. The diamond, placed upon the material like an eternal snowflake, immortalises this moment.
+    </p>
+    <div class="color-nav">
+      <button class="color-nav-item active">Lavender Pink</button>
+      <button class="color-nav-item">Powder Blue</button>
+      <button class="color-nav-item">Blush Pink</button>
     </div>
-
-    <!-- Right: color nav + watch images -->
-    <div class="s1-right">
-      <div class="color-nav">
-        <button class="color-nav-item active">Lavender Pink</button>
-        <button class="color-nav-item">Powder Blue</button>
-        <button class="color-nav-item">Blush Pink</button>
-      </div>
-      <div class="watch-duo">
-        <div class="watch-card">
-          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=85&fit=crop" alt="RM 07-01 Front View — Geometric Dial">
-          <span class="watch-card-label">Front view</span>
-        </div>
-        <div class="watch-card">
-          <img src="https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&q=85&fit=crop" alt="RM 07-01 Angled View — Open-work Movement">
-          <span class="watch-card-label">Movement</span>
-        </div>
-      </div>
-    </div>
-
   </div>
-
   <!-- Scroll hint -->
   <div class="scroll-hint">
     <div class="scroll-hint-line"></div>
-    Scroll to discover
+    <span class="scroll-hint-text">Scroll</span>
   </div>
 </section>
 
