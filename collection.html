@@ -69,89 +69,145 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .menu-socials a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,234,.45);text-decoration:none;transition:color .3s;}
 .menu-socials a:hover{color:var(--white);}
 
-/* ── HERO ── */
-.col-hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;justify-content:flex-start;overflow:hidden;padding:0 80px 100px;}
-.col-hero-bg{position:absolute;inset:0;background-image:url('https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/fill/w_980,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg');background-size:cover;background-position:center 30%;filter:brightness(.18) saturate(0.7);}
-.col-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,8,8,.9) 0%,transparent 60%),linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,.4) 40%,transparent 100%);}
-.col-hero-content{position:relative;z-index:2;max-width:900px;}
-.col-hero-eyebrow{font-size:9px;font-weight:500;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:.85;}
-.col-hero-title{font-size:clamp(64px,10vw,148px);font-weight:300;font-style:italic;line-height:.95;letter-spacing:-.03em;color:var(--white);margin-bottom:40px;}
-.col-hero-title span{color:var(--gold);opacity:.35;}
-.col-hero-desc{font-size:clamp(13px,1.2vw,16px);font-weight:400;line-height:1.75;color:rgba(245,240,234,.5);max-width:480px;margin-bottom:48px;}
-.col-hero-line{width:80px;height:1px;background:linear-gradient(to right,var(--gold),transparent);}
-.hero-scroll-hint{position:absolute;bottom:48px;right:80px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px;opacity:.35;}
-.hero-scroll-hint span{font-size:8px;letter-spacing:.4em;text-transform:uppercase;writing-mode:vertical-rl;}
-.scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,var(--gold),transparent);}
+/* ── SCROLL REVEAL: S3 fixed video, S2 curtain, S1 slides over ── */
+.s3-video-wrap {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  z-index: 5;
+  overflow: hidden;
+}
+.s3-video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 
-/* ── FILTER TABS ── */
-.col-filter{padding:72px 80px 48px;display:flex;align-items:center;gap:0;border-bottom:1px solid rgba(65,105,225,.1);}
-.col-filter-label{font-size:9px;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:var(--gray);margin-right:40px;}
-.filter-tabs{display:flex;gap:0;}
-.filter-tab{background:none;border:none;border-bottom:1px solid rgba(65,105,225,.15);font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,240,234,.4);padding:14px 28px;cursor:none;transition:color .3s,border-color .3s;position:relative;}
-.filter-tab::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .4s cubic-bezier(.16,1,.3,1);}
-.filter-tab.active{color:var(--white);}
-.filter-tab.active::after{transform:scaleX(1);}
-.filter-tab:hover{color:rgba(245,240,234,.75);}
+.s2-curtain {
+  position: relative;
+  z-index: 15;
+  height: 100vh;
+  overflow: hidden;
+}
+.s2-curtain-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.5);
+}
+/* S2 hero text overlay */
+.s2-hero-content {
+  position: absolute;
+  bottom: 80px; left: 80px;
+  z-index: 2;
+}
+.s2-hero-eyebrow {
+  font-size: 9px; font-weight: 500; letter-spacing: .5em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 20px; opacity: .85;
+}
+.s2-hero-title {
+  font-size: clamp(52px, 8vw, 120px);
+  font-weight: 300; font-style: italic;
+  line-height: .95; letter-spacing: -.03em;
+  color: var(--white); margin-bottom: 0;
+}
 
-/* ── SECTION HEADERS ── */
-.col-section-header{padding:80px 80px 48px;display:flex;align-items:flex-end;justify-content:space-between;}
-.col-section-meta{}
-.col-section-eyebrow{font-size:9px;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:.8;}
-.col-section-title{font-size:clamp(32px,4vw,60px);font-weight:300;font-style:italic;line-height:1;letter-spacing:-.02em;}
-.col-section-count{font-size:11px;font-weight:500;letter-spacing:.3em;color:var(--gray);text-transform:uppercase;}
+.s3-spacer {
+  height: 100vh;
+  position: relative;
+  z-index: 0;
+}
 
-/* ── COLLECTION GRID ── */
-.col-grid{padding:0 80px 100px;display:grid;gap:2px;}
-.col-grid--3{grid-template-columns:repeat(3,1fr);}
-.col-grid--4{grid-template-columns:repeat(4,1fr);}
+/* S1: two-column collection showcase — slides over video */
+.col-s1 {
+  position: relative;
+  z-index: 20;
+  background: var(--black);
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 42% 58%;
+}
+.col-s1-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 120px 60px 80px 80px;
+  border-right: 1px solid rgba(65,105,225,0.08);
+}
+.col-s1-eyebrow {
+  font-size: 9px; font-weight: 500; letter-spacing: .45em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 28px; opacity: .85;
+}
+.col-s1-title {
+  font-family: var(--serif);
+  font-size: clamp(48px, 5.5vw, 86px);
+  font-weight: 300; font-style: italic;
+  line-height: .92; letter-spacing: -.02em;
+  color: var(--white); margin-bottom: 36px;
+}
+.col-s1-body {
+  font-size: 13px; font-weight: 300; line-height: 1.9;
+  color: rgba(245,240,234,.45); letter-spacing: .02em; max-width: 380px;
+  margin-bottom: 48px;
+}
+.col-s1-cta {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 9px; font-weight: 600; letter-spacing: .32em;
+  text-transform: uppercase; color: var(--white);
+  background: var(--gold); padding: 18px 40px; text-decoration: none;
+  transition: background .3s;
+}
+.col-s1-cta:hover { background: var(--gold-light); }
 
-/* ── COLLECTION CARD ── */
-.col-card{position:relative;overflow:hidden;background:var(--dark);cursor:none;text-decoration:none;display:block;}
-.col-card--tall{aspect-ratio:3/4;}
-.col-card--square{aspect-ratio:4/5;}
-.col-card-img{width:100%;height:100%;object-fit:cover;filter:grayscale(40%) brightness(.55);transition:transform 1.2s cubic-bezier(.16,1,.3,1),filter 1.1s;}
-.col-card:hover .col-card-img{transform:scale(1.07);filter:grayscale(10%) brightness(.7);}
-.col-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.92) 0%,rgba(8,8,8,.3) 45%,transparent 100%);transition:background .6s;}
-.col-card:hover .col-card-overlay{background:linear-gradient(to top,rgba(8,8,8,.96) 0%,rgba(8,8,8,.4) 55%,transparent 100%);}
-.col-card-body{position:absolute;bottom:0;left:0;right:0;padding:32px 30px;transform:translateY(8px);transition:transform .6s cubic-bezier(.16,1,.3,1);}
-.col-card:hover .col-card-body{transform:translateY(0);}
-.col-card-cat{font-size:8px;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:.8;}
-.col-card-name{font-size:clamp(18px,1.8vw,26px);font-weight:300;font-style:italic;color:var(--white);line-height:1.1;margin-bottom:8px;letter-spacing:-.01em;}
-.col-card-sub{font-size:11px;font-weight:400;letter-spacing:.15em;color:rgba(245,240,234,.4);text-transform:uppercase;margin-bottom:20px;}
-.col-card-cta{display:inline-flex;align-items:center;gap:10px;font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateY(10px);transition:opacity .4s .1s,transform .4s .1s;}
-.col-card:hover .col-card-cta{opacity:1;transform:translateY(0);}
-.col-card-cta-arrow{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid rgba(65,105,225,.4);border-radius:50%;font-size:12px;transition:background .3s,border-color .3s;}
-.col-card:hover .col-card-cta-arrow{background:var(--gold);border-color:var(--gold);color:var(--black);}
-/* Featured card — first card spans 2 rows */
-.col-card--featured{grid-row:span 1;}
+.col-s1-right {
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.col-s1-tabs {
+  display: flex; align-items: flex-end;
+  padding: 100px 60px 0; justify-content: flex-end;
+  border-bottom: 1px solid rgba(65,105,225,.1); flex-shrink: 0;
+}
+.col-s1-tab {
+  font-size: 11px; font-weight: 400;
+  color: rgba(245,240,234,.3); padding: 0 20px 16px;
+  cursor: none; background: none; border: none;
+  font-family: var(--sans); position: relative; transition: color .3s;
+  white-space: nowrap;
+}
+.col-s1-tab::after {
+  content: ''; position: absolute; bottom: -1px; left: 20px; right: 20px;
+  height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.col-s1-tab.active { color: var(--white); }
+.col-s1-tab.active::after { transform: scaleX(1); }
 
-/* ── DIVIDER ── */
-.col-divider{margin:0 80px;height:1px;background:linear-gradient(to right,transparent,rgba(65,105,225,.15),transparent);}
-
-/* ── CTA STRIP ── */
-.cta-strip{padding:120px 80px;display:flex;align-items:center;justify-content:space-between;gap:60px;background:var(--off-black);border-top:1px solid rgba(65,105,225,.08);border-bottom:1px solid rgba(65,105,225,.08);}
-.cta-strip-text{}
-.cta-strip-eyebrow{font-size:9px;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:.8;}
-.cta-strip-title{font-size:clamp(28px,3.5vw,52px);font-weight:300;font-style:italic;line-height:1.15;letter-spacing:-.02em;max-width:600px;}
-.cta-strip-actions{display:flex;gap:16px;flex-shrink:0;}
-.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--white);font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;padding:18px 36px;text-decoration:none;cursor:none;transition:background .3s,transform .3s;}
-.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);}
-.btn-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(65,105,225,.3);color:var(--white);font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;padding:18px 36px;text-decoration:none;cursor:none;transition:border-color .3s,color .3s,transform .3s;}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
-
-/* ── QUICKLINKS ── */
-.quicklinks{padding:0;background:var(--off-black);}
-.quicklinks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
-.ql-item{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--dark);text-decoration:none;display:block;}
-.ql-item+.ql-item{border-left:1px solid rgba(65,105,225,.06);}
-.ql-img{width:100%;height:100%;object-fit:cover;filter:grayscale(60%) brightness(.5);transition:transform 1s cubic-bezier(.16,1,.3,1),filter 1s;}
-.ql-item:hover .ql-img{transform:scale(1.08);filter:grayscale(20%) brightness(.65);}
-.ql-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:40px 32px;background:linear-gradient(to top,rgba(8,8,8,.85) 0%,transparent 60%);}
-.ql-label{font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;opacity:0;transform:translateY(12px);transition:opacity .4s,transform .4s;}
-.ql-item:hover .ql-label{opacity:1;transform:translateY(0);}
-.ql-title{font-family:var(--serif);font-size:clamp(14px,1.3vw,19px);font-weight:400;color:var(--white);line-height:1.2;white-space:nowrap;}
-.ql-arrow{margin-top:16px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(65,105,225,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:14px;opacity:0;transform:scale(.8);transition:opacity .4s,transform .4s;}
-.ql-item:hover .ql-arrow{opacity:1;transform:scale(1);}
+.col-s1-slider-wrap {
+  flex: 1; overflow: hidden; cursor: none; user-select: none; min-height: 0;
+}
+.col-s1-slider {
+  display: flex; height: 100%; gap: 2px; overflow-x: auto;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding: 2px 0 0 2px;
+}
+.col-s1-slider::-webkit-scrollbar { display: none; }
+.col-s1-slide {
+  flex: 0 0 calc(50% - 1px); scroll-snap-align: start;
+  overflow: hidden; position: relative; background: var(--dark);
+}
+.col-s1-slide img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .7s cubic-bezier(.16,1,.3,1);
+  filter: brightness(.85);
+  pointer-events: none;
+}
+.col-s1-slide:hover img { transform: scale(1.04); }
+.col-s1-slide-lbl {
+  position: absolute; bottom: 16px; left: 16px;
+  font-size: 8px; font-weight: 500; letter-spacing: .32em;
+  text-transform: uppercase; color: rgba(245,240,234,.5);
+}
 
 /* ── FOOTER ── */
 footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(65,105,225,.1);}
@@ -179,44 +235,21 @@ footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(
 .reveal-delay-2{transition-delay:.2s;}
 .reveal-delay-3{transition-delay:.3s;}
 .reveal-delay-4{transition-delay:.4s;}
-/* ── Eyebrow: fast appear ── */
-.col-hero-eyebrow,.col-section-eyebrow{transition-duration:.25s!important;transition-delay:0s!important;}
-/* ── Title: fast appear ── */
-.col-hero-title,.col-section-title{transition-duration:.3s!important;transition-delay:.04s!important;}
-/* ── Description: slide up from below, slow ── */
-.col-hero-desc{transform:translateY(32px)!important;transition:opacity .9s ease .55s,transform .9s cubic-bezier(.16,1,.3,1) .55s!important;}
-.col-hero-desc.visible{opacity:1;transform:translateY(0)!important;}
-
-/* ── TYPOGRAPHY — Richard Mille scale ── */
-p,li,cite,blockquote,.footer-tagline,.col-hero-desc,.col-card-sub{font-weight:400;line-height:1.75;}
-.col-section-title,.col-hero-title,.cta-strip-title{font-weight:300;}
-.section-label,.hero-eyebrow,.col-hero-eyebrow,.col-section-eyebrow,.col-card-cat,.col-card-cta,.filter-tab,.col-filter-label,.cta-strip-eyebrow,.ql-label,.nav-cta,.footer-col h4{font-weight:500;letter-spacing:.28em;}
-.col-card-name{font-weight:300;}
-.menu-links li a{font-weight:400;}
-
-/* ── HIDDEN STATE (for filter) ── */
-.col-section[data-section].hidden{display:none;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:1024px){
-  .col-grid--4{grid-template-columns:repeat(2,1fr);}
+  .col-s1{grid-template-columns:1fr;}
+  .col-s1-right{min-height:60vh;}
 }
 @media(max-width:768px){
-  .col-hero{padding:0 32px 80px;}
-  .col-filter{padding:48px 32px 32px;flex-wrap:wrap;}
-  .col-section-header{padding:60px 32px 32px;flex-direction:column;align-items:flex-start;gap:16px;}
-  .col-grid{padding:0 32px 60px;}
-  .col-grid--3{grid-template-columns:1fr 1fr;}
-  .col-grid--4{grid-template-columns:1fr 1fr;}
-  .col-divider{margin:0 32px;}
-  .cta-strip{padding:80px 32px;flex-direction:column;align-items:flex-start;}
-  .quicklinks-grid{grid-template-columns:repeat(2,1fr);}
+  .col-s1-left{padding:80px 32px 60px;}
+  .col-s1-tabs{padding:60px 32px 0;}
+  .s2-hero-content{left:32px;bottom:60px;}
   footer{padding:60px 24px 40px;}
   .footer-top{grid-template-columns:1fr;gap:32px;}
   .footer-bottom{flex-direction:column;gap:12px;text-align:center;}
   #menu-overlay{padding:100px 32px 48px;}
   #menu-overlay::before{left:32px;right:32px;}
-  .hero-scroll-hint{display:none;}
 }
 
   /* BOOKING MODAL */
@@ -378,208 +411,69 @@ p,li,cite,blockquote,.footer-tagline,.col-hero-desc,.col-card-sub{font-weight:40
 
 <main>
 
-<!-- ═══ HERO ═══ -->
-<section class="col-hero">
-  <div class="col-hero-bg"></div>
-  <div class="col-hero-content">
-    <div class="col-hero-eyebrow reveal">02 · MKT Collection</div>
-    <h1 class="col-hero-title reveal reveal-delay-1"><em>Collection</em></h1>
-    <p class="col-hero-desc reveal reveal-delay-2">Every piece is unique — no remakes, no mass production. Handcrafted for those who understand that true luxury is singular.</p>
-    <div class="col-hero-line reveal reveal-delay-3"></div>
-  </div>
-  <div class="hero-scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
+<!-- S3: truly fixed video background -->
+<div class="s3-video-wrap">
+  <video class="s3-video" autoplay muted loop playsinline>
+    <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/2278095/2278095-hd_1920_1080_24fps.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- S2: curtain — covers video, scrolls away to reveal it -->
+<section class="s2-curtain">
+  <img class="s2-curtain-img"
+    src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=1920&q=90&fit=crop"
+    alt="MKT Collection">
+  <div class="s2-hero-content">
+    <div class="s2-hero-eyebrow">2025 · Handcrafted in Vietnam</div>
+    <h1 class="s2-hero-title">THE<br>COLLECTION</h1>
   </div>
 </section>
 
-<!-- ═══ FILTER TABS ═══ -->
-<div class="col-filter">
-  <div class="filter-tabs">
-    <button class="filter-tab active" data-filter="all" onclick="filterCollection('all')">All</button>
-    <button class="filter-tab" data-filter="grillz" onclick="filterCollection('grillz')">Grillz</button>
-    <button class="filter-tab" data-filter="jewelry" onclick="filterCollection('jewelry')">Jewelry</button>
-  </div>
-</div>
+<!-- Spacer: user "views" the video before S1 arrives -->
+<div class="s3-spacer"></div>
 
-<!-- ═══ GRILLZ SECTION ═══ -->
-<div data-section="grillz">
-  <div class="col-section-header">
-    <div class="col-section-meta">
-      <div class="col-section-eyebrow reveal">Category · 01</div>
-      <h2 class="col-section-title reveal reveal-delay-1">Grillz</h2>
+<!-- S1: two-column collection showcase (slides over fixed video) -->
+<section class="col-s1">
+  <div class="col-s1-left">
+    <span class="col-s1-eyebrow">Grillz · Chains · Custom</span>
+    <h2 class="col-s1-title">WEAR<br>GRILLZ<br>NOT ONLY<br>TO FLEX</h2>
+    <p class="col-s1-body">
+      Each piece is conceived, engineered, and assembled by hand in Ho Chi Minh City — where Vietnamese craftsmanship meets global statement. No two pieces are ever identical.
+    </p>
+    <a href="#collections" class="col-s1-cta">
+      Explore Collection
+      <span style="font-size:16px;">→</span>
+    </a>
+  </div>
+  <div class="col-s1-right">
+    <div class="col-s1-tabs">
+      <button class="col-s1-tab active" data-tab="grillz">Grillz</button>
+      <button class="col-s1-tab" data-tab="chains">Chains</button>
+      <button class="col-s1-tab" data-tab="custom">Custom</button>
     </div>
-    <span class="col-section-count reveal-right">3 Collections</span>
-  </div>
-
-  <div class="col-grid col-grid--3">
-
-    <!-- M'SCOTIK -->
-    <a href="collection-mscotik.html" class="col-card col-card--tall reveal">
-      <img class="col-card-img"
-        src="https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/fill/w_980,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg"
-        alt="M'SCOTIK" loading="lazy">
-      <div class="col-card-overlay"></div>
-      <div class="col-card-body">
-        <div class="col-card-cat">Grillz</div>
-        <div class="col-card-name">M'SCOTIK</div>
-        <div class="col-card-sub">Signature Series</div>
-        <div class="col-card-cta">View Collection <span class="col-card-cta-arrow">→</span></div>
+    <div class="col-s1-slider-wrap" id="colSliderWrap">
+      <div class="col-s1-slider" id="colSlider">
+        <div class="col-s1-slide">
+          <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=900&q=85&fit=crop" alt="Grillz 01" loading="lazy">
+          <span class="col-s1-slide-lbl">Gold Grillz</span>
+        </div>
+        <div class="col-s1-slide">
+          <img src="https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=900&q=85&fit=crop" alt="Diamond 02" loading="lazy">
+          <span class="col-s1-slide-lbl">Diamond Set</span>
+        </div>
+        <div class="col-s1-slide">
+          <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=900&q=85&fit=crop" alt="Chain 03" loading="lazy">
+          <span class="col-s1-slide-lbl">Cuban Chain</span>
+        </div>
+        <div class="col-s1-slide">
+          <img src="https://images.unsplash.com/photo-1561828995-aa79a2db86dd?w=900&q=85&fit=crop" alt="Custom 04" loading="lazy">
+          <span class="col-s1-slide-lbl">Custom Order</span>
+        </div>
       </div>
-    </a>
-
-    <!-- M'CELESTIAL -->
-    <a href="collection-mcelestial.html" class="col-card col-card--tall reveal reveal-delay-1">
-      <img class="col-card-img"
-        src="https://static.wixstatic.com/media/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg/v1/fill/w_762,h_1005,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg"
-        alt="M'CELESTIAL" loading="lazy">
-      <div class="col-card-overlay"></div>
-      <div class="col-card-body">
-        <div class="col-card-cat">Grillz</div>
-        <div class="col-card-name">M'CELESTIAL</div>
-        <div class="col-card-sub">Celestial Series</div>
-        <div class="col-card-cta">View Collection <span class="col-card-cta-arrow">→</span></div>
-      </div>
-    </a>
-
-    <!-- M'RISING STAR - COLOR -->
-    <a href="collection-mrisingstar.html" class="col-card col-card--tall reveal-right">
-      <img class="col-card-img"
-        src="https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/crop/x_84,y_0,w_907,h_1214/fill/w_907,h_1214,al_c,q_85,enc_avif,quality_auto/536553245_1658062488450681_1675531161089091145_n.jpg"
-        alt="M'RISING STAR - COLOR" loading="lazy">
-      <div class="col-card-overlay"></div>
-      <div class="col-card-body">
-        <div class="col-card-cat">Grillz · Color</div>
-        <div class="col-card-name">M'RISING STAR</div>
-        <div class="col-card-sub">Color Edition</div>
-        <div class="col-card-cta">View Collection <span class="col-card-cta-arrow">→</span></div>
-      </div>
-    </a>
-
-  </div>
-</div>
-
-<!-- DIVIDER -->
-<div class="col-divider"></div>
-
-<!-- ═══ JEWELRY / Q4 2025 SECTION ═══ -->
-<div data-section="jewelry">
-  <div class="col-section-header">
-    <div class="col-section-meta">
-      <div class="col-section-eyebrow reveal">Category · 02</div>
-      <h2 class="col-section-title reveal reveal-delay-1">Q4 / 2025 Collection</h2>
     </div>
-    <span class="col-section-count reveal-right">4 Pieces</span>
-  </div>
-
-  <div class="col-grid col-grid--4">
-
-    <!-- K'NOT -->
-    <a href="collection-knot.html" class="col-card col-card--square reveal">
-      <img class="col-card-img"
-        src="https://static.wixstatic.com/media/bbdef6_a59e50ab8b80412392908cdb89bc54dc~mv2.jpg/v1/fill/w_980,h_700,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_3939.jpg"
-        alt="K'NOT" loading="lazy">
-      <div class="col-card-overlay"></div>
-      <div class="col-card-body">
-        <div class="col-card-cat">Jewelry · Q4 2025</div>
-        <div class="col-card-name">K'NOT</div>
-        <div class="col-card-sub">Knot Series</div>
-        <div class="col-card-cta">View <span class="col-card-cta-arrow">→</span></div>
-      </div>
-    </a>
-
-    <!-- K'ETHEREALITY -->
-    <a href="collection-kethereality.html" class="col-card col-card--square reveal reveal-delay-1">
-      <img class="col-card-img"
-        src="https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/fill/w_980,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg"
-        alt="K'ETHEREALITY" loading="lazy">
-      <div class="col-card-overlay"></div>
-      <div class="col-card-body">
-        <div class="col-card-cat">Jewelry · Q4 2025</div>
-        <div class="col-card-name">K'ETHEREALITY</div>
-        <div class="col-card-sub">Ethereal Series</div>
-        <div class="col-card-cta">View <span class="col-card-cta-arrow">→</span></div>
-      </div>
-    </a>
-
-    <!-- K'HARMONICS -->
-    <a href="collection-kharmonics.html" class="col-card col-card--square reveal-right reveal-delay-1">
-      <img class="col-card-img"
-        src="https://static.wixstatic.com/media/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg/v1/fill/w_762,h_1005,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg"
-        alt="K'HARMONICS" loading="lazy">
-      <div class="col-card-overlay"></div>
-      <div class="col-card-body">
-        <div class="col-card-cat">Jewelry · Q4 2025</div>
-        <div class="col-card-name">K'HARMONICS</div>
-        <div class="col-card-sub">Harmonic Series</div>
-        <div class="col-card-cta">View <span class="col-card-cta-arrow">→</span></div>
-      </div>
-    </a>
-
-    <!-- K'BOUTEGON -->
-    <a href="collection-kboutegon.html" class="col-card col-card--square reveal-right">
-      <img class="col-card-img"
-        src="https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/crop/x_84,y_0,w_907,h_1214/fill/w_907,h_1214,al_c,q_85,enc_avif,quality_auto/536553245_1658062488450681_1675531161089091145_n.jpg"
-        alt="K'BOUTEGON" loading="lazy">
-      <div class="col-card-overlay"></div>
-      <div class="col-card-body">
-        <div class="col-card-cat">Jewelry · Q4 2025</div>
-        <div class="col-card-name">K'BOUTEGON</div>
-        <div class="col-card-sub">Boutegon Series</div>
-        <div class="col-card-cta">View <span class="col-card-cta-arrow">→</span></div>
-      </div>
-    </a>
-
-  </div>
-</div>
-
-<!-- ═══ CTA STRIP ═══ -->
-<section class="cta-strip">
-  <div class="cta-strip-text">
-    <div class="cta-strip-eyebrow reveal">Private Commission</div>
-    <h2 class="cta-strip-title reveal reveal-delay-1">Ready to commission your piece?</h2>
-  </div>
-  <div class="cta-strip-actions reveal-right">
-    <a href="contact.html" class="btn-primary">Book a Consultation</a>
-    <a href="pricing.html" class="btn-ghost">View Pricing</a>
   </div>
 </section>
-
-<!-- ═══ QUICKLINKS ═══ -->
-<section class="quicklinks"><div class="quicklinks-grid">
-  <a href="store.html" class="ql-item reveal">
-    <img class="ql-img" src="https://static.wixstatic.com/media/bbdef6_a59e50ab8b80412392908cdb89bc54dc~mv2.jpg/v1/fill/w_980,h_700,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_3939.jpg" alt="Store Locator" loading="lazy">
-    <div class="ql-overlay">
-      <div class="ql-label">Find Us</div>
-      <div class="ql-title">Store Locator</div>
-      <div class="ql-arrow">→</div>
-    </div>
-  </a>
-  <a href="contact.html" class="ql-item reveal-right">
-    <img class="ql-img" src="https://static.wixstatic.com/media/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg/v1/fill/w_762,h_1005,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/bbdef6_df8fbe6f4a18452682c0e58c3394fd2b~mv2.jpg" alt="Book Appointment" loading="lazy">
-    <div class="ql-overlay">
-      <div class="ql-label">Private Consultation</div>
-      <div class="ql-title">Book Appointment</div>
-      <div class="ql-arrow">→</div>
-    </div>
-  </a>
-  <a href="pricing.html" class="ql-item reveal">
-    <img class="ql-img" src="https://static.wixstatic.com/media/bbdef6_65d32ccb79c84bc99a9c6bee0c32aed5~mv2.jpg/v1/fill/w_980,h_980,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/481211558_1527747081482223_118554144495421154_n%20(2).jpg" alt="Pricing" loading="lazy">
-    <div class="ql-overlay">
-      <div class="ql-label">Investment</div>
-      <div class="ql-title">Pricing &amp; Options</div>
-      <div class="ql-arrow">→</div>
-    </div>
-  </a>
-  <a href="brand.html" class="ql-item reveal-right">
-    <img class="ql-img" src="https://static.wixstatic.com/media/bbdef6_96a26e43df3447a7a58726ff6edd5495~mv2.jpg/v1/crop/x_84,y_0,w_907,h_1214/fill/w_907,h_1214,al_c,q_85,enc_avif,quality_auto/536553245_1658062488450681_1675531161089091145_n.jpg" alt="The Brand" loading="lazy">
-    <div class="ql-overlay">
-      <div class="ql-label">Our Story</div>
-      <div class="ql-title">The Brand</div>
-      <div class="ql-arrow">→</div>
-    </div>
-  </a>
-</div></section>
 
 <!-- ═══ FOOTER ═══ -->
 <footer><div class="footer-inner">
@@ -661,27 +555,6 @@ window.addEventListener('scroll',function(){
   });
 })();
 
-// ── CATEGORY FILTER ──
-function filterCollection(cat) {
-  // Update tab states
-  document.querySelectorAll('.filter-tab').forEach(function(btn){
-    btn.classList.toggle('active', btn.dataset.filter === cat);
-  });
-  // Show / hide sections
-  document.querySelectorAll('[data-section]').forEach(function(sec){
-    if (cat === 'all' || sec.dataset.section === cat) {
-      sec.classList.remove('hidden');
-    } else {
-      sec.classList.add('hidden');
-    }
-  });
-  // Also hide the divider when filtering
-  var divider = document.querySelector('.col-divider');
-  if (divider) {
-    divider.style.display = (cat === 'all') ? '' : 'none';
-  }
-}
-
 // ── SCROLL REVEAL ──
 (function(){
   var io = new IntersectionObserver(function(entries){
@@ -695,6 +568,30 @@ function filterCollection(cat) {
 
   document.querySelectorAll('.reveal, .reveal-right').forEach(function(el){
     io.observe(el);
+  });
+})();
+
+/* Drag-scroll for collection slider */
+(function(){
+  var wrap = document.getElementById('colSliderWrap');
+  var slider = document.getElementById('colSlider');
+  if (!wrap || !slider) return;
+  var isDown = false, startX, scrollLeft;
+  wrap.addEventListener('mousedown', function(e){
+    isDown = true; wrap.style.cursor = 'grabbing';
+    startX = e.pageX - wrap.offsetLeft; scrollLeft = slider.scrollLeft; e.preventDefault();
+  });
+  wrap.addEventListener('mouseleave', function(){ isDown = false; wrap.style.cursor = 'none'; });
+  wrap.addEventListener('mouseup', function(){ isDown = false; wrap.style.cursor = 'none'; });
+  wrap.addEventListener('mousemove', function(e){
+    if (!isDown) return; e.preventDefault();
+    slider.scrollLeft = scrollLeft - (e.pageX - wrap.offsetLeft - startX) * 1.5;
+  });
+  document.querySelectorAll('.col-s1-tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      document.querySelectorAll('.col-s1-tab').forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+    });
   });
 })();
 </script>
