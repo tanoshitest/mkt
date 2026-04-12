@@ -146,146 +146,144 @@
       background: var(--cream);
     }
 
-    /* ── SECTION 1: HERO LAYOUT ── */
-    .s1-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* ── SECTION 1: TWO-COLUMN LIGHT ── */
+    .s1 {
+      position: relative;
+      z-index: 20;
+      background: #fff;
       min-height: 100vh;
-      padding-top: 100px;
+      display: grid;
+      grid-template-columns: 38% 62%;
     }
-
     .s1-left {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 80px 60px 80px 80px;
-      border-right: 1px solid var(--border);
+      padding: 140px 60px 80px 80px;
+      border-right: 1px solid rgba(0,0,0,0.06);
     }
-
     .eyebrow {
       font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.42em;
+      font-weight: 400;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 32px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      color: var(--muted);
+      margin-bottom: 28px;
     }
-    .eyebrow::before {
-      content: '';
-      width: 28px; height: 1px;
-      background: var(--gold);
-    }
-
     .s1-title {
       font-family: var(--serif);
-      font-size: clamp(64px, 7vw, 120px);
+      font-size: clamp(52px, 5.5vw, 86px);
       font-weight: 700;
-      line-height: 0.9;
+      line-height: 0.92;
       letter-spacing: -0.02em;
       color: var(--text);
-      margin-bottom: 48px;
+      margin-bottom: 36px;
     }
-
     .s1-body {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 300;
       line-height: 1.9;
       color: var(--muted);
-      letter-spacing: 0.02em;
-      max-width: 480px;
+      letter-spacing: 0.01em;
+      max-width: 400px;
     }
-
     .s1-right {
       display: flex;
       flex-direction: column;
-      padding: 80px 80px 80px 60px;
-    }
-
-    .color-nav {
-      display: flex;
-      gap: 0;
-      margin-bottom: 48px;
-      padding-top: 20px;
-    }
-    .color-nav-item {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 10px 20px;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: all 0.3s;
-      background: transparent;
-      font-family: var(--sans);
-    }
-    .color-nav-item:not(:first-child) { border-left: none; }
-    .color-nav-item.active {
-      background: var(--text);
-      color: var(--cream);
-      border-color: var(--text);
-    }
-    .color-nav-item:hover:not(.active) { border-color: var(--text); color: var(--text); }
-
-    .watch-duo {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      flex: 1;
-    }
-
-    .watch-card {
-      aspect-ratio: 1;
       overflow: hidden;
-      background: var(--cream2);
-      position: relative;
     }
-    .watch-card img {
+    .s1-tabs {
+      display: flex;
+      align-items: flex-end;
+      padding: 120px 60px 0;
+      justify-content: flex-end;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+    .s1-tab {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(100,96,92,0.5);
+      padding: 0 24px 16px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      position: relative;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+    .s1-tab::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 24px; right: 24px;
+      height: 1.5px;
+      background: var(--text);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .s1-tab.active { color: var(--text); font-weight: 500; }
+    .s1-tab.active::after { transform: scaleX(1); }
+    .s1-tab:hover:not(.active) { color: var(--text); }
+    .s1-slider-wrap {
+      flex: 1;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      min-height: 0;
+    }
+    .s1-slider-wrap:active { cursor: grabbing; }
+    .s1-slider {
+      display: flex;
+      height: 100%;
+      gap: 4px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 4px 0 0 4px;
+    }
+    .s1-slider::-webkit-scrollbar { display: none; }
+    .s1-slide {
+      flex: 0 0 calc(50% - 2px);
+      scroll-snap-align: start;
+      overflow: hidden;
+      position: relative;
+      background: #111;
+    }
+    .s1-slide img {
       width: 100%; height: 100%;
       object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
     }
-    .watch-card:hover img { transform: scale(1.04); }
-
-    .watch-card-label {
+    .s1-slide:hover img { transform: scale(1.04); }
+    .s1-slide-lbl {
       position: absolute;
-      bottom: 12px; left: 12px;
+      bottom: 16px; left: 16px;
       font-size: 8px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(26,22,20,0.5);
-      font-weight: 500;
-    }
-
-    /* scroll hint */
-    .scroll-hint {
-      position: absolute;
-      bottom: 40px;
-      left: 80px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 9px;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.4);
+      font-weight: 500;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px; left: 80px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+      color: rgba(26,22,20,0.3); pointer-events: none;
     }
     .scroll-hint-line {
-      width: 40px; height: 1px;
-      background: var(--muted);
-      position: relative;
-      overflow: hidden;
+      width: 36px; height: 1px;
+      background: rgba(26,22,20,0.2);
+      position: relative; overflow: hidden;
     }
     .scroll-hint-line::after {
       content: '';
-      position: absolute;
-      left: -100%;
-      top: 0; bottom: 0;
-      width: 100%;
+      position: absolute; left: -100%; top: 0; bottom: 0; width: 100%;
       background: var(--gold);
       animation: lineSlide 2s ease-in-out infinite;
     }
@@ -588,7 +586,8 @@
       #navbar { padding: 18px 24px; }
       .nav-logo img { height: 50px; }
       .nav-login-btn span { display: none; }
-      .s1-content { padding: 0 24px 60px; }
+      .s1-left { padding: 60px 24px 40px; }
+      .s1-tabs { padding: 24px 24px 0; justify-content: flex-start; }
       .color-nav { flex-wrap: wrap; }
       .s2-text { left: 24px; bottom: 40px; }
       .s3-inner { padding: 80px 24px; }
@@ -645,32 +644,53 @@
 </div>
 
 <!-- ════════════════════════════════════════
-     SECTION 1 — Full-bleed hero image
+     SECTION 1 — Two-column: text + slider
 ════════════════════════════════════════ -->
 <section class="s1">
-  <img
-    class="s1-bg"
-    src="https://static.wixstatic.com/media/bbdef6_a59e50ab8b80412392908cdb89bc54dc~mv2.jpg/v1/fill/w_1920,h_1080,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_3939.jpg"
-    alt="MKT Showroom"
-  >
-  <div class="s1-overlay"></div>
-  <div class="s1-content">
-    <span class="eyebrow">MKT Universe · Our Space</span>
+
+  <!-- Left: text -->
+  <div class="s1-left">
+    <span class="eyebrow">RM 07-01 · Coloured Ceramics</span>
     <h1 class="s1-title">LAVENDER<br>PINK</h1>
     <p class="s1-body">
       Every reflection emanating from the new RM 07-01 Coloured Ceramics awakens the memory, brilliantly sealing the creativity of an object that has become truly symbolic. The dials radiate, textures come to life, and colours vibrate as the world undergoes a metamorphosis: the shades compose a dreamlike universe where technical mastery diffracts the ordinary. The diamond, placed upon the material like an eternal snowflake, immortalises this moment.
     </p>
-    <div class="color-nav">
-      <button class="color-nav-item active">Lavender Pink</button>
-      <button class="color-nav-item">Powder Blue</button>
-      <button class="color-nav-item">Blush Pink</button>
+  </div>
+
+  <!-- Right: tabs + draggable image slider -->
+  <div class="s1-right">
+    <div class="s1-tabs">
+      <button class="s1-tab active" data-tab="lavender">Lavender Pink</button>
+      <button class="s1-tab" data-tab="blue">Powder Blue</button>
+      <button class="s1-tab" data-tab="blush">Blush Pink</button>
+    </div>
+    <div class="s1-slider-wrap" id="s1SliderWrap">
+      <div class="s1-slider" id="s1Slider">
+        <div class="s1-slide">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=85&fit=crop" alt="Front view" loading="lazy">
+          <span class="s1-slide-lbl">Front view</span>
+        </div>
+        <div class="s1-slide">
+          <img src="https://images.unsplash.com/photo-1619134778706-7015533a6150?w=900&q=85&fit=crop" alt="Side view" loading="lazy">
+          <span class="s1-slide-lbl">Side view</span>
+        </div>
+        <div class="s1-slide">
+          <img src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=900&q=85&fit=crop" alt="Movement" loading="lazy">
+          <span class="s1-slide-lbl">Movement</span>
+        </div>
+        <div class="s1-slide">
+          <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=900&q=85&fit=crop" alt="Detail" loading="lazy">
+          <span class="s1-slide-lbl">Detail</span>
+        </div>
+      </div>
     </div>
   </div>
-  <!-- Scroll hint -->
+
   <div class="scroll-hint">
     <div class="scroll-hint-line"></div>
-    <span class="scroll-hint-text">Scroll</span>
+    Scroll to explore
   </div>
+
 </section>
 
 <!-- ════════════════════════════════════════
@@ -855,6 +875,48 @@
     else { alert('Please fill in all fields.'); }
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLogin(); });
+
+  /* S1 drag-to-scroll slider */
+  (function(){
+    const wrap = document.getElementById('s1SliderWrap');
+    const slider = document.getElementById('s1Slider');
+    if (!wrap || !slider) return;
+    let isDown = false, startX, scrollLeft;
+    wrap.addEventListener('mousedown', e => {
+      isDown = true;
+      wrap.style.cursor = 'grabbing';
+      startX = e.pageX - wrap.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+      e.preventDefault();
+    });
+    wrap.addEventListener('mouseleave', () => { isDown = false; wrap.style.cursor = 'grab'; });
+    wrap.addEventListener('mouseup', () => { isDown = false; wrap.style.cursor = 'grab'; });
+    wrap.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - wrap.offsetLeft;
+      slider.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+
+    /* Touch support */
+    let touchStartX, touchScrollLeft;
+    wrap.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].pageX;
+      touchScrollLeft = slider.scrollLeft;
+    }, { passive: true });
+    wrap.addEventListener('touchmove', e => {
+      const dx = touchStartX - e.touches[0].pageX;
+      slider.scrollLeft = touchScrollLeft + dx;
+    }, { passive: true });
+
+    /* Tab switching */
+    document.querySelectorAll('.s1-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.s1-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  })();
 </script>
 </body>
 </html>
