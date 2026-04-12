@@ -171,7 +171,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .col-s1 {
   position: relative;
   z-index: 20;
-  background: var(--black);
+  background: #fff;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 42% 58%;
@@ -179,7 +179,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .col-s1-left {
   display: flex; flex-direction: column; justify-content: center;
   padding: 120px 60px 80px 80px;
-  border-right: 1px solid rgba(65,105,225,0.08);
+  border-right: 1px solid rgba(0,0,0,0.07);
 }
 .col-s1-eyebrow {
   font-size: 9px; font-weight: 500; letter-spacing: .45em;
@@ -191,33 +191,36 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   font-size: clamp(48px, 5.5vw, 86px);
   font-weight: 300; font-style: italic;
   line-height: .92; letter-spacing: -.02em;
-  color: var(--white); margin-bottom: 36px;
+  color: #111; margin-bottom: 36px;
 }
 .col-s1-body {
   font-size: 13px; font-weight: 300; line-height: 1.9;
-  color: rgba(245,240,234,.45); letter-spacing: .02em; max-width: 380px;
+  color: rgba(0,0,0,.45); letter-spacing: .02em; max-width: 380px;
   margin-bottom: 48px;
 }
 .col-s1-cta {
   display: inline-flex; align-items: center; gap: 14px;
   font-size: 9px; font-weight: 600; letter-spacing: .32em;
-  text-transform: uppercase; color: var(--white);
+  text-transform: uppercase; color: #fff;
   background: var(--gold); padding: 18px 40px; text-decoration: none;
   transition: background .3s;
 }
 .col-s1-cta:hover { background: var(--gold-light); }
 
 .col-s1-right {
-  display: flex; flex-direction: column; overflow: hidden;
+  display: flex; flex-direction: column;
+  padding: 0 48px;
+  justify-content: center;
 }
 .col-s1-tabs {
   display: flex; align-items: flex-end;
-  padding: 100px 60px 0; justify-content: flex-end;
-  border-bottom: 1px solid rgba(65,105,225,.1); flex-shrink: 0;
+  padding: 0 0 0; justify-content: flex-end;
+  border-bottom: 1px solid rgba(0,0,0,.08); flex-shrink: 0;
+  margin-bottom: 32px;
 }
 .col-s1-tab {
   font-size: 11px; font-weight: 400;
-  color: rgba(245,240,234,.3); padding: 0 20px 16px;
+  color: rgba(0,0,0,.3); padding: 0 20px 16px;
   cursor: none; background: none; border: none;
   font-family: var(--sans); position: relative; transition: color .3s;
   white-space: nowrap;
@@ -228,33 +231,42 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   transform: scaleX(0); transform-origin: left;
   transition: transform .35s cubic-bezier(.16,1,.3,1);
 }
-.col-s1-tab.active { color: var(--white); }
+.col-s1-tab.active { color: #111; }
 .col-s1-tab.active::after { transform: scaleX(1); }
 
 .col-s1-slider-wrap {
-  flex: 1; overflow: hidden; cursor: none; user-select: none; min-height: 0;
+  overflow: hidden; cursor: none; user-select: none;
 }
 .col-s1-slider {
-  display: flex; height: 100%; gap: 2px; overflow-x: auto;
-  scroll-snap-type: x mandatory; scrollbar-width: none;
-  padding: 2px 0 0 2px;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 4px;
 }
 .col-s1-slider::-webkit-scrollbar { display: none; }
 .col-s1-slide {
-  flex: 0 0 calc(50% - 1px); scroll-snap-align: start;
-  overflow: hidden; position: relative; background: var(--dark);
+  flex: 0 0 calc(50% - 8px);
+  aspect-ratio: 3 / 4;
+  scroll-snap-align: start;
+  overflow: hidden; position: relative;
+  background: #f0f0ee;
+  border-radius: 2px;
 }
 .col-s1-slide img {
   width: 100%; height: 100%; object-fit: cover; display: block;
   transition: transform .7s cubic-bezier(.16,1,.3,1);
-  filter: brightness(.85);
   pointer-events: none;
 }
 .col-s1-slide:hover img { transform: scale(1.04); }
 .col-s1-slide-lbl {
-  position: absolute; bottom: 16px; left: 16px;
+  position: absolute; bottom: 14px; left: 14px;
   font-size: 8px; font-weight: 500; letter-spacing: .32em;
-  text-transform: uppercase; color: rgba(245,240,234,.5);
+  text-transform: uppercase; color: rgba(0,0,0,.45);
+  background: rgba(255,255,255,.7);
+  padding: 4px 8px;
+  backdrop-filter: blur(4px);
 }
 
 /* ── CREATIVE DIRECTOR ── */
