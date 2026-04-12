@@ -162,6 +162,78 @@
       z-index: 0;
     }
 
+    /* S4: second truly fixed bg — same mechanic as S3, fades in via JS */
+    .s4 {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      z-index: 4;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .s4.visible { opacity: 1; }
+    .s4-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* spacer for S4 */
+    .s4-spacer {
+      height: 100vh;
+      position: relative;
+      z-index: 0;
+    }
+
+    /* ── SECTION MASTERPIECE ── */
+    .s-master {
+      position: relative;
+      z-index: 20;
+      background: #fff;
+      padding: 100px 60px 140px;
+      overflow: hidden;
+    }
+    .master-title {
+      font-family: var(--serif);
+      font-size: clamp(60px, 8vw, 130px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--text);
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    /* Organic collage grid */
+    .master-collage {
+      position: relative;
+      width: 100%;
+      min-height: 800px;
+    }
+    .mc {
+      position: absolute;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    }
+    .mc img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .mc:hover img { transform: scale(1.05); }
+
+    /* Collage positions — organic scatter like mood board */
+    .mc-1 { width: 22%; aspect-ratio: 3/4; top: 0%;    left: 0%; }
+    .mc-2 { width: 16%; aspect-ratio: 3/4; top: 4%;    left: 26%; }
+    .mc-3 { width: 10%; aspect-ratio: 1/1; top: 42%;   left: 33%; }
+    .mc-4 { width: 19%; aspect-ratio: 4/5; top: 2%;    left: 50%; }
+    .mc-5 { width: 14%; aspect-ratio: 3/4; top: 46%;   left: 52%; }
+    .mc-6 { width: 20%; aspect-ratio: 3/4; top: 0%;    left: 72%; }
+    .mc-7 { width: 28%; aspect-ratio: 5/3; top: 56%;   left: 20%; }
+    .mc-8 { width: 22%; aspect-ratio: 5/3; top: 62%;   left: 65%; }
+
     /* ── SECTION 1: TWO-COLUMN LIGHT ── */
     .s1 {
       position: relative;
@@ -532,6 +604,59 @@
 
 </section>
 
+<!-- ════════════════════════════════════════
+     SECTION 4 — Fixed bg #2 (revealed after S1 scrolls away)
+════════════════════════════════════════ -->
+<section class="s4">
+  <img
+    class="s4-img"
+    src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1920&q=90&fit=crop"
+    alt="MKT Lifestyle"
+    loading="lazy"
+  >
+</section>
+
+<!-- spacer: S4 visible while user "rests" before MASTERPIECE arrives -->
+<div class="s4-spacer"></div>
+
+<!-- ════════════════════════════════════════
+     SECTION MASTERPIECE
+════════════════════════════════════════ -->
+<section class="s-master">
+
+  <h2 class="master-title">MASTERPIECE</h2>
+
+  <div class="master-collage">
+
+    <div class="mc mc-1">
+      <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&q=85&fit=crop" alt="Model 1">
+    </div>
+    <div class="mc mc-2">
+      <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=600&q=85&fit=crop" alt="Model 2">
+    </div>
+    <div class="mc mc-3">
+      <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=400&q=85&fit=crop" alt="Model 3">
+    </div>
+    <div class="mc mc-4">
+      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=85&fit=crop" alt="Model 4">
+    </div>
+    <div class="mc mc-5">
+      <img src="https://images.unsplash.com/photo-1541535881914-fa59bc1d5af4?w=500&q=85&fit=crop" alt="Model 5">
+    </div>
+    <div class="mc mc-6">
+      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500&q=85&fit=crop" alt="Model 6">
+    </div>
+    <div class="mc mc-7">
+      <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=700&q=85&fit=crop" alt="Model 7">
+    </div>
+    <div class="mc mc-8">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=85&fit=crop" alt="Model 8">
+    </div>
+
+  </div>
+
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -652,6 +777,60 @@
         this.classList.add('active');
       });
     });
+  })();
+
+  /* Fixed bg swap: S3 visible during S1 zone, S4 visible during MASTERPIECE zone */
+  (function(){
+    const s3  = document.querySelector('.s3');
+    const s4  = document.querySelector('.s4');
+    const s1  = document.querySelector('.s1');
+    const sMaster = document.querySelector('.s-master');
+    if (!s3 || !s4 || !s1 || !sMaster) return;
+
+    function update() {
+      const s1Rect = s1.getBoundingClientRect();
+      const masterRect = sMaster.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // S4 fades in when MASTERPIECE is coming into view (bottom of master enters viewport)
+      // and fades out when MASTERPIECE has fully passed
+      const masterVisible = masterRect.top < vh && masterRect.bottom > 0;
+      s4.classList.toggle('visible', masterVisible);
+
+      // S3 is always-on (z:5), S4 sits at z:4 — so S4 fading in has no effect unless
+      // we also fade S3 out when S4 should dominate
+      if (masterVisible) {
+        s3.style.opacity = '0';
+      } else {
+        s3.style.opacity = '1';
+      }
+    }
+
+    // Smooth opacity transition on S3 too
+    s3.style.transition = 'opacity 0.6s ease';
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  /* Collage: subtle parallax on scroll */
+  (function(){
+    const items = document.querySelectorAll('.mc');
+    if (!items.length) return;
+    const speeds = [0.04, -0.06, 0.08, -0.03, 0.07, -0.05, 0.03, -0.07];
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      requestAnimationFrame(() => {
+        const sy = window.scrollY;
+        items.forEach((el, i) => {
+          const s = speeds[i % speeds.length];
+          el.style.transform = `translateY(${sy * s}px)`;
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }, { passive: true });
   })();
 
 </script>
