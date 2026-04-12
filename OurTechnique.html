@@ -190,7 +190,7 @@
     .s-process {
       position: relative;
       z-index: 20;
-      background: #0c0c0c;
+      background: #fff;
       display: flex;
     }
 
@@ -207,20 +207,20 @@
       flex-direction: column;
       justify-content: center;
       padding: 80px 60px 80px 80px;
-      border-right: 1px solid rgba(255,255,255,0.07);
+      border-right: 1px solid rgba(0,0,0,0.08);
     }
     .process-eyebrow {
       font-size: 9px;
       font-weight: 500;
       letter-spacing: .42em;
       text-transform: uppercase;
-      color: var(--accent, #4169E1);
+      color: #4169E1;
       margin-bottom: 32px;
       display: flex; align-items: center; gap: 14px;
     }
     .process-eyebrow::before {
       content: ''; width: 28px; height: 1px;
-      background: var(--accent, #4169E1);
+      background: #4169E1;
     }
     .process-title {
       font-family: var(--serif);
@@ -228,14 +228,14 @@
       font-weight: 700;
       line-height: 1.08;
       letter-spacing: -0.02em;
-      color: #f5f0ea;
+      color: #111;
       margin-bottom: 28px;
     }
     .process-desc {
       font-size: 13px;
       font-weight: 300;
       line-height: 1.85;
-      color: rgba(245,240,234,.45);
+      color: rgba(0,0,0,.45);
       letter-spacing: .02em;
       max-width: 320px;
     }
@@ -244,10 +244,10 @@
       font-size: 11px;
       letter-spacing: .25em;
       text-transform: uppercase;
-      color: rgba(245,240,234,.18);
+      color: rgba(0,0,0,.2);
     }
     .process-counter span {
-      color: var(--accent, #4169E1);
+      color: #4169E1;
       font-size: 28px;
       font-weight: 300;
       letter-spacing: -.01em;
@@ -290,7 +290,7 @@
     }
     .proc-step-num {
       font-size: 9px; font-weight: 500; letter-spacing: .38em;
-      text-transform: uppercase; color: rgba(245,240,234,.25);
+      text-transform: uppercase; color: rgba(0,0,0,.25);
       margin-bottom: 28px;
     }
     .proc-step-title {
@@ -298,75 +298,36 @@
       font-size: clamp(28px, 2.8vw, 42px);
       font-weight: 700; line-height: 1.05;
       letter-spacing: -0.02em;
-      color: #f5f0ea;
+      color: #111;
       margin-bottom: 20px;
     }
     .proc-step-body {
       font-size: 13px; font-weight: 300;
       line-height: 1.85; letter-spacing: .015em;
-      color: rgba(245,240,234,.5);
+      color: rgba(0,0,0,.5);
       max-width: 320px;
     }
 
     .proc-card-visual {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-left: 1px solid rgba(255,255,255,.06);
+      border-left: 1px solid rgba(0,0,0,.07);
       position: relative;
       overflow: hidden;
     }
-    .proc-icon {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      opacity: .85;
+    .proc-card-visual img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(15%) brightness(0.92);
+      transition: transform .8s cubic-bezier(.16,1,.3,1);
     }
-    .proc-icon svg {
-      width: 72px; height: 72px;
-      stroke-width: 1;
-    }
-    .proc-icon-label {
-      font-size: 9px; letter-spacing: .35em;
-      text-transform: uppercase;
-      color: rgba(245,240,234,.3);
-    }
+    .proc-card:hover .proc-card-visual img { transform: scale(1.04); }
 
-    /* 8 distinct backgrounds */
-    .proc-card:nth-child(1) { background: #0c0c0c; }
-    .proc-card:nth-child(2) { background: #0f0f14; }
-    .proc-card:nth-child(3) { background: #110a08; }
-    .proc-card:nth-child(4) { background: #08100f; }
-    .proc-card:nth-child(5) { background: #0e0c14; }
-    .proc-card:nth-child(6) { background: #12080e; }
-    .proc-card:nth-child(7) { background: #090e14; }
-    .proc-card:nth-child(8) { background: #0c1008; }
+    /* all cards white */
+    .proc-card { background: #fff; }
+    .proc-card:nth-child(even) { background: #f8f8f6; }
 
-    /* accent color per card */
-    .proc-card:nth-child(1) .proc-step-title { color: #f5f0ea; }
-    .proc-card:nth-child(1) .proc-icon svg { stroke: #6b8ef0; }
-    .proc-card:nth-child(2) .proc-icon svg { stroke: #7b9ef8; }
-    .proc-card:nth-child(3) .proc-icon svg { stroke: #e8a87c; }
-    .proc-card:nth-child(4) .proc-icon svg { stroke: #b8c4cc; }
-    .proc-card:nth-child(5) .proc-icon svg { stroke: #a8d8c8; }
-    .proc-card:nth-child(6) .proc-icon svg { stroke: #d4a8c8; }
-    .proc-card:nth-child(7) .proc-icon svg { stroke: #f0d080; }
-    .proc-card:nth-child(8) .proc-icon svg { stroke: #90c890; }
-
-    /* diagonal grid line decoration */
-    .proc-card-visual::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 40px,
-        rgba(255,255,255,.018) 40px,
-        rgba(255,255,255,.018) 41px
-      );
-      pointer-events: none;
-    }
+    /* thin top border accent per card */
+    .proc-card { border-top: 1px solid rgba(0,0,0,.06); }
 
     @media (max-width: 768px) {
       .s-process { flex-direction: column; }
@@ -375,7 +336,7 @@
       .process-right { width: 100%; flex: none; }
       .proc-card { position: relative; grid-template-columns: 1fr; min-height: auto; }
       .proc-card-text { padding: 60px 32px 40px; }
-      .proc-card-visual { min-height: 220px; border-left: none; border-top: 1px solid rgba(255,255,255,.06); }
+      .proc-card-visual { min-height: 260px; border-left: none; border-top: 1px solid rgba(0,0,0,.06); }
     }
 
     /* ── SECTION 1: TWO-COLUMN LIGHT ── */
@@ -792,16 +753,7 @@
         <p class="proc-step-body">Conceptualizing the idea. Hand sketching and digital illustrations defining the shape, dimensions, and gemstone placement.</p>
       </div>
       <div class="proc-card-visual">
-        <div class="proc-icon">
-          <svg viewBox="0 0 80 80" fill="none" stroke="#6b8ef0" xmlns="http://www.w3.org/2000/svg">
-            <rect x="12" y="12" width="56" height="56" rx="2"/>
-            <line x1="20" y1="55" x2="35" y2="35"/>
-            <line x1="35" y1="35" x2="50" y2="45"/>
-            <line x1="50" y1="45" x2="62" y2="28"/>
-            <circle cx="62" cy="24" r="3" fill="#6b8ef0" stroke="none"/>
-          </svg>
-          <span class="proc-icon-label">Sketch &amp; Illustration</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85&fit=crop" alt="2D Design sketch">
       </div>
     </div>
 
@@ -813,17 +765,7 @@
         <p class="proc-step-body">CAD modeling. Creating a highly precise 3D digital representation to calculate metal weight and view the piece from all angles.</p>
       </div>
       <div class="proc-card-visual">
-        <div class="proc-icon">
-          <svg viewBox="0 0 80 80" fill="none" stroke="#7b9ef8" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="40,10 68,24 68,56 40,70 12,56 12,24"/>
-            <polygon points="40,10 40,70" stroke-dasharray="4 3"/>
-            <polygon points="12,24 68,24" stroke-dasharray="4 3"/>
-            <polygon points="12,56 68,56" stroke-dasharray="4 3"/>
-            <line x1="40" y1="10" x2="68" y2="24"/>
-            <line x1="40" y1="10" x2="12" y2="24"/>
-          </svg>
-          <span class="proc-icon-label">CAD Wireframe</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&q=85&fit=crop" alt="3D CAD Design">
       </div>
     </div>
 
@@ -835,15 +777,7 @@
         <p class="proc-step-body">The lost-wax process. Molten gold is poured into a plaster mold created from a 3D printed resin prototype.</p>
       </div>
       <div class="proc-card-visual">
-        <div class="proc-icon">
-          <svg viewBox="0 0 80 80" fill="none" stroke="#e8a87c" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 20 Q20 10 30 10 L50 10 Q60 10 60 20 L56 48 Q56 54 50 54 L30 54 Q24 54 24 48 Z"/>
-            <path d="M32 54 Q28 62 24 72 M48 54 Q52 62 56 72" stroke-width="1.5"/>
-            <path d="M36 54 Q36 64 40 72 Q44 64 44 54" stroke-width="1.5"/>
-            <ellipse cx="40" cy="20" rx="14" ry="5" fill="rgba(232,168,124,.15)"/>
-          </svg>
-          <span class="proc-icon-label">Lost-Wax Casting</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=900&q=85&fit=crop" alt="Gold Casting">
       </div>
     </div>
 
@@ -855,17 +789,7 @@
         <p class="proc-step-body">Refining the raw casting. Removing imperfections, smoothing surfaces, and shaping the metal component using precise files and tools.</p>
       </div>
       <div class="proc-card-visual">
-        <div class="proc-icon">
-          <svg viewBox="0 0 80 80" fill="none" stroke="#b8c4cc" xmlns="http://www.w3.org/2000/svg">
-            <rect x="14" y="34" width="36" height="10" rx="2"/>
-            <line x1="50" y1="39" x2="68" y2="32"/>
-            <rect x="62" y="28" width="8" height="8" rx="1"/>
-            <line x1="18" y1="44" x2="16" y2="60"/>
-            <line x1="28" y1="44" x2="28" y2="62"/>
-            <line x1="38" y1="44" x2="40" y2="60"/>
-          </svg>
-          <span class="proc-icon-label">Filing &amp; Smoothing</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=900&q=85&fit=crop" alt="Jewelry Filing">
       </div>
     </div>
 
@@ -877,16 +801,7 @@
         <p class="proc-step-body">Gemstone faceting. Transforming raw rough minerals into sparkling gemstones by cutting precise facets at mathematical angles.</p>
       </div>
       <div class="proc-card-visual">
-        <div class="proc-icon">
-          <svg viewBox="0 0 80 80" fill="none" stroke="#a8d8c8" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="40,10 62,30 52,64 28,64 18,30"/>
-            <polygon points="40,10 62,30 40,38 18,30"/>
-            <line x1="40" y1="38" x2="52" y2="64"/>
-            <line x1="40" y1="38" x2="28" y2="64"/>
-            <line x1="40" y1="10" x2="40" y2="38"/>
-          </svg>
-          <span class="proc-icon-label">Gemstone Faceting</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=900&q=85&fit=crop" alt="Stone Cutting">
       </div>
     </div>
 
@@ -898,17 +813,7 @@
         <p class="proc-step-body">Securing the gems. Master setters precisely set each gemstone into the metal, using techniques like prong, bezel, or pavé setting.</p>
       </div>
       <div class="proc-card-visual">
-        <div class="proc-icon">
-          <svg viewBox="0 0 80 80" fill="none" stroke="#d4a8c8" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="40" cy="46" r="14"/>
-            <line x1="40" y1="14" x2="40" y2="30"/>
-            <line x1="30" y1="17" x2="34" y2="32"/>
-            <line x1="22" y1="25" x2="30" y2="36"/>
-            <path d="M30 14 Q40 10 48 16" stroke-dasharray="3 2"/>
-            <path d="M28 46 Q34 40 40 44 Q46 40 52 46" fill="rgba(212,168,200,.12)"/>
-          </svg>
-          <span class="proc-icon-label">Prong · Bezel · Pavé</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=900&q=85&fit=crop" alt="Stone Setting">
       </div>
     </div>
 
@@ -920,18 +825,7 @@
         <p class="proc-step-body">Final shine. Using high-speed polishing wheels and various abrasive compounds to give the gold a mirror-like finish.</p>
       </div>
       <div class="proc-card-visual">
-        <div class="proc-icon">
-          <svg viewBox="0 0 80 80" fill="none" stroke="#f0d080" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="40" cy="44" r="18"/>
-            <circle cx="40" cy="44" r="10" stroke-dasharray="5 3"/>
-            <line x1="40" y1="12" x2="40" y2="20"/>
-            <line x1="58" y1="18" x2="53" y2="24"/>
-            <line x1="65" y1="34" x2="57" y2="36"/>
-            <line x1="22" y1="18" x2="27" y2="24"/>
-            <line x1="15" y1="34" x2="23" y2="36"/>
-          </svg>
-          <span class="proc-icon-label">Mirror Finish</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=900&q=85&fit=crop" alt="Polishing">
       </div>
     </div>
 
@@ -943,16 +837,7 @@
         <p class="proc-step-body">Finishing touch. Rhodium plating for brilliant white gold, or electroplating for yellow/rose gold to enhance durability and color.</p>
       </div>
       <div class="proc-card-visual">
-        <div class="proc-icon">
-          <svg viewBox="0 0 80 80" fill="none" stroke="#90c890" xmlns="http://www.w3.org/2000/svg">
-            <rect x="16" y="40" width="48" height="24" rx="4"/>
-            <path d="M28 40 L28 32 Q28 20 40 20 Q52 20 52 32 L52 40"/>
-            <ellipse cx="40" cy="40" rx="8" ry="4" fill="rgba(144,200,144,.2)"/>
-            <line x1="40" y1="20" x2="40" y2="14"/>
-            <circle cx="40" cy="12" r="3" fill="#90c890" stroke="none"/>
-          </svg>
-          <span class="proc-icon-label">Electroplating</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=900&q=85&fit=crop" alt="Plating">
       </div>
     </div>
 
