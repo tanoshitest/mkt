@@ -23,9 +23,7 @@
       --sans:    'Montserrat', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
-    body { background: var(--cream); color: var(--text); font-family: var(--sans); }
-    .page-wrap { overflow-x: hidden; }
+    html, body { scroll-behavior: smooth; background: var(--cream); color: var(--text); font-family: var(--sans); }
 
     /* ── NAVBAR ── */
     #navbar {
@@ -450,8 +448,6 @@
   </div>
 </div>
 
-<div class="page-wrap">
-
 <!-- ════════════════════════════════════════
      SECTION 2 — Full-bleed showroom image (scrolls away first)
 ════════════════════════════════════════ -->
@@ -525,8 +521,6 @@
   </div>
 
 </section>
-
-</div><!-- /.page-wrap -->
 
 <!-- FOOTER -->
 <footer>
@@ -649,6 +643,7 @@
       });
     });
   })();
+
 </script>
 </body>
 </html>
