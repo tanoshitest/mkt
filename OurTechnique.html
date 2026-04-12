@@ -383,7 +383,8 @@
     .s1-right {
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      padding: 0 48px;
+      justify-content: center;
     }
     .s1-tabs {
       display: flex;
@@ -420,7 +421,6 @@
     .s1-tab.active::after { transform: scaleX(1); }
     .s1-tab:hover:not(.active) { color: var(--text); }
     .s1-slider-wrap {
-      flex: 1;
       overflow: hidden;
       cursor: grab;
       user-select: none;
@@ -429,21 +429,22 @@
     .s1-slider-wrap:active { cursor: grabbing; }
     .s1-slider {
       display: flex;
-      height: 100%;
-      gap: 4px;
+      gap: 16px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      padding: 4px 0 0 4px;
+      padding-bottom: 4px;
     }
     .s1-slider::-webkit-scrollbar { display: none; }
     .s1-slide {
-      flex: 0 0 calc(50% - 2px);
+      flex: 0 0 calc(50% - 8px);
+      aspect-ratio: 3 / 4;
       scroll-snap-align: start;
       overflow: hidden;
       position: relative;
       background: #111;
+      border-radius: 2px;
     }
     .s1-slide img {
       width: 100%; height: 100%;
@@ -667,7 +668,7 @@
   <!-- Left: text -->
   <div class="s1-left">
     <span class="eyebrow">RM 07-01 · Coloured Ceramics</span>
-    <h1 class="s1-title">LAVENDER<br>PINK</h1>
+    <h1 class="s1-title" id="s1Title">LAVENDER<br>PINK</h1>
     <p class="s1-body">
       Every reflection emanating from the new RM 07-01 Coloured Ceramics awakens the memory, brilliantly sealing the creativity of an object that has become truly symbolic. The dials radiate, textures come to life, and colours vibrate as the world undergoes a metamorphosis: the shades compose a dreamlike universe where technical mastery diffracts the ordinary. The diamond, placed upon the material like an eternal snowflake, immortalises this moment.
     </p>
@@ -682,20 +683,55 @@
     </div>
     <div class="s1-slider-wrap" id="s1SliderWrap">
       <div class="s1-slider" id="s1Slider">
-        <div class="s1-slide">
+        <!-- LAVENDER PINK -->
+        <div class="s1-slide" data-tab="lavender">
           <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=85&fit=crop" alt="Front view" loading="lazy">
-          <span class="s1-slide-lbl">Front view</span>
+          <span class="s1-slide-lbl">Front View</span>
         </div>
-        <div class="s1-slide">
+        <div class="s1-slide" data-tab="lavender">
           <img src="https://images.unsplash.com/photo-1619134778706-7015533a6150?w=900&q=85&fit=crop" alt="Side view" loading="lazy">
-          <span class="s1-slide-lbl">Side view</span>
+          <span class="s1-slide-lbl">Side View</span>
         </div>
-        <div class="s1-slide">
+        <div class="s1-slide" data-tab="lavender">
           <img src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=900&q=85&fit=crop" alt="Movement" loading="lazy">
           <span class="s1-slide-lbl">Movement</span>
         </div>
-        <div class="s1-slide">
+        <div class="s1-slide" data-tab="lavender">
           <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=900&q=85&fit=crop" alt="Detail" loading="lazy">
+          <span class="s1-slide-lbl">Detail</span>
+        </div>
+        <!-- POWDER BLUE -->
+        <div class="s1-slide" data-tab="blue" style="display:none">
+          <img src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=900&q=85&fit=crop" alt="Blue 01" loading="lazy">
+          <span class="s1-slide-lbl">Front View</span>
+        </div>
+        <div class="s1-slide" data-tab="blue" style="display:none">
+          <img src="https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=900&q=85&fit=crop" alt="Blue 02" loading="lazy">
+          <span class="s1-slide-lbl">Side View</span>
+        </div>
+        <div class="s1-slide" data-tab="blue" style="display:none">
+          <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=900&q=85&fit=crop" alt="Blue 03" loading="lazy">
+          <span class="s1-slide-lbl">Movement</span>
+        </div>
+        <div class="s1-slide" data-tab="blue" style="display:none">
+          <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=900&q=85&fit=crop" alt="Blue 04" loading="lazy">
+          <span class="s1-slide-lbl">Detail</span>
+        </div>
+        <!-- BLUSH PINK -->
+        <div class="s1-slide" data-tab="blush" style="display:none">
+          <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=900&q=85&fit=crop" alt="Blush 01" loading="lazy">
+          <span class="s1-slide-lbl">Front View</span>
+        </div>
+        <div class="s1-slide" data-tab="blush" style="display:none">
+          <img src="https://images.unsplash.com/photo-1619134778706-7015533a6150?w=900&q=85&fit=crop&crop=right" alt="Blush 02" loading="lazy">
+          <span class="s1-slide-lbl">Side View</span>
+        </div>
+        <div class="s1-slide" data-tab="blush" style="display:none">
+          <img src="https://images.unsplash.com/photo-1600717535275-0b18ede2f7fc?w=900&q=85&fit=crop" alt="Blush 03" loading="lazy">
+          <span class="s1-slide-lbl">Movement</span>
+        </div>
+        <div class="s1-slide" data-tab="blush" style="display:none">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=85&fit=crop&crop=bottom" alt="Blush 04" loading="lazy">
           <span class="s1-slide-lbl">Detail</span>
         </div>
       </div>
@@ -957,11 +993,27 @@
       slider.scrollLeft = touchScrollLeft + dx;
     }, { passive: true });
 
-    /* Tab switching */
+    /* Tab switching: swap images + update title */
+    const tabTitles = {
+      lavender: 'LAVENDER<br>PINK',
+      blue:     'POWDER<br>BLUE',
+      blush:    'BLUSH<br>PINK'
+    };
+    const s1Title = document.getElementById('s1Title');
+    const s1Slider = document.getElementById('s1Slider');
     document.querySelectorAll('.s1-tab').forEach(tab => {
       tab.addEventListener('click', function() {
+        const key = this.dataset.tab;
         document.querySelectorAll('.s1-tab').forEach(t => t.classList.remove('active'));
         this.classList.add('active');
+        /* swap slides */
+        document.querySelectorAll('.s1-slide').forEach(slide => {
+          slide.style.display = slide.dataset.tab === key ? '' : 'none';
+        });
+        /* reset scroll */
+        if (s1Slider) s1Slider.scrollLeft = 0;
+        /* update title */
+        if (s1Title && tabTitles[key]) s1Title.innerHTML = tabTitles[key];
       });
     });
   })();
