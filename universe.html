@@ -191,30 +191,33 @@
       position: relative;
       z-index: 20;
       background: #fff;
-      padding: 100px 60px 140px;
+      padding: 100px 0 0;
       overflow: hidden;
     }
     .master-title {
       font-family: var(--serif);
-      font-size: clamp(60px, 8vw, 130px);
+      font-size: clamp(72px, 10vw, 160px);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
       color: var(--text);
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 0;
+      padding-bottom: 60px;
     }
 
-    /* Organic collage grid */
+    /* Organic collage — uses vw for consistent sizing across viewports */
     .master-collage {
       position: relative;
       width: 100%;
-      min-height: 800px;
+      height: 80vw;
+      max-height: 1100px;
+      overflow: hidden;
     }
     .mc {
       position: absolute;
       overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.14);
     }
     .mc img {
       width: 100%; height: 100%;
@@ -222,17 +225,17 @@
       display: block;
       transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
     }
-    .mc:hover img { transform: scale(1.05); }
+    .mc:hover img { transform: scale(1.06); }
 
-    /* Collage positions — organic scatter like mood board */
-    .mc-1 { width: 22%; aspect-ratio: 3/4; top: 0%;    left: 0%; }
-    .mc-2 { width: 16%; aspect-ratio: 3/4; top: 4%;    left: 26%; }
-    .mc-3 { width: 10%; aspect-ratio: 1/1; top: 42%;   left: 33%; }
-    .mc-4 { width: 19%; aspect-ratio: 4/5; top: 2%;    left: 50%; }
-    .mc-5 { width: 14%; aspect-ratio: 3/4; top: 46%;   left: 52%; }
-    .mc-6 { width: 20%; aspect-ratio: 3/4; top: 0%;    left: 72%; }
-    .mc-7 { width: 28%; aspect-ratio: 5/3; top: 56%;   left: 20%; }
-    .mc-8 { width: 22%; aspect-ratio: 5/3; top: 62%;   left: 65%; }
+    /* Collage scatter — dense mood-board layout */
+    .mc-1 { width: 21vw; aspect-ratio: 3/4;  top: 1vw;   left: 1vw; }
+    .mc-2 { width: 14vw; aspect-ratio: 3/4;  top: 3vw;   left: 27vw; }
+    .mc-3 { width: 8vw;  aspect-ratio: 1/1;  top: 28vw;  left: 35vw; }
+    .mc-4 { width: 19vw; aspect-ratio: 4/5;  top: 0vw;   left: 46vw; }
+    .mc-5 { width: 13vw; aspect-ratio: 3/4;  top: 30vw;  left: 52vw; }
+    .mc-6 { width: 22vw; aspect-ratio: 3/4;  top: 0vw;   left: 72vw; }
+    .mc-7 { width: 32vw; aspect-ratio: 16/9; top: 38vw;  left: 14vw; }
+    .mc-8 { width: 28vw; aspect-ratio: 16/9; top: 44vw;  left: 60vw; }
 
     /* ── SECTION 1: TWO-COLUMN LIGHT ── */
     .s1 {
@@ -813,19 +816,22 @@
     update();
   })();
 
-  /* Collage: subtle parallax on scroll */
+  /* Collage: gentle parallax relative to collage entry point */
   (function(){
     const items = document.querySelectorAll('.mc');
-    if (!items.length) return;
-    const speeds = [0.04, -0.06, 0.08, -0.03, 0.07, -0.05, 0.03, -0.07];
+    const master = document.querySelector('.s-master');
+    if (!items.length || !master) return;
+    const speeds = [0.03, -0.04, 0.05, -0.02, 0.04, -0.03, 0.02, -0.04];
     let ticking = false;
     window.addEventListener('scroll', () => {
       if (ticking) return;
       requestAnimationFrame(() => {
-        const sy = window.scrollY;
+        const masterTop = master.getBoundingClientRect().top;
+        const relScroll = -masterTop; // 0 when master at top
+        if (relScroll < 0) { ticking = false; return; }
         items.forEach((el, i) => {
           const s = speeds[i % speeds.length];
-          el.style.transform = `translateY(${sy * s}px)`;
+          el.style.transform = `translateY(${relScroll * s}px)`;
         });
         ticking = false;
       });
