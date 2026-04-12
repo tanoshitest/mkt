@@ -520,8 +520,8 @@
       position: sticky;
       top: 0;
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       background: var(--cream);
       overflow: hidden;
     }
@@ -529,42 +529,48 @@
     .ed-card:nth-child(2) { z-index: 2; background: var(--cream2); }
     .ed-card:nth-child(3) { z-index: 3; background: var(--cream); }
     .ed-card:nth-child(4) { z-index: 4; background: var(--cream2); }
-    .ed-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 80px 40px 80px 56px;
+    .ed-img {
+      flex: 0 0 62%;
+      overflow: hidden;
     }
-    .ed-num {
-      font-family: var(--serif);
-      font-size: 64px; font-weight: 300; font-style: italic;
-      color: var(--gold); opacity: .18;
-      line-height: 1; margin-bottom: 28px;
-    }
-    .ed-tag {
-      font-size: 8px; font-weight: 500; letter-spacing: .4em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 14px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .ed-tag::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
-    .ed-name {
-      font-family: var(--serif);
-      font-size: clamp(22px, 2.4vw, 36px);
-      font-weight: 600; line-height: 1.1;
-      color: var(--text); margin-bottom: 18px;
-    }
-    .ed-desc {
-      font-size: 13px; font-weight: 300; line-height: 1.85;
-      color: var(--muted); max-width: 300px;
-    }
-    .ed-img { overflow: hidden; }
     .ed-img img {
       width: 100%; height: 100%;
       object-fit: cover; display: block;
       transition: transform .9s cubic-bezier(.16,1,.3,1);
     }
     .ed-card:hover .ed-img img { transform: scale(1.04); }
+    .ed-text {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 36px 56px;
+      border-top: 1px solid var(--border);
+    }
+    .ed-num {
+      font-family: var(--serif);
+      font-size: 48px; font-weight: 300; font-style: italic;
+      color: var(--gold); opacity: .2;
+      line-height: 1; flex-shrink: 0;
+    }
+    .ed-text-inner { display: flex; flex-direction: column; }
+    .ed-tag {
+      font-size: 8px; font-weight: 500; letter-spacing: .4em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .ed-tag::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+    .ed-name {
+      font-family: var(--serif);
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 600; line-height: 1.15;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .ed-desc {
+      font-size: 13px; font-weight: 300; line-height: 1.8;
+      color: var(--muted); max-width: 480px;
+    }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
@@ -785,53 +791,63 @@
   <div class="editorial-right">
 
     <div class="ed-card">
-      <div class="ed-text">
-        <div class="ed-num">01</div>
-        <div class="ed-tag">Street Culture</div>
-        <h3 class="ed-name">The Flex is Personal</h3>
-        <p class="ed-desc">Every grillz tells a story only the wearer truly knows. Crafted for those who refuse to blend in.</p>
-      </div>
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=900&q=85&fit=crop&auto=format" alt="Street Style">
       </div>
+      <div class="ed-text">
+        <div class="ed-num">01</div>
+        <div class="ed-text-inner">
+          <div class="ed-tag">Street Culture</div>
+          <h3 class="ed-name">The Flex is Personal</h3>
+          <p class="ed-desc">Every grillz tells a story only the wearer truly knows. Crafted for those who refuse to blend in.</p>
+        </div>
+      </div>
     </div>
 
     <div class="ed-card">
-      <div class="ed-text">
-        <div class="ed-num">02</div>
-        <div class="ed-tag">Fine Jewelry</div>
-        <h3 class="ed-name">Precision in Every Facet</h3>
-        <p class="ed-desc">Diamond-set, hand-polished, and built to last a lifetime. Vietnamese craftsmanship at its finest.</p>
-      </div>
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=900&q=85&fit=crop&auto=format" alt="Fine Jewelry">
       </div>
+      <div class="ed-text">
+        <div class="ed-num">02</div>
+        <div class="ed-text-inner">
+          <div class="ed-tag">Fine Jewelry</div>
+          <h3 class="ed-name">Precision in Every Facet</h3>
+          <p class="ed-desc">Diamond-set, hand-polished, and built to last a lifetime. Vietnamese craftsmanship at its finest.</p>
+        </div>
+      </div>
     </div>
 
     <div class="ed-card">
-      <div class="ed-text">
-        <div class="ed-num">03</div>
-        <div class="ed-tag">Identity</div>
-        <h3 class="ed-name">An Extension of Self</h3>
-        <p class="ed-desc">Jewelry is not decoration — it is declaration. Wear what you stand for, make it gold.</p>
-      </div>
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=900&q=85&fit=crop&auto=format" alt="Identity">
       </div>
+      <div class="ed-text">
+        <div class="ed-num">03</div>
+        <div class="ed-text-inner">
+          <div class="ed-tag">Identity</div>
+          <h3 class="ed-name">An Extension of Self</h3>
+          <p class="ed-desc">Jewelry is not decoration — it is declaration. Wear what you stand for, make it gold.</p>
+        </div>
+      </div>
     </div>
 
     <div class="ed-card">
-      <div class="ed-text">
-        <div class="ed-num">04</div>
-        <div class="ed-tag">Custom Order</div>
-        <h3 class="ed-name">Made for You, Only You</h3>
-        <p class="ed-desc">No two pieces are identical. Your vision, our hands — a collaboration that begins with a conversation.</p>
-      </div>
       <div class="ed-img">
         <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=85&fit=crop&auto=format" alt="Custom">
       </div>
+      <div class="ed-text">
+        <div class="ed-num">04</div>
+        <div class="ed-text-inner">
+          <div class="ed-tag">Custom Order</div>
+          <h3 class="ed-name">Made for You, Only You</h3>
+          <p class="ed-desc">No two pieces are identical. Your vision, our hands — a collaboration that begins with a conversation.</p>
+        </div>
+      </div>
     </div>
 
+  </div>
+</section>
   </div>
 </section>
 
