@@ -324,6 +324,83 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   .cd-right{padding:40px 32px 80px;border-left:none;border-top:1px solid rgba(65,105,225,.07);}
 }
 
+/* ── S4 FIXED IMAGE ── */
+.s4-img-wrap {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  z-index: 6;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.s4-img-wrap.visible { opacity: 1; }
+.s4-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.6);
+}
+.s4-spacer { height: 100vh; position: relative; z-index: 0; }
+
+/* ── FEATURE SECTION ── */
+.feat-section {
+  position: relative;
+  z-index: 20;
+  background: var(--black);
+  display: grid;
+  grid-template-columns: 50% 50%;
+  min-height: 100vh;
+}
+.feat-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 60px 120px 80px;
+}
+.feat-eyebrow {
+  font-size: 9px; font-weight: 500; letter-spacing: .45em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 36px; opacity: .8;
+  display: flex; align-items: center; gap: 16px;
+}
+.feat-eyebrow::before {
+  content: ''; width: 32px; height: 1px; background: var(--gold);
+}
+.feat-title {
+  font-size: clamp(38px, 4.8vw, 72px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -.02em;
+  color: var(--white);
+  text-transform: uppercase;
+  margin-bottom: 36px;
+}
+.feat-body {
+  font-size: clamp(13px, 1.1vw, 16px);
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(245,240,234,.5);
+  max-width: 440px;
+  letter-spacing: .015em;
+}
+.feat-right {
+  overflow: hidden;
+  min-height: 70vh;
+}
+.feat-right img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: brightness(0.88);
+}
+@media(max-width:768px){
+  .feat-section{grid-template-columns:1fr;}
+  .feat-left{padding:80px 32px 60px;}
+  .feat-right{min-height:55vw;}
+}
+
 /* ── FOOTER ── */
 footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(65,105,225,.1);}
 .footer-inner{max-width:1400px;margin:0 auto;}
@@ -628,6 +705,35 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
   </div>
 </section>
 
+<!-- S4: Fixed image — revealed after Creative Director scrolls past -->
+<div class="s4-img-wrap" id="s4ImgWrap">
+  <img class="s4-img"
+    src="https://images.unsplash.com/photo-1601121141418-1a57c17db37b?w=1920&q=90&fit=crop"
+    alt="MKT Craftsmanship">
+</div>
+
+<!-- Spacer: user views s4 fixed image -->
+<div class="s4-spacer"></div>
+
+<!-- Feature section: slides over s4 fixed image -->
+<section class="feat-section">
+  <div class="feat-left">
+    <div class="feat-eyebrow">The Process</div>
+    <h2 class="feat-title">BUILT FOR<br>THOSE WHO<br>DEMAND<br>MORE</h2>
+    <p class="feat-body">
+      Every MKT piece begins not with metal, but with a conversation. Our craftsmen in Ho Chi Minh City work at the intersection of traditional Vietnamese goldsmithing and contemporary street culture — producing grillz and jewelry that carry the weight of intention, precision, and identity.
+      <br><br>
+      No shortcuts. No compromises. Only work that stands as a testament to the wearer's ambition.
+    </p>
+  </div>
+  <div class="feat-right">
+    <img
+      src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&q=90&fit=crop"
+      alt="MKT Goldsmith at work"
+      loading="lazy">
+  </div>
+</section>
+
 <!-- ═══ FOOTER ═══ -->
 <footer><div class="footer-inner">
   <div class="footer-top">
@@ -724,20 +830,27 @@ window.addEventListener('scroll',function(){
   });
 })();
 
-/* Scroll reveal: hero fades out, video fades in after text section */
+/* Scroll reveal: fixed layer transitions */
 (function(){
-  var s2Hero = document.getElementById('s2Hero');
-  var s3Video = document.getElementById('s3VideoWrap');
+  var s2Hero    = document.getElementById('s2Hero');
+  var s3Video   = document.getElementById('s3VideoWrap');
+  var s4Img     = document.getElementById('s4ImgWrap');
   var textSection = document.getElementById('s2TextSection');
+  var cdSection   = document.querySelector('.cd-section');
   if (!s2Hero || !s3Video || !textSection) return;
 
   function updateReveal() {
-    var textBottom = textSection.getBoundingClientRect().bottom;
-    var textPast = textBottom <= 0;
-    // Video fades in only after text has fully scrolled past viewport
-    // Hero image stays fixed and visible throughout — never fades
-    s3Video.classList.toggle('visible', textPast);
+    var textPast = textSection.getBoundingClientRect().bottom <= 0;
+    var cdPast   = cdSection ? cdSection.getBoundingClientRect().bottom <= 0 : false;
+
+    // Hero image: visible until text section enters
     s2Hero.style.opacity = textPast ? '0' : '1';
+
+    // Ocean video: visible after text past; hidden when s4 image takes over
+    s3Video.classList.toggle('visible', textPast && !cdPast);
+
+    // S4 fixed image: visible after cd-section fully scrolled past
+    if (s4Img) s4Img.classList.toggle('visible', cdPast);
   }
 
   window.addEventListener('scroll', updateReveal, { passive: true });
