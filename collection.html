@@ -257,6 +257,73 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   text-transform: uppercase; color: rgba(245,240,234,.5);
 }
 
+/* ── CREATIVE DIRECTOR ── */
+.cd-section {
+  position: relative;
+  z-index: 20;
+  background: var(--black);
+  display: grid;
+  grid-template-columns: 42% 58%;
+  min-height: 70vh;
+  border-top: 1px solid rgba(65,105,225,.07);
+}
+.cd-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 60px 100px 80px;
+}
+.cd-photo {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(15%) brightness(0.9);
+}
+.cd-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 80px 100px 60px;
+  border-left: 1px solid rgba(65,105,225,.07);
+}
+.cd-label {
+  font-size: 9px; font-weight: 500; letter-spacing: .45em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 40px; opacity: .8;
+  display: flex; align-items: center; gap: 16px;
+}
+.cd-label::before {
+  content: ''; width: 32px; height: 1px; background: var(--gold);
+}
+.cd-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 36px);
+  font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 32px;
+}
+.cd-quote {
+  font-size: clamp(14px, 1.3vw, 17px);
+  font-weight: 300; line-height: 1.85;
+  color: rgba(245,240,234,.6);
+  letter-spacing: .01em;
+  max-width: 560px;
+  font-style: italic;
+}
+.cd-sig {
+  margin-top: 40px;
+  font-size: 10px; letter-spacing: .3em;
+  text-transform: uppercase; color: rgba(245,240,234,.25);
+}
+@media(max-width:768px){
+  .cd-section{grid-template-columns:1fr;}
+  .cd-left{padding:60px 32px 40px;}
+  .cd-right{padding:40px 32px 80px;border-left:none;border-top:1px solid rgba(65,105,225,.07);}
+}
+
 /* ── FOOTER ── */
 footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(65,105,225,.1);}
 .footer-inner{max-width:1400px;margin:0 auto;}
@@ -538,6 +605,23 @@ footer{background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══ CREATIVE DIRECTOR ═══ -->
+<section class="cd-section">
+  <div class="cd-left">
+    <img class="cd-photo"
+      src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=90&fit=crop"
+      alt="MKT Creative Director">
+  </div>
+  <div class="cd-right">
+    <div class="cd-label">The Maker</div>
+    <h2 class="cd-title">Creative Director</h2>
+    <p class="cd-quote">
+      "To me, a diamond is not merely a rare material, but a memory crystallized through love and connection. Each creation in the Diamond Collection represents a bond that cannot be replicated — between people, between emotion and time. When love runs deep, there is no need for excess; only a timeless mark to remind us that we once belonged to one another, and always will."
+    </p>
+    <div class="cd-sig">MKT · Ho Chi Minh City</div>
   </div>
 </section>
 
