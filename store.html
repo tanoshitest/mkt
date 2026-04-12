@@ -78,11 +78,21 @@ body::before { content:''; position:fixed; inset:0; background-image:url("data:i
   position: fixed;
   inset: 0;
   z-index: 0;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
-#map-container iframe {
+#map-container img {
   width: 100%; height: 100%;
-  border: none;
-  filter: grayscale(100%) brightness(0.75) contrast(1.1);
+  object-fit: contain;
+  object-position: center;
+  filter: invert(1) brightness(0.78) contrast(1.05);
+  opacity: 0.9;
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 /* Map pins overlay */
@@ -179,33 +189,33 @@ body::before { content:''; position:fixed; inset:0; background-image:url("data:i
   padding-right: 48px;
 }
 
-/* ── STORE CARDS GRID (centered) ── */
+/* ── STORE CARDS RAIL (bottom) ── */
 .store-rail {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   display: flex;
-  gap: 2px;
+  justify-content: center;
+  gap: 0;
   overflow-x: auto;
   scrollbar-width: none;
-  max-width: calc(100vw - 48px);
 }
 
 .store-card {
-  flex: 0 0 380px;
+  flex: 0 0 420px;
   display: grid;
-  grid-template-columns: 200px 1fr;
-  background: rgba(8,8,8,0.92);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.07);
+  grid-template-columns: 220px 1fr;
+  background: rgba(8,8,8,0.96);
+  border-right: 1px solid rgba(255,255,255,0.06);
   border-top: 2px solid transparent;
   cursor: none;
-  transition: border-top-color .3s, box-shadow .3s;
-  min-height: 220px;
+  transition: border-top-color .3s;
+  min-height: 210px;
 }
-.store-card:hover { border-top-color: var(--gold); box-shadow: 0 8px 40px rgba(0,0,0,.6); }
+.store-card:last-child { border-right: none; }
+.store-card:hover { border-top-color: var(--gold); }
 .store-card:hover { border-top-color: var(--gold); }
 .store-card:last-child { border-right: none; }
 
@@ -308,26 +318,24 @@ body::before { content:''; position:fixed; inset:0; background-image:url("data:i
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- FULL-SCREEN MAP -->
+<!-- FULL-SCREEN MAP (static world map image) -->
 <div id="map-container">
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d31353.24!2d106.6983!3d10.7769!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3e0f0a87a7%3A0x1bc4d6fe26f44a1d!2zSOG7kyBDaMOtIE1pbmggQ2l0eQ!5e0!3m2!1sen!2s!4v1700000000000"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-    allowfullscreen>
-  </iframe>
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
+    alt="World Map"
+    id="worldMap">
 </div>
 
-<!-- MAP PINS -->
+<!-- MAP PINS — Vietnam: ~80.3% from left, ~40.5% from top on this projection -->
 <div id="map-pins">
-  <!-- Pin 1: District 1 ~53% from left, ~48% from top -->
-  <div class="map-pin" style="left:53%;top:48%;" onclick="location.href='store-detail.html?store=1'">
+  <!-- Pin 1: MKT Studio District 1 -->
+  <div class="map-pin" style="left:80.3%;top:40.5%;" onclick="location.href='store-detail.html?store=1'">
     <div class="map-pin-label">MKT Studio · D1</div>
     <div class="map-pin-dot"></div>
     <div class="map-pin-tail"></div>
   </div>
-  <!-- Pin 2: District 3 ~50% from left, ~44% from top -->
-  <div class="map-pin" style="left:50%;top:44%;" onclick="location.href='store-detail.html?store=2'">
+  <!-- Pin 2: MKT Showroom District 3 (slightly offset) -->
+  <div class="map-pin" style="left:80.6%;top:41%;" onclick="location.href='store-detail.html?store=2'">
     <div class="map-pin-label">MKT Showroom · D3</div>
     <div class="map-pin-dot"></div>
     <div class="map-pin-tail"></div>
