@@ -129,9 +129,10 @@
       min-height: 100vh;
     }
 
-    /* S2: full-bleed showroom image — pure photo, no text */
+    /* S2: showroom image — scrolls away normally */
     .s2 {
       position: relative;
+      z-index: 20;
       height: 100vh;
       overflow: hidden;
     }
@@ -141,10 +142,18 @@
       object-position: center;
     }
 
-    /* S3: detail light */
+    /* S3: sticky image — pins while S1 slides over it */
     .s3 {
-      position: relative;
-      background: var(--cream);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 10;
+      overflow: hidden;
+    }
+    .s3-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
     /* ── SECTION 1: TWO-COLUMN LIGHT ── */
@@ -290,7 +299,7 @@
     }
     @keyframes lineSlide { 0%{left:-100%} 50%{left:0%} 100%{left:100%} }
 
-    /* ── SECTION 2: STICKY DARK IMAGE ── */
+    /* ── SECTION 2: FULL-BLEED SHOWROOM (z-20) ── */
     .s2-img {
       position: absolute;
       inset: 0;
@@ -299,149 +308,7 @@
       object-position: center;
     }
 
-    /* ── SECTION 3: DETAIL CONTENT ── */
-    .s3-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 120px 80px;
-    }
-
-    .s3-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      margin-bottom: 100px;
-      padding-bottom: 80px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .s3-eyebrow {
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.42em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .s3-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
-
-    .s3-title {
-      font-family: var(--serif);
-      font-size: clamp(36px, 4.5vw, 72px);
-      font-weight: 600;
-      line-height: 1.0;
-      letter-spacing: -0.01em;
-      color: var(--text);
-    }
-
-    .s3-sub {
-      font-family: var(--serif);
-      font-size: 18px;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--muted);
-      margin-top: 28px;
-    }
-
-    .s3-header-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .s3-header-body {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 1.85;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-    }
-
-    /* Three columns */
-    .s3-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 100px;
-    }
-
-    .s3-col {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .s3-col-img {
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      background: var(--cream2);
-      margin-bottom: 28px;
-    }
-    .s3-col-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
-      filter: contrast(1.05);
-    }
-    .s3-col:hover .s3-col-img img { transform: scale(1.05); }
-
-    .s3-col-num {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-
-    .s3-col-title {
-      font-family: var(--serif);
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: var(--text);
-      margin-bottom: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .s3-col-body {
-      font-size: 13px;
-      font-weight: 300;
-      line-height: 1.85;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      flex: 1;
-    }
-
-    /* CTA */
-    .s3-cta {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 40px;
-      padding-top: 80px;
-      border-top: 1px solid var(--border);
-    }
-
-    .s3-cta-label {
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.42em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .s3-cta-title {
-      font-family: var(--serif);
-      font-size: clamp(28px, 3.5vw, 52px);
-      font-weight: 400;
-      font-style: italic;
-      color: var(--text);
-      text-align: center;
-      line-height: 1.2;
-    }
+    /* ── SECTION 3: STICKY IMAGE BEHIND S1 (z-10) ── */
 
     .cta-btn {
       display: inline-flex;
@@ -521,8 +388,6 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .s3-header { grid-template-columns: 1fr; gap: 40px; }
-      .s3-cols { grid-template-columns: 1fr; gap: 60px; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
     }
     @media (max-width: 768px) {
@@ -533,8 +398,6 @@
       .s1-tabs { padding: 24px 24px 0; justify-content: flex-start; }
       .color-nav { flex-wrap: wrap; }
 
-      .s3-inner { padding: 80px 24px; }
-      .s3-cta-title { font-size: 28px; }
       .cta-btn { padding: 16px 32px; font-size: 9px; }
       footer { padding: 60px 24px 32px; }
       .footer-top { grid-template-columns: 1fr; }
@@ -587,7 +450,31 @@
 </div>
 
 <!-- ════════════════════════════════════════
-     SECTION 1 — Two-column: text + slider
+     SECTION 2 — Full-bleed showroom image (scrolls away first)
+════════════════════════════════════════ -->
+<section class="s2">
+  <img
+    class="s2-img"
+    src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=1920&q=90&fit=crop"
+    alt="MKT Showroom"
+    loading="lazy"
+  >
+</section>
+
+<!-- ════════════════════════════════════════
+     SECTION 3 — Sticky full-bleed image (fixed while S1 slides over)
+════════════════════════════════════════ -->
+<section class="s3">
+  <img
+    class="s3-img"
+    src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=1920&q=90&fit=crop"
+    alt="MKT Showroom Interior"
+    loading="lazy"
+  >
+</section>
+
+<!-- ════════════════════════════════════════
+     SECTION 1 — Two-column: text + slider (slides over sticky S3)
 ════════════════════════════════════════ -->
 <section class="s1">
 
@@ -634,101 +521,6 @@
     Scroll to explore
   </div>
 
-</section>
-
-<!-- ════════════════════════════════════════
-     SECTION 3 — Detail content
-════════════════════════════════════════ -->
-<section class="s3">
-  <div class="s3-inner">
-
-    <!-- Header -->
-    <div class="s3-header">
-      <div>
-        <span class="s3-eyebrow">Technical Excellence</span>
-        <h2 class="s3-title">UNVEILING THE ART<br>OF TECHNICAL<br>PRECISION</h2>
-        <p class="s3-sub">The Movement and the Materials</p>
-      </div>
-      <div class="s3-header-right">
-        <p class="s3-header-body">
-          The RM 07-01 represents a paradigm of horological engineering — where ceramic material science meets haute joaillerie. Each component is conceived, engineered, and assembled by hand, ensuring that no two timepieces are ever identical. The result is a watch that transcends functionality to become a wearable work of art.
-        </p>
-      </div>
-    </div>
-
-    <!-- Three columns -->
-    <div class="s3-cols">
-
-      <!-- Col 1 -->
-      <div class="s3-col">
-        <div class="s3-col-img">
-          <img
-            src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=600&q=85&fit=crop"
-            alt="Geometric Dial Design"
-          >
-        </div>
-        <span class="s3-col-num">01</span>
-        <h3 class="s3-col-title">Geometric Dial Design</h3>
-        <p class="s3-col-body">
-          The open-worked dial features a multi-layered geometric pattern — rectangles, diamonds — in a vibrant palette of orange, blue, and teal. Set with several distinct diamonds, meticulously placed to add a sparkle like eternal snowflakes caught in perpetual motion.
-        </p>
-      </div>
-
-      <!-- Col 2 -->
-      <div class="s3-col">
-        <div class="s3-col-img">
-          <img
-            src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=600&q=85&fit=crop"
-            alt="Coloured Ceramic Case"
-          >
-        </div>
-        <span class="s3-col-num">02</span>
-        <h3 class="s3-col-title">Coloured Ceramic Case</h3>
-        <p class="s3-col-body">
-          The stunning TZP-P pale lavender pink ceramic case is a masterclass in material engineering. It provides incredible hardness, scratch resistance, and a unique velvety touch — contrasting beautifully with the polished metal elements that frame the movement.
-        </p>
-      </div>
-
-      <!-- Col 3 -->
-      <div class="s3-col">
-        <div class="s3-col-img">
-          <img
-            src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85&fit=crop"
-            alt="CRMA1 Calibre Movement"
-          >
-        </div>
-        <span class="s3-col-num">03</span>
-        <h3 class="s3-col-title">CRMA1 Calibre Movement</h3>
-        <p class="s3-col-body">
-          Powering the watch is the in-house automatic CRMA1 calibre — an open-work movement visible from the angled view. It showcases complex bridge architecture and high-end finishing, including a variable geometry rotor for optimized winding efficiency.
-        </p>
-      </div>
-
-    </div>
-
-    <!-- CTA -->
-    <div class="s3-cta">
-      <span class="s3-cta-label">The Collection</span>
-      <p class="s3-cta-title">Discover every shade of<br>technical perfection.</p>
-      <a href="collection.html" class="cta-btn">
-        Explore the Full RM 07-01 Collection
-        <span class="cta-btn-arrow"></span>
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════
-     SECTION 2 — Full-bleed showroom image
-════════════════════════════════════════ -->
-<section class="s2">
-  <img
-    class="s2-img"
-    src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=1920&q=90&fit=crop"
-    alt="MKT Showroom"
-    loading="lazy"
-  >
 </section>
 
 <!-- FOOTER -->
