@@ -69,27 +69,12 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .menu-socials a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,234,.45);text-decoration:none;transition:color .3s;}
 .menu-socials a:hover{color:var(--white);}
 
-/* ── SCROLL REVEAL: S3 fixed video, S2 curtain, S1 slides over ── */
-/* ── S2 HERO BG: truly fixed image — no text ── */
-.s2-hero {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100vh;
-  z-index: 3;
-  overflow: hidden;
-}
-.s2-hero-img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center;
-  filter: brightness(0.45);
-}
-
-/* ── S2 SPACER: in normal flow — title scrolls up with page ── */
+/* ── S2 SPACER: hero image as background, scrolls normally ── */
 .s2-spacer {
   position: relative;
   z-index: 10;
   height: 100vh;
+  background: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=1920&q=90&fit=crop') center/cover no-repeat;
 }
 .s2-hero-content {
   position: absolute;
@@ -107,14 +92,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   color: var(--white); margin-bottom: 0;
 }
 
-/* ── TEXT SECTION: scrolls up over fixed hero ── */
+/* ── TEXT SECTION: solid bg — covers video while reading, then slides off ── */
 .s2-text-section {
   position: relative;
   z-index: 15;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: var(--black);
   padding: 120px 80px 140px;
 }
 .s2-text-inner {
@@ -145,16 +130,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   color: rgba(245,240,234,.3); font-weight: 400;
 }
 
-/* ── S3 VIDEO: fixed, revealed after text scrolls past ── */
+/* ── S3 VIDEO: always fixed, revealed naturally when content scrolls past ── */
 .s3-video-wrap {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100vh;
   z-index: 5;
   overflow: hidden;
-  opacity: 0;
 }
-.s3-video-wrap.visible { opacity: 1; }
 .s3-video {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -624,14 +607,7 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 
 <main>
 
-<!-- S2: Hero image — truly fixed, image only -->
-<div class="s2-hero" id="s2Hero">
-  <img class="s2-hero-img"
-    src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=1920&q=90&fit=crop"
-    alt="MKT Collection">
-</div>
-
-<!-- Spacer: in normal flow — title scrolls up as user scrolls -->
+<!-- Spacer: hero bg image in normal flow, title scrolls up as user scrolls -->
 <div class="s2-spacer">
   <div class="s2-hero-content">
     <div class="s2-hero-eyebrow">2025 · Handcrafted in Vietnam</div>
@@ -913,40 +889,16 @@ window.addEventListener('scroll',function(){
   });
 })();
 
-/* Scroll reveal: fixed layer transitions */
+/* Scroll reveal: s4/s5 fixed layer transitions */
 (function(){
-  var s2Hero    = document.getElementById('s2Hero');
-  var s3Video   = document.getElementById('s3VideoWrap');
   var s4Img     = document.getElementById('s4ImgWrap');
   var s5Video   = document.getElementById('s5VideoWrap');
-  var textSection  = document.getElementById('s2TextSection');
   var cdSection    = document.querySelector('.cd-section');
   var featSection  = document.getElementById('featSection1');
-  var featReverse  = document.getElementById('featReverse');
-  if (!s2Hero || !s3Video || !textSection) return;
 
   function updateReveal() {
-    var vh = window.innerHeight;
-    var textRect = textSection.getBoundingClientRect();
     var cdPast   = cdSection   ? cdSection.getBoundingClientRect().bottom   <= 0 : false;
     var featPast = featSection ? featSection.getBoundingClientRect().bottom <= 0 : false;
-    var feat2Past = featReverse ? featReverse.getBoundingClientRect().bottom <= 0 : false;
-
-    // Smooth crossfade: hero fades out / video fades in
-    // as text section bottom travels from viewport bottom → viewport top
-    var crossfade;
-    if (textRect.bottom >= vh) {
-      crossfade = 0;          // text not started scrolling out yet
-    } else if (textRect.bottom <= 0) {
-      crossfade = 1;          // text fully past viewport
-    } else {
-      crossfade = 1 - (textRect.bottom / vh);
-    }
-
-    s2Hero.style.opacity  = 1 - crossfade;
-    s3Video.style.opacity = crossfade;
-    // keep s3 visible only until cd-section takes over
-    if (cdPast) s3Video.style.opacity = 0;
 
     // s4 craft image → on after cd-section, off when s5 takes over
     if (s4Img) s4Img.classList.toggle('visible', cdPast && !featPast);
