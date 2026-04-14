@@ -97,11 +97,24 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   position: relative;
   z-index: 15;
   background: var(--black);
-  padding: 100px 80px 140px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .s2-text-inner {
-  max-width: 760px;
-  width: 100%;
+  padding: 100px 60px 140px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.s2-text-img {
+  overflow: hidden;
+}
+.s2-text-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: brightness(0.7);
 }
 .s2-text-label {
   font-size: 9px; font-weight: 500; letter-spacing: .45em;
@@ -700,6 +713,9 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
       Our artisans in Ho Chi Minh City work with the same precision that defines the world's finest ateliers — yet we bring to it something no European house can replicate: the soul of Vietnamese craftsmanship, the rhythm of the street, the language of flex spoken fluently and authentically.
     </p>
     <div class="s2-text-sig">MKT · Wear Grillz Not Only To Flex</div>
+  </div>
+  <div class="s2-text-img">
+    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&q=90&fit=crop&auto=format" alt="MKT Craftsmanship">
   </div>
 </section>
 
