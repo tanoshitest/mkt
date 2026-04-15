@@ -14,7 +14,7 @@
   --serif:'Montserrat',sans-serif;--sans:'Montserrat',sans-serif;
 }
 html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--white);font-family:var(--sans);font-weight:400;overflow-x:clip;cursor:none;}
+body{background:#ffffff;color:var(--white);font-family:var(--sans);font-weight:400;overflow-x:clip;cursor:none;}
 
 /* ── CURSOR ── */
 .cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;mix-blend-mode:difference;}
@@ -46,7 +46,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .menu-links{list-style:none;}
 .menu-links li{overflow:hidden;border-bottom:1px solid rgba(65,105,225,.07);}
 .menu-links li:first-child{border-top:1px solid rgba(65,105,225,.07);}
-.menu-links li a{display:flex;align-items:center;gap:16px;font-family:var(--serif);font-size:clamp(16px,2.2vw,34px);font-weight:400;font-style:italic;color:var(--white);text-decoration:none;line-height:1;padding:10px 0;opacity:0;transform:translateY(52px);position:relative;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .6s,color .3s;}
+.menu-links li a{display:flex;align-items:center;gap:16px;font-family:var(--serif);font-size:clamp(16px,2.2vw,34px);font-weight:400;font-style:italic;color:var(--white);text-decoration:none;line-height:1;padding:10px 0;opacity:0;transform:translateY(52px);position:relative;transition:transform .85s cubic-bezier(0.34,1.56,0.64,1),opacity .55s cubic-bezier(0.16,1,0.3,1),color .3s;}
 .menu-links li a::after{content:'→';font-family:var(--sans);font-style:normal;font-size:14px;position:absolute;right:0;color:var(--gold);opacity:0;transform:translateX(-14px);transition:opacity .3s,transform .35s cubic-bezier(.16,1,.3,1);}
 .menu-links li a:hover::after{opacity:1;transform:translateX(0);}
 .menu-links li a:hover{color:var(--gold);}
@@ -69,185 +69,501 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .menu-socials a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,234,.45);text-decoration:none;transition:color .3s;}
 .menu-socials a:hover{color:var(--white);}
 
-/* ── S2 SPACER: hero image as background, scrolls normally ── */
-.s2-spacer {
+/* ── S2 SPACER: hero video, Richard Mille layout ── */
+/* Wrapper limits sticky range to hero + text section only */
+.s2-wrapper {
   position: relative;
+}
+.s2-spacer {
+  position: sticky;
+  top: 0;
   z-index: 10;
   height: 100vh;
-  background: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=1920&q=90&fit=crop') center/cover no-repeat;
+  overflow: hidden;
+  background: #000;
+}
+.s2-hero-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  will-change: opacity;
+}
+.s2-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.72) 0%,
+    rgba(0,0,0,0.18) 45%,
+    transparent 100%
+  );
+  z-index: 1;
 }
 .s2-hero-content {
   position: absolute;
-  bottom: 80px; left: 80px;
-}
-.s2-hero-eyebrow {
-  font-size: 9px; font-weight: 500; letter-spacing: .5em;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 20px; opacity: .85;
+  bottom: 160px; left: 80px;
+  z-index: 2;
+  will-change: transform;
+  transition: none; /* JS spring handles this */
 }
 .s2-hero-title {
-  font-size: clamp(52px, 8vw, 120px);
-  font-weight: 300; font-style: italic;
-  line-height: .95; letter-spacing: -.03em;
-  color: var(--white); margin-bottom: 0;
+  font-size: clamp(38px, 5.8vw, 76px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.s2-hero-eyebrow {
+  font-size: 11px; font-weight: 300; letter-spacing: .35em;
+  text-transform: uppercase;
+  color: rgba(245,240,234,.65);
+  margin-bottom: 32px;
+}
+/* Circular scroll arrow — Richard Mille style */
+.s2-hero-scroll {
+  display: flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color .3s, background .3s;
+  padding: 0;
+}
+.s2-hero-scroll:hover {
+  border-color: var(--gold);
+  background: rgba(255,255,255,.06);
+}
+.s2-hero-scroll svg {
+  width: 16px; height: 16px;
+  stroke: rgba(255,255,255,.8);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-/* ── TEXT SECTION: solid bg — covers video while reading, then slides off ── */
+/* ── TEXT SECTION: hero sticky behind, dark top 70% + white bottom 30% ── */
 .s2-text-section {
   position: relative;
   z-index: 15;
-  background: var(--black);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  background: transparent;
+}
+/* overlay: covers dark zone + taper room */
+.s2-text-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 80%;
+  background: transparent;
+  z-index: 1;
+  pointer-events: none;
+  will-change: background;
 }
 .s2-text-inner {
-  padding: 100px 60px 140px 80px;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 70%;
+  z-index: 2;
+  padding: 0 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 28px;
+  transition: none; /* JS spring handles this */
 }
-.s2-text-img {
-  overflow: hidden;
+/* Richard Mille-style section label */
+.s2-rm-label {
+  font-size: 9px; font-weight: 600; letter-spacing: .52em;
+  text-transform: uppercase; color: rgba(245,240,234,.55);
+  margin-bottom: 28px;
 }
-.s2-text-img img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  filter: brightness(0.7);
-}
-.s2-text-label {
-  font-size: 9px; font-weight: 500; letter-spacing: .45em;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 40px; opacity: .8;
-  display: flex; align-items: center; gap: 16px;
-}
-.s2-text-label::before {
-  content: ''; width: 32px; height: 1px; background: var(--gold);
+/* Richard Mille-style large title */
+.s2-rm-title {
+  font-size: clamp(38px, 5.8vw, 76px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0;
 }
 .s2-text-para {
-  font-size: clamp(18px, 2.2vw, 28px);
-  font-weight: 300; font-style: italic;
-  line-height: 1.7; letter-spacing: -.01em;
-  color: rgba(245,240,234,.75);
-  margin-bottom: 48px;
+  font-size: clamp(13px, 1.15vw, 16px);
+  font-weight: 300;
+  line-height: 1.75;
+  letter-spacing: 0em;
+  color: rgba(245,240,234,.82);
+  margin: 0;
 }
 .s2-text-para strong {
-  color: var(--white); font-weight: 400; font-style: normal;
+  color: var(--white); font-weight: 500; font-style: normal;
 }
 .s2-text-sig {
-  font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
-  color: rgba(245,240,234,.3); font-weight: 400;
+  font-size: 10px; letter-spacing: .36em; text-transform: uppercase;
+  color: rgba(245,240,234,.28); font-weight: 400;
+  margin-top: 20px;
 }
 
-/* ── S3 VIDEO: always fixed, revealed naturally when content scrolls past ── */
-.s3-video-wrap {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100vh;
-  z-index: 5;
-  overflow: hidden;
+/* ── SECTION 2 FADE-IN-UP — Spring Physics ── */
+/* Keyframes computed from spring(stiffness:100, damping:12, mass:1)
+   ~9% overshoot at t≈0.4s then settles cleanly */
+@keyframes s2SpringReveal {
+  0%   { opacity: 0; transform: translateY(28px); }
+  22%  { opacity: 1; transform: translateY(5px);  }
+  45%  { transform: translateY(-3px);             }
+  65%  { transform: translateY(0.8px);            }
+  82%  { transform: translateY(-0.2px);           }
+  100% { opacity: 1; transform: translateY(0);    }
 }
-.s3-video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center;
+.s2-anim {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.s2-anim.s2-visible {
+  animation: s2SpringReveal 0.9s forwards;
 }
 
-/* Spacer so user "rests" on video */
-.s3-spacer { height: 100vh; position: relative; z-index: 0; }
-
-/* S1: two-column collection showcase — slides over video */
-.col-s1 {
+/* ── SV: Featured Video Section ── */
+.sv-section {
   position: relative;
   z-index: 20;
   background: #fff;
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 42% 58%;
+  margin-top: -30vh; /* pull video up so 30% peeks below the dark zone */
 }
-.col-s1-left {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 120px 60px 80px 80px;
-  border-right: 1px solid rgba(0,0,0,0.07);
+/* Video frame — flush top, 7% white margin each side */
+.sv-frame {
+  margin: 0 7% 96px;
+  padding-top: 0;
 }
-.col-s1-eyebrow {
-  font-size: 9px; font-weight: 500; letter-spacing: .45em;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 28px; opacity: .85;
+/* 16:9 aspect wrapper */
+.sv-player {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: #0a0a0a;
+  overflow: hidden;
+  cursor: pointer;
 }
-.col-s1-title {
-  font-family: var(--serif);
-  font-size: clamp(48px, 5.5vw, 86px);
-  font-weight: 300; font-style: italic;
-  line-height: .92; letter-spacing: -.02em;
-  color: #111; margin-bottom: 36px;
+.sv-video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
 }
-.col-s1-body {
-  font-size: 13px; font-weight: 300; line-height: 1.9;
-  color: rgba(0,0,0,.45); letter-spacing: .02em; max-width: 380px;
-}
-
-.col-s1-right {
-  display: flex; flex-direction: column;
-  padding: 0 48px;
-  justify-content: center;
-}
-.col-s1-tabs {
-  display: flex; align-items: flex-end;
-  padding: 0 0 0; justify-content: flex-end;
-  border-bottom: 1px solid rgba(0,0,0,.08); flex-shrink: 0;
-  margin-bottom: 32px;
-}
-.col-s1-tab {
-  font-size: 11px; font-weight: 400;
-  color: rgba(0,0,0,.3); padding: 0 20px 16px;
-  cursor: none; background: none; border: none;
-  font-family: var(--sans); position: relative; transition: color .3s;
-  white-space: nowrap;
-}
-.col-s1-tab::after {
-  content: ''; position: absolute; bottom: -1px; left: 20px; right: 20px;
-  height: 1px; background: var(--gold);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .35s cubic-bezier(.16,1,.3,1);
-}
-.col-s1-tab.active { color: #111; }
-.col-s1-tab.active::after { transform: scaleX(1); }
-
-.col-s1-slider-wrap {
-  overflow: hidden; cursor: none; user-select: none;
-}
-.col-s1-slider {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  padding-bottom: 4px;
-}
-.col-s1-slider::-webkit-scrollbar { display: none; }
-.col-s1-slide {
-  flex: 0 0 calc(50% - 8px);
-  aspect-ratio: 3 / 4;
-  scroll-snap-align: start;
-  overflow: hidden; position: relative;
-  background: #f0f0ee;
-  border-radius: 2px;
-}
-.col-s1-slide img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform .7s cubic-bezier(.16,1,.3,1);
+/* Dark scrim — visible only when paused */
+.sv-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.28);
+  z-index: 1;
+  transition: opacity 0.4s;
   pointer-events: none;
 }
-.col-s1-slide:hover img { transform: scale(1.04); }
-.col-s1-slide-lbl {
-  position: absolute; bottom: 14px; left: 14px;
-  font-size: 8px; font-weight: 500; letter-spacing: .32em;
-  text-transform: uppercase; color: rgba(0,0,0,.45);
-  background: rgba(255,255,255,.7);
-  padding: 4px 8px;
-  backdrop-filter: blur(4px);
+.sv-player.playing .sv-scrim { opacity: 0; }
+/* Play / Pause button */
+.sv-play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 72px; height: 72px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.38);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.3s, background 0.3s,
+              transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.sv-play-btn:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.sv-player.playing .sv-play-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+.sv-player.playing:hover .sv-play-btn {
+  opacity: 1;
+  pointer-events: all;
+}
+.sv-play-btn svg {
+  width: 22px; height: 22px;
+  fill: #fff;
+  flex-shrink: 0;
+}
+/* Play icon offset for optical center */
+.sv-play-btn .icon-play  { margin-left: 4px; }
+.sv-play-btn .icon-pause { display: none; }
+.sv-player.playing .sv-play-btn .icon-play  { display: none; }
+.sv-player.playing .sv-play-btn .icon-pause { display: block; }
+
+/* ── COL-RM: Collection Showcase — Richard Mille-style layout ── */
+.col-rm {
+  position: relative; z-index: 20; background: #fff;
+  display: grid; grid-template-columns: 35% 65%;
+  min-height: 100vh;
+}
+.col-rm-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 120px 64px 80px 80px;
+  border-right: 1px solid rgba(0,0,0,.07);
+}
+/* Slide-bounce keyframes — entrance from right with overshoot */
+@keyframes slide-bounce {
+  0%   { transform: translateX(20px); opacity: 0; }
+  70%  { transform: translateX(-5px); opacity: 1; }
+  100% { transform: translateX(0);    opacity: 1; }
+}
+/* Exit: slip left and fade out */
+@keyframes slide-out {
+  0%   { transform: translateX(0);     opacity: 1; }
+  100% { transform: translateX(-18px); opacity: 0; }
+}
+.col-rm-title {
+  font-size: clamp(38px, 3.6vw, 58px);
+  font-weight: 800; line-height: 1.0; letter-spacing: -.01em;
+  color: #0a0a0a; margin-bottom: 32px;
+  will-change: transform, opacity;
+}
+.col-rm-body {
+  font-size: clamp(13px, .82vw, 14px);
+  line-height: 1.82; color: rgba(0,0,0,.58);
+  font-weight: 300; max-width: 360px;
+  will-change: transform, opacity;
+}
+/* Exit state */
+.col-rm-left.fading .col-rm-title,
+.col-rm-left.fading .col-rm-body {
+  animation: slide-out .28s ease-out forwards;
+}
+/* Entrance animation on text */
+.col-rm-title.slide-in {
+  animation: slide-bounce .52s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.col-rm-body.slide-in {
+  animation: slide-bounce .52s cubic-bezier(0.22, 1, 0.36, 1) .06s forwards;
+  opacity: 0;
+}
+/* Entrance animation on slides with stagger */
+.col-rm-slide.slide-in {
+  animation: slide-bounce .55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+/* Right column */
+.col-rm-right {
+  display: flex; flex-direction: column; min-height: 0;
+}
+.col-rm-tabs-row {
+  display: flex; align-items: flex-end; justify-content: flex-end;
+  padding: 48px 60px 0; flex-shrink: 0;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.col-rm-tab {
+  font-size: 13px; font-weight: 400; color: rgba(0,0,0,.32);
+  padding: 0 0 18px; margin-left: 44px;
+  background: none; border: none; font-family: var(--sans);
+  cursor: pointer; position: relative;
+  transition: color .3s; white-space: nowrap;
+}
+.col-rm-tab::after {
+  content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+  height: 1px; background: #111;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.col-rm-tab.active { color: #0a0a0a; font-weight: 500; }
+.col-rm-tab.active::after { transform: scaleX(1); }
+/* Slider area */
+.col-rm-slider-outer {
+  display: flex; flex-direction: column;
+  padding: 32px 0 28px;
+}
+.col-rm-slider-wrap { overflow: hidden; }
+.col-rm-slider {
+  display: flex; gap: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; cursor: grab; user-select: none;
+  -webkit-overflow-scrolling: touch;
+}
+.col-rm-slider:active { cursor: grabbing; }
+.col-rm-slider::-webkit-scrollbar { display: none; }
+.col-rm-slide {
+  flex: 0 0 calc(40% - 5px); flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  background: #0a0a0a; position: relative;
+  overflow: hidden; scroll-snap-align: start;
+}
+.col-rm-slide img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  opacity: .88; transition: transform .7s cubic-bezier(.16,1,.3,1), opacity .4s;
+  pointer-events: none;
+}
+.col-rm-slide:hover img { transform: scale(1.04); opacity: 1; }
+/* Progress bar */
+.col-rm-progress {
+  flex-shrink: 0; margin: 16px 0 0; height: 2px;
+  background: rgba(0,0,0,.09); position: relative; overflow: hidden;
+}
+.col-rm-progress-fill {
+  position: absolute; top: 0; left: 0; bottom: 0;
+  background: var(--gold); width: 25%;
+  transition: width .18s ease;
+}
+
+/* ── SPEC: Product Detail — Richard Mille-style image + spec layout ── */
+.spec-section {
+  position: relative; z-index: 20; background: #fff;
+  display: grid; grid-template-columns: 57% 43%;
+  min-height: 100vh;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+.spec-img-wrap {
+  overflow: hidden; position: relative; min-height: 70vh;
+  background: #f5f5f3;
+  display: flex; align-items: center; justify-content: center;
+}
+.spec-img-wrap img {
+  width: 86%; height: auto;
+  object-fit: contain; display: block;
+  padding: 48px 0;
+}
+.spec-content {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 100px 80px 100px 72px;
+}
+.spec-title {
+  font-size: clamp(44px, 5.2vw, 78px);
+  font-weight: 800; line-height: 1.0;
+  letter-spacing: -.02em; text-transform: uppercase;
+  color: #0a0a0a; margin-bottom: 56px;
+}
+.spec-list {
+  display: flex; flex-direction: column; gap: 28px;
+}
+.spec-list p {
+  font-size: clamp(14px, 1.05vw, 16px);
+  font-weight: 300; line-height: 1.78;
+  color: rgba(0,0,0,.65); letter-spacing: .01em;
+}
+@media(max-width:768px){
+  .spec-section{grid-template-columns:1fr;}
+  .spec-img-wrap{min-height:55vw;}
+  .spec-content{padding:60px 28px 72px;}
+}
+
+/* ── DUO: 2-column image + text below layout ── */
+.duo-section {
+  position: relative; z-index: 20; background: #fff;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 0 52px;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+.duo-col {
+  display: flex; flex-direction: column;
+}
+.duo-img {
+  width: 100%; overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+.duo-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center; display: block;
+  transition: transform .9s cubic-bezier(.16,1,.3,1);
+}
+.duo-col:hover .duo-img img { transform: scale(1.04); }
+.duo-text {
+  padding: 48px 60px 72px;
+  flex: 1;
+}
+.duo-title {
+  font-size: clamp(28px, 3.0vw, 46px);
+  font-weight: 800; line-height: 1.0;
+  letter-spacing: -.02em; text-transform: uppercase;
+  color: #0a0a0a; margin-bottom: 24px;
+}
+.duo-body {
+  font-size: clamp(13px, .9vw, 15px);
+  font-weight: 300; line-height: 1.82;
+  color: rgba(0,0,0,.55); max-width: 480px;
+}
+@media(max-width:768px){
+  .duo-section{grid-template-columns:1fr; padding:0 20px; gap:16px;}
+  .duo-col + .duo-col{border-top:1px solid rgba(0,0,0,.06);}
+  .duo-text{padding:36px 28px 56px;}
+}
+
+/* ── CRAFT: Text-left Image-right detail section ── */
+.craft-section {
+  position: relative; z-index: 20; background: #fff;
+  display: grid; grid-template-columns: 38% 62%;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+/* Reversed variant: image left, text right */
+.craft-section.craft-reverse {
+  grid-template-columns: 62% 38%;
+}
+.craft-section.craft-reverse .craft-img-wrap { order: -1; }
+.craft-section.craft-reverse .craft-content {
+  padding: 80px 80px 80px 56px;
+}
+.craft-content {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 56px 80px 80px;
+}
+.craft-title {
+  font-size: clamp(22px, 2.6vw, 40px);
+  font-weight: 800; line-height: 1.08;
+  letter-spacing: -.02em; text-transform: uppercase;
+  color: #0a0a0a; margin-bottom: 40px;
+}
+.craft-body { display: flex; flex-direction: column; gap: 22px; }
+.craft-body p {
+  font-size: clamp(13px, .92vw, 15px);
+  font-weight: 300; line-height: 1.82;
+  color: rgba(0,0,0,.62); letter-spacing: .01em;
+}
+.craft-img-wrap { overflow: hidden; min-height: 60vh; }
+.craft-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: center; display: block;
+}
+@media(max-width:768px){
+  .craft-section{grid-template-columns:1fr;}
+  .craft-img-wrap{min-height:60vw;}
+  .craft-content{padding:56px 28px 64px;}
+}
+
+/* ── S-MID: Fixed background image between craft & cd ── */
+.smid-img-wrap {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  z-index: 6;
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: none;
+}
+.smid-img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center bottom;
+  display: block;
+}
+.smid-spacer {
+  height: 90vh;
+  position: relative; z-index: 0;
+  background: transparent;
 }
 
 /* ── CREATIVE DIRECTOR ── */
@@ -258,7 +574,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   display: grid;
   grid-template-columns: 42% 58%;
   min-height: 70vh;
-  border-top: 1px solid rgba(0,0,0,.07);
+  border-top: 1px solid rgba(0,0,0,.06);
 }
 .cd-left {
   display: flex;
@@ -272,19 +588,19 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
-  filter: grayscale(15%) brightness(0.9);
+  filter: grayscale(10%) brightness(1.0);
 }
 .cd-right {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 100px 80px 100px 60px;
-  border-left: 1px solid rgba(0,0,0,.07);
+  border-left: 1px solid rgba(0,0,0,.06);
 }
 .cd-label {
   font-size: 9px; font-weight: 500; letter-spacing: .45em;
   text-transform: uppercase; color: var(--gold);
-  margin-bottom: 40px; opacity: .8;
+  margin-bottom: 40px; opacity: .85;
   display: flex; align-items: center; gap: 16px;
 }
 .cd-label::before {
@@ -295,7 +611,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   font-size: clamp(22px, 2.4vw, 36px);
   font-weight: 600; letter-spacing: .04em;
   text-transform: uppercase;
-  color: #111;
+  color: #0a0a0a;
   margin-bottom: 32px;
 }
 .cd-quote {
@@ -309,13 +625,29 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .cd-sig {
   margin-top: 40px;
   font-size: 10px; letter-spacing: .3em;
-  text-transform: uppercase; color: rgba(0,0,0,.25);
+  text-transform: uppercase; color: rgba(0,0,0,.28);
 }
 @media(max-width:768px){
   .cd-section{grid-template-columns:1fr;}
   .cd-left{padding:60px 32px 40px;}
-  .cd-right{padding:40px 32px 80px;border-left:none;border-top:1px solid rgba(0,0,0,.07);}
+  .cd-right{padding:40px 32px 80px;border-left:none;border-top:1px solid rgba(0,0,0,.06);}
 }
+
+/* ── S3 PARALLAX IMAGE (between collection & creative director) ── */
+.s3-img-wrap {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  z-index: 6;
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: none;
+}
+.s3-img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+}
+.s3-spacer { height: 85vh; position: relative; z-index: 0; background: transparent; }
 
 /* ── S4 FIXED IMAGE ── */
 .s4-img-wrap {
@@ -334,13 +666,13 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   object-position: center;
   filter: brightness(0.6);
 }
-.s4-spacer { height: 100vh; position: relative; z-index: 0; }
+.s4-spacer { height: 100vh; position: relative; z-index: 0; background: transparent; }
 
 /* ── STANDARDS SECTION ── */
 .std-section {
   position: relative;
   z-index: 20;
-  background: #0a0a0a;
+  background: #fff;
   display: grid;
   grid-template-columns: 38% 62%;
   min-height: 60vh;
@@ -350,7 +682,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   flex-direction: column;
   justify-content: center;
   padding: 80px 60px 80px 80px;
-  border-right: 1px solid rgba(255,255,255,.06);
+  border-right: 1px solid rgba(0,0,0,.06);
 }
 .std-eyebrow {
   font-size: 9px; font-weight: 500; letter-spacing: .45em;
@@ -363,11 +695,11 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   font-size: clamp(28px, 3.5vw, 52px);
   font-weight: 700; line-height: 1.05;
   letter-spacing: -.02em; text-transform: uppercase;
-  color: var(--white); margin-bottom: 28px;
+  color: #0a0a0a; margin-bottom: 28px;
 }
 .std-body {
   font-size: 13px; font-weight: 300; line-height: 1.9;
-  color: rgba(245,240,234,.45); max-width: 380px;
+  color: rgba(0,0,0,.55); max-width: 380px;
   letter-spacing: .015em;
 }
 .std-right {
@@ -390,7 +722,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   aspect-ratio: 4 / 3;
   scroll-snap-align: start;
   overflow: hidden; position: relative;
-  background: #111; border-radius: 2px;
+  background: #e8e8e8; border-radius: 2px;
   flex-shrink: 0;
 }
 .std-slide img {
@@ -511,23 +843,42 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 .footer-copy{font-size:11px;color:var(--gray);letter-spacing:.12em;}
 .footer-copy span{color:var(--gold-dim);}
 
-/* ── SCROLL REVEAL ── */
-.reveal{opacity:0;transform:translateX(-80px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
-.reveal-right{opacity:0;transform:translateX(80px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
-.reveal.visible,.reveal-right.visible{opacity:1;transform:translateX(0);}
-.reveal-delay-1{transition-delay:.1s;}
-.reveal-delay-2{transition-delay:.2s;}
-.reveal-delay-3{transition-delay:.3s;}
-.reveal-delay-4{transition-delay:.4s;}
+/* ── SCROLL REVEAL — Spring Physics ── */
+@keyframes springRevealLeft {
+  0%   { opacity: 0; transform: translateX(-80px); }
+  22%  { opacity: 1; transform: translateX(-18px); }
+  45%  { transform: translateX(8px);  }
+  65%  { transform: translateX(-3px); }
+  82%  { transform: translateX(0.7px);}
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes springRevealRight {
+  0%   { opacity: 0; transform: translateX(80px);  }
+  22%  { opacity: 1; transform: translateX(18px);  }
+  45%  { transform: translateX(-8px); }
+  65%  { transform: translateX(3px);  }
+  82%  { transform: translateX(-0.7px);}
+  100% { opacity: 1; transform: translateX(0); }
+}
+.reveal       { opacity: 0; transform: translateX(-80px); }
+.reveal-right { opacity: 0; transform: translateX(80px);  }
+.reveal.visible       { animation: springRevealLeft  0.95s forwards; }
+.reveal-right.visible { animation: springRevealRight 0.95s forwards; }
+.reveal-delay-1, .reveal-right.reveal-delay-1 { animation-delay: .1s; }
+.reveal-delay-2, .reveal-right.reveal-delay-2 { animation-delay: .2s; }
+.reveal-delay-3, .reveal-right.reveal-delay-3 { animation-delay: .3s; }
+.reveal-delay-4, .reveal-right.reveal-delay-4 { animation-delay: .4s; }
 
 /* ── RESPONSIVE ── */
 @media(max-width:1024px){
-  .col-s1{grid-template-columns:1fr;}
-  .col-s1-right{min-height:60vh;}
+  .col-rm{grid-template-columns:1fr;}
+  .col-rm-left{padding:80px 40px 60px;}
+  .col-rm-tabs-row{padding:40px 40px 0;}
 }
 @media(max-width:768px){
-  .col-s1-left{padding:80px 32px 60px;}
-  .col-s1-tabs{padding:60px 32px 0;}
+  .col-rm-left{padding:60px 28px 48px;}
+  .col-rm-tabs-row{padding:32px 28px 0; flex-wrap:wrap; gap:8px;}
+  .col-rm-tab{margin-left:0; margin-right:24px;}
   .s2-hero-content{left:32px;bottom:60px;}
   footer{padding:60px 24px 40px;}
   .footer-top{grid-template-columns:1fr;gap:32px;}
@@ -619,14 +970,23 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
     transition: background 0.4s ease, backdrop-filter 0.4s ease;
   }
   #login-overlay.open { background: rgba(0,0,0,0.75); backdrop-filter: blur(12px); pointer-events: all; }
+  @keyframes springModal {
+    0%   { opacity: 0; transform: translateY(28px) scale(0.96); }
+    30%  { opacity: 1; transform: translateY(-5px) scale(1.008); }
+    55%  { transform: translateY(2px) scale(0.999); }
+    75%  { transform: translateY(-0.5px) scale(1); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
   #login-modal {
     background: #0c0c0c; border: 1px solid rgba(255,215,100,0.15);
     width: 420px; max-width: calc(100vw - 48px);
     padding: 52px 48px 44px; position: relative;
-    opacity: 0; transform: translateY(24px) scale(0.97);
-    transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    opacity: 0; transform: translateY(28px) scale(0.96);
+    transition: opacity 0.3s ease;
   }
-  #login-overlay.open #login-modal { opacity: 1; transform: translateY(0) scale(1); }
+  #login-overlay.open #login-modal {
+    animation: springModal 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
   #login-close {
     position: absolute; top: 20px; right: 20px;
     background: none; border: none; color: rgba(255,255,255,0.35);
@@ -694,117 +1054,144 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 
 <main>
 
-<!-- Spacer: hero bg image in normal flow, title scrolls up as user scrolls -->
+<!-- Wrapper: contains sticky hero + text section (limits sticky range) -->
+<div class="s2-wrapper">
+
+<!-- Hero: full-screen video, sticky so it stays behind text section -->
 <div class="s2-spacer">
+  <video class="s2-hero-video" autoplay muted loop playsinline>
+    <source src="knot-breakdown.mp4" type="video/mp4">
+  </video>
+  <div class="s2-hero-overlay"></div>
   <div class="s2-hero-content">
+    <h1 class="s2-hero-title">DIAMOND COLLECTION</h1>
     <div class="s2-hero-eyebrow">2025 · Handcrafted in Vietnam</div>
-    <h1 class="s2-hero-title">THE<br>COLLECTION</h1>
+    <button class="s2-hero-scroll" onclick="document.getElementById('s2TextSection').scrollIntoView({behavior:'smooth'})">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+    </button>
   </div>
 </div>
 
-<!-- Text section: scrolls up over fixed hero, user reads before video -->
+<!-- Text section: hero video visible through transparent top (dimmed), white bottom half -->
 <section class="s2-text-section" id="s2TextSection">
+  <div class="s2-text-overlay"></div>
   <div class="s2-text-inner">
-    <div class="s2-text-label">Our Philosophy</div>
-    <p class="s2-text-para">
+    <h2 class="s2-rm-title s2-anim" style="animation-delay:0ms">THE MKT STORY</h2>
+    <p class="s2-text-para s2-anim" style="animation-delay:140ms">
       At <strong>MKT</strong>, we believe that jewelry is not merely decoration — it is an extension of identity. Each grillz, each chain, each custom piece is born from a conversation between the wearer and the craftsman. We listen to your vision, translate it into gold and stone, and return to you something that is undeniably, irreversibly <strong>yours</strong>.
     </p>
-    <p class="s2-text-para">
+    <p class="s2-text-para s2-anim" style="animation-delay:260ms">
       Our artisans in Ho Chi Minh City work with the same precision that defines the world's finest ateliers — yet we bring to it something no European house can replicate: the soul of Vietnamese craftsmanship, the rhythm of the street, the language of flex spoken fluently and authentically.
     </p>
-    <div class="s2-text-sig">MKT · Wear Grillz Not Only To Flex</div>
-  </div>
-  <div class="s2-text-img">
-    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&q=90&fit=crop&auto=format" alt="MKT Craftsmanship">
   </div>
 </section>
 
-<!-- S3: Video — fixed, fades in after text scrolls away -->
-<div class="s3-video-wrap" id="s3VideoWrap">
-  <video class="s3-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4">
-    <source src="https://videos.pexels.com/video-files/2278095/2278095-hd_1920_1080_24fps.mp4" type="video/mp4">
-  </video>
-</div>
+</div><!-- end .s2-wrapper -->
 
-<!-- Spacer: user views video -->
-<div class="s3-spacer"></div>
-
-<!-- S1: two-column collection showcase (slides over fixed video) -->
-<section class="col-s1">
-  <div class="col-s1-left">
-    <span class="col-s1-eyebrow">Grillz · Chains · Custom</span>
-    <h2 class="col-s1-title">WEAR<br>GRILLZ<br>NOT ONLY<br>TO FLEX</h2>
-    <p class="col-s1-body">
-      Each piece is conceived, engineered, and assembled by hand in Ho Chi Minh City — where Vietnamese craftsmanship meets global statement. No two pieces are ever identical.
-    </p>
-  </div>
-  <div class="col-s1-right">
-    <div class="col-s1-tabs">
-      <button class="col-s1-tab active" data-tab="grillz">Grillz</button>
-      <button class="col-s1-tab" data-tab="chains">Chains</button>
-      <button class="col-s1-tab" data-tab="custom">Custom</button>
+<!-- SV: Featured Video Section — framed 16:9 player, click to play -->
+<section class="sv-section">
+  <div class="sv-frame">
+    <div class="sv-player" id="svPlayer">
+      <video class="sv-video" id="svVideo" preload="metadata">
+        <source src="knot-breakdown.mp4" type="video/mp4">
+      </video>
+      <div class="sv-scrim"></div>
+      <button class="sv-play-btn" id="svPlayBtn" aria-label="Play video">
+        <!-- Play icon -->
+        <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <!-- Pause icon -->
+        <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      </button>
     </div>
-    <div class="col-s1-slider-wrap" id="colSliderWrap">
-      <div class="col-s1-slider" id="colSlider">
-        <!-- GRILLZ -->
-        <div class="col-s1-slide" data-tab="grillz">
-          <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=900&q=85&fit=crop&auto=format" alt="Gold Grillz" loading="lazy">
-          <span class="col-s1-slide-lbl">Gold Grillz</span>
-        </div>
-        <div class="col-s1-slide" data-tab="grillz">
-          <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=85&fit=crop&auto=format" alt="Diamond Set" loading="lazy">
-          <span class="col-s1-slide-lbl">Diamond Set</span>
-        </div>
-        <div class="col-s1-slide" data-tab="grillz">
-          <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=900&q=85&fit=crop&auto=format" alt="Iced Out" loading="lazy">
-          <span class="col-s1-slide-lbl">Iced Out</span>
-        </div>
-        <div class="col-s1-slide" data-tab="grillz">
-          <img src="https://images.unsplash.com/photo-1561828995-aa79a2db86dd?w=900&q=85&fit=crop&auto=format" alt="Rose Gold" loading="lazy">
-          <span class="col-s1-slide-lbl">Rose Gold</span>
-        </div>
-        <!-- CHAINS -->
-        <div class="col-s1-slide" data-tab="chains" style="display:none">
-          <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=900&q=85&fit=crop&auto=format" alt="Cuban Chain" loading="lazy">
-          <span class="col-s1-slide-lbl">Cuban Chain</span>
-        </div>
-        <div class="col-s1-slide" data-tab="chains" style="display:none">
-          <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=900&q=85&fit=crop&auto=format&crop=right" alt="Box Chain" loading="lazy">
-          <span class="col-s1-slide-lbl">Box Chain</span>
-        </div>
-        <div class="col-s1-slide" data-tab="chains" style="display:none">
-          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=85&fit=crop&auto=format" alt="Rope Chain" loading="lazy">
-          <span class="col-s1-slide-lbl">Rope Chain</span>
-        </div>
-        <div class="col-s1-slide" data-tab="chains" style="display:none">
-          <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=900&q=85&fit=crop&auto=format" alt="Tennis Chain" loading="lazy">
-          <span class="col-s1-slide-lbl">Tennis Chain</span>
-        </div>
-        <!-- CUSTOM -->
-        <div class="col-s1-slide" data-tab="custom" style="display:none">
-          <img src="https://images.unsplash.com/photo-1561828995-aa79a2db86dd?w=900&q=85&fit=crop&auto=format" alt="Custom Order" loading="lazy">
-          <span class="col-s1-slide-lbl">Custom Order</span>
-        </div>
-        <div class="col-s1-slide" data-tab="custom" style="display:none">
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=85&fit=crop&auto=format" alt="Bespoke Design" loading="lazy">
-          <span class="col-s1-slide-lbl">Bespoke Design</span>
-        </div>
-        <div class="col-s1-slide" data-tab="custom" style="display:none">
-          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=900&q=85&fit=crop&auto=format" alt="One of a Kind" loading="lazy">
-          <span class="col-s1-slide-lbl">One of a Kind</span>
-        </div>
-        <div class="col-s1-slide" data-tab="custom" style="display:none">
-          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=900&q=85&fit=crop&auto=format" alt="Engraved" loading="lazy">
-          <span class="col-s1-slide-lbl">Engraved</span>
-        </div>
+  </div>
+</section>
+
+<!-- RM: Collection Showcase — Richard Mille-style layout -->
+<section class="col-rm" id="colRm">
+  <div class="col-rm-left" id="colRmLeft">
+    <h2 class="col-rm-title" id="colRmTitle">DIAMOND<br>GRILLZ</h2>
+    <p class="col-rm-body" id="colRmBody">Every reflection emanating from a Diamond Grillz by MKT carries within it the full weight of intention. Hand-set stones, chosen for their fire and depth, are mounted in 18K gold structures built to last beyond the wearer.</p>
+  </div>
+  <div class="col-rm-right">
+    <div class="col-rm-tabs-row">
+      <button class="col-rm-tab active" data-col="grillz">Diamond Grillz</button>
+      <button class="col-rm-tab" data-col="chains">Cuban Chains</button>
+      <button class="col-rm-tab" data-col="pendants">Iced Pendant</button>
+      <button class="col-rm-tab" data-col="custom">Custom Order</button>
+    </div>
+    <div class="col-rm-slider-outer">
+      <div class="col-rm-slider-wrap">
+        <div class="col-rm-slider" id="colRmSlider"></div>
+      </div>
+      <div class="col-rm-progress">
+        <div class="col-rm-progress-fill" id="colRmProgressFill"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Spacer: user views video after product grid -->
+
+<!-- S3: Parallax fixed image — between collection & creative director -->
+<div class="s3-img-wrap" id="s3ImgWrap">
+  <img class="s3-img" src="parallax-mid.avif" alt="MKT Craftsmanship">
+</div>
+<!-- Spacer: scroll zone for s3 image -->
 <div class="s3-spacer"></div>
+
+<!-- SPEC: Product Detail Section -->
+<section class="spec-section">
+  <div class="spec-img-wrap">
+    <img src="spec-ring.png" alt="MKT Signature Ring">
+  </div>
+  <div class="spec-content">
+    <h2 class="spec-title">SIGNATURE<br>GRILLZ</h2>
+    <div class="spec-list">
+      <p>— Hand-set VS1 diamonds in solid 18K gold, individually chosen for fire and clarity.</p>
+      <p>— Custom sizing for upper and lower arches; fits crafted from dental-grade impressions.</p>
+      <p>— Fabrication time: 3 to 5 weeks per commission.</p>
+      <p>— Each piece signed and numbered by the maker.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CRAFT: Text left, Image right -->
+<section class="craft-section">
+  <div class="craft-content">
+    <h2 class="craft-title">CRAFTED<br>CONNECTIONS</h2>
+    <div class="craft-body">
+      <p>The collection is created as a language of its own, where every line and detail tells a story of the bond between love and friendship. Without the need for explanation, the designs reflect the silent understanding shared between those who wear them.</p>
+      <p>Each piece carries a meaning that belongs only to the wearer — a private language made permanent in gold and stone.</p>
+    </div>
+  </div>
+  <div class="craft-img-wrap">
+    <img
+      src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1400&h=900&q=90&fit=crop&auto=format"
+      alt="MKT Crafted Connections" loading="lazy">
+  </div>
+</section>
+
+<!-- CRAFT REVERSED: Image left, Text right -->
+<section class="craft-section craft-reverse">
+  <div class="craft-img-wrap">
+    <img
+      src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1400&h=900&q=90&fit=crop&auto=format"
+      alt="MKT Bound Together" loading="lazy">
+  </div>
+  <div class="craft-content">
+    <h2 class="craft-title">BOUND<br>TOGETHER</h2>
+    <div class="craft-body">
+      <p>The image of the collection unfolds a story of two distinct individuals bound by an inseparable connection. The diamond-set metal circles interwoven between the two forms symbolize the intersection of friendship and love.</p>
+      <p>Independent, yet always drawn toward one another — a geometry that cannot be undone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S-MID: Fixed background image -->
+<div class="smid-img-wrap" id="smidVideoWrap">
+  <img class="smid-img" src="smid-bg.avif" alt="MKT Background">
+</div>
+<!-- Spacer: scroll zone for image -->
+<div class="smid-spacer"></div>
 
 <!-- ═══ CREATIVE DIRECTOR ═══ -->
 <section class="cd-section">
@@ -862,57 +1249,33 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
   </div>
 </section>
 
+<!-- DUO: 2-col image + text below (replaces feat sections) -->
+<section class="duo-section" id="featSection1">
+  <div class="duo-col">
+    <div class="duo-img">
+      <img
+        src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=900&h=1100&q=90&fit=crop&auto=format"
+        alt="MKT Goldsmith at work" loading="lazy">
+    </div>
+    <div class="duo-text">
+      <h2 class="duo-title">BUILT FOR<br>THOSE WHO<br>DEMAND MORE</h2>
+      <p class="duo-body">Every MKT piece begins not with metal, but with a conversation. Our craftsmen in Ho Chi Minh City work at the intersection of traditional Vietnamese goldsmithing and contemporary street culture — producing grillz and jewelry that carry the weight of intention, precision, and identity.<br><br>No shortcuts. No compromises. Only work that stands as a testament to the wearer's ambition.</p>
+    </div>
+  </div>
+  <div class="duo-col">
+    <div class="duo-img">
+      <img
+        src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=900&h=1100&q=90&fit=crop&auto=format"
+        alt="MKT Unique Piece" loading="lazy">
+    </div>
+    <div class="duo-text">
+      <h2 class="duo-title">NO TWO<br>PIECES ARE<br>EVER THE SAME</h2>
+      <p class="duo-body">From the first sketch to the final polish, every MKT creation passes through the hands of a single craftsman — ensuring that each piece carries one consistent vision. We reject the factory. We reject the template. What you receive is not a product; it is an original.<br><br>This is what it means to wear MKT.</p>
+    </div>
+  </div>
+</section>
+
 <div class="s4-spacer"></div>
-
-<!-- Feature section: slides over s4 fixed image -->
-<section class="feat-section" id="featSection1">
-  <div class="feat-left">
-    <div class="feat-eyebrow">The Process</div>
-    <h2 class="feat-title">BUILT FOR<br>THOSE WHO<br>DEMAND<br>MORE</h2>
-    <p class="feat-body">
-      Every MKT piece begins not with metal, but with a conversation. Our craftsmen in Ho Chi Minh City work at the intersection of traditional Vietnamese goldsmithing and contemporary street culture — producing grillz and jewelry that carry the weight of intention, precision, and identity.
-      <br><br>
-      No shortcuts. No compromises. Only work that stands as a testament to the wearer's ambition.
-    </p>
-  </div>
-  <div class="feat-right">
-    <img
-      src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&q=90&fit=crop"
-      alt="MKT Goldsmith at work"
-      loading="lazy">
-  </div>
-</section>
-
-<!-- S5: Final fixed video — revealed after first feat scrolls past -->
-<div class="s5-video-wrap" id="s5VideoWrap">
-  <video class="s5-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/6765967/6765967-uhd_2560_1440_24fps.mp4" type="video/mp4">
-    <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4">
-    <source src="https://videos.pexels.com/video-files/2278095/2278095-hd_1920_1080_24fps.mp4" type="video/mp4">
-  </video>
-</div>
-
-<!-- Reversed feat section: image left, text right — slides over s5 video -->
-<section class="feat-section feat-section--reverse" id="featReverse">
-  <div class="feat-left">
-    <div class="feat-eyebrow">The Standard</div>
-    <h2 class="feat-title">NO TWO<br>PIECES<br>ARE EVER<br>THE SAME</h2>
-    <p class="feat-body">
-      From the first sketch to the final polish, every MKT creation passes through the hands of a single craftsman — ensuring that each piece carries one consistent vision. We reject the factory. We reject the template. What you receive is not a product; it is an original.
-      <br><br>
-      This is what it means to wear MKT.
-    </p>
-  </div>
-  <div class="feat-right">
-    <img
-      src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1200&q=90&fit=crop"
-      alt="MKT Unique Piece"
-      loading="lazy">
-  </div>
-</section>
-
-<!-- Spacer: user views s5 video before footer -->
-<div class="s5-spacer"></div>
 
 <!-- ═══ FOOTER ═══ -->
 <footer><div class="footer-inner">
@@ -969,9 +1332,9 @@ document.querySelectorAll('.menu-links a').forEach(function(a){
   a.addEventListener('click', closeMenu);
 });
 
-// ── NAVBAR SCROLL ──
+// ── NAVBAR SCROLL — stays transparent on collection page ──
 window.addEventListener('scroll',function(){
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('navbar').classList.remove('scrolled');
 });
 
 // ── CUSTOM CURSOR ──
@@ -1010,26 +1373,188 @@ window.addEventListener('scroll',function(){
   });
 })();
 
-/* Scroll reveal: s4/s5 fixed layer transitions */
+/* Scroll reveal: s3/s4/s5 fixed layer transitions */
 (function(){
+  var s3Img     = document.getElementById('s3ImgWrap');
   var s4Img     = document.getElementById('s4ImgWrap');
   var s5Video   = document.getElementById('s5VideoWrap');
+  var colRm        = document.getElementById('colRm');
   var cdSection    = document.querySelector('.cd-section');
   var featSection  = document.getElementById('featSection1');
 
   function updateReveal() {
-    var cdPast   = cdSection   ? cdSection.getBoundingClientRect().bottom   <= 0 : false;
-    var featPast = featSection ? featSection.getBoundingClientRect().bottom <= 0 : false;
+    var wh = window.innerHeight;
+    // col-rm fully scrolled past → bottom <= 0
+    var colPast  = colRm      ? colRm.getBoundingClientRect().bottom      <= 0    : false;
+    // cd-section entering viewport top edge crosses halfway
+    var cdEnter  = cdSection  ? cdSection.getBoundingClientRect().top     <= wh * 0.55 : false;
+    var cdPast   = cdSection  ? cdSection.getBoundingClientRect().bottom  <= 0    : false;
+    var featPast = featSection? featSection.getBoundingClientRect().bottom<= 0    : false;
 
-    // s4 craft image → on after cd-section, off when s5 takes over
+    // s4 craft image: on after cd-section, off when s5 takes over
     if (s4Img) s4Img.classList.toggle('visible', cdPast && !featPast);
 
-    // s5 final video → on after first feat-section scrolls past
+    // s5 final video: on after first feat-section scrolls past
     if (s5Video) s5Video.classList.toggle('visible', featPast);
   }
 
   window.addEventListener('scroll', updateReveal, { passive: true });
   updateReveal();
+})();
+
+/* ── HERO ARROW: smooth scroll to section 2 ── */
+(function(){
+  var btn = document.querySelector('.s2-hero-scroll');
+  if (!btn) return;
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.getElementById('s2TextSection');
+    if (!target) return;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
+  });
+  btn.removeAttribute('onclick');
+})();
+
+/* ── SCROLL PARALLAX: hero ↔ section 2 — Spring Physics ── */
+(function(){
+  var spacer      = document.querySelector('.s2-spacer');
+  var heroContent = document.querySelector('.s2-hero-content');
+  var heroVideo   = document.querySelector('.s2-hero-video');
+  var s2Overlay   = document.querySelector('.s2-text-overlay');
+  var s2TextInner = document.querySelector('.s2-text-inner');
+  var s2Anims     = document.querySelectorAll('#s2TextSection .s2-anim');
+  if (!spacer || !heroContent) return;
+
+  /* ── Spring config: equivalent to framer-motion spring(stiffness:100,damping:12,mass:1)
+     ζ = 12/(2√100) = 0.6  →  underdamped, ~9% overshoot, settles ≈ 0.9s ── */
+  var K = 100, D = 12, M = 1;
+
+  /* Spring state objects { pos, vel, target } */
+  var dcSpring  = { pos: 0, vel: 0, target: 0 };   /* DIAMOND COLLECTION translateY */
+  var mktSpring = { pos: 0, vel: 0, target: 0 };   /* THE MKT STORY translateY      */
+
+  var spacerH    = 0;
+  var s2Revealed = false;
+  var rafId      = null;
+  var lastT      = null;
+
+  /* Semi-implicit Euler integrator — 8 substeps for stability */
+  function stepSpring(sp, dt) {
+    var h = Math.min(dt, 64) / 1000 / 8; /* cap 64ms, convert to seconds, 8 substeps */
+    for (var i = 0; i < 8; i++) {
+      var F   = -K * (sp.pos - sp.target) - D * sp.vel;
+      sp.vel += (F / M) * h;
+      sp.pos += sp.vel * h;
+    }
+  }
+
+  function settled(sp) {
+    return Math.abs(sp.pos - sp.target) < 0.08 && Math.abs(sp.vel) < 0.08;
+  }
+
+  /* rAF loop — runs until both springs are at rest */
+  function tick(now) {
+    var dt = lastT !== null ? now - lastT : 16;
+    lastT  = now;
+
+    stepSpring(dcSpring,  dt);
+    stepSpring(mktSpring, dt);
+
+    /* Apply DIAMOND COLLECTION */
+    heroContent.style.transform = 'translateY(-' + dcSpring.pos.toFixed(2) + 'px)';
+
+    /* Apply THE MKT STORY */
+    if (s2TextInner) {
+      s2TextInner.style.transform = mktSpring.pos > 0.05
+        ? 'translateY(-' + mktSpring.pos.toFixed(2) + 'px)'
+        : '';
+    }
+
+    if (settled(dcSpring) && settled(mktSpring)) {
+      rafId = null;
+      lastT = null;
+    } else {
+      rafId = requestAnimationFrame(tick);
+    }
+  }
+
+  function startRaf() {
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+
+  function measure() { spacerH = spacer.offsetHeight || window.innerHeight; }
+
+  function onScroll() {
+    var sy = window.scrollY;
+    var p  = spacerH > 0 ? Math.max(0, Math.min(1, sy / spacerH)) : 0;
+
+    /* 1. DIAMOND COLLECTION target — exits fully at p ≈ 0.57 */
+    dcSpring.target = sy * 1.08;
+
+    /* 2. Hero video — direct (fade doesn't benefit from bounce) */
+    if (heroVideo) {
+      heroVideo.style.opacity = Math.max(0, 1 - p * 1.1).toFixed(3);
+    }
+
+    /* 3. Section 2 overlay — direct (background gradient, no spring needed) */
+    if (s2Overlay) {
+      var ov = Math.min(0.52, p * 0.68);
+      s2Overlay.style.background =
+        'linear-gradient(to bottom,' +
+        ' transparent 0%,' +
+        ' rgba(0,0,0,' + ov.toFixed(3) + ') 16%,' +
+        ' rgba(0,0,0,' + ov.toFixed(3) + ') 62%,' +
+        ' rgba(0,0,0,' + (ov * 0.35).toFixed(3) + ') 70%,' +
+        ' transparent 80%)';
+    }
+
+    /* 4. THE MKT STORY target — spring kicks in at p > 0.85 */
+    mktSpring.target = p > 0.85
+      ? Math.max(0, (sy - spacerH * 0.85) * 0.25)
+      : 0;
+
+    /* 5. Reveal THE MKT STORY only after DC has fully exited the viewport.
+          DC bottom exits at p ≈ 0.72; p=0.82 adds buffer for spring lag. */
+    if (!s2Revealed && p >= 0.82) {
+      s2Revealed = true;
+      s2Anims.forEach(function(el) { el.classList.add('s2-visible'); });
+    }
+
+    startRaf();
+  }
+
+  window.addEventListener('resize', measure, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  measure();
+  onScroll();
+})();
+
+/* ── SV: Featured Video — click to play/pause ── */
+(function(){
+  var player  = document.getElementById('svPlayer');
+  var video   = document.getElementById('svVideo');
+  var playBtn = document.getElementById('svPlayBtn');
+  if (!player || !video || !playBtn) return;
+
+  function play() {
+    video.play();
+    player.classList.add('playing');
+  }
+  function pause() {
+    video.pause();
+    player.classList.remove('playing');
+  }
+
+  /* Click anywhere on player or the button toggles play/pause */
+  player.addEventListener('click', function() {
+    video.paused ? play() : pause();
+  });
+
+  /* When video ends, reset to paused state */
+  video.addEventListener('ended', function() {
+    player.classList.remove('playing');
+    video.currentTime = 0;
+  });
 })();
 
 /* Drag-scroll for standards slider */
@@ -1044,36 +1569,139 @@ window.addEventListener('scroll',function(){
   wrap.addEventListener('mousemove', function(e){ if (!isDown) return; e.preventDefault(); slider.scrollLeft = scrollLeft - (e.pageX - wrap.offsetLeft - startX) * 1.5; });
 })();
 
-/* Drag-scroll for collection slider */
+/* ── COL-RM: Collection Showcase — data-driven switcher ── */
 (function(){
-  var wrap = document.getElementById('colSliderWrap');
-  var slider = document.getElementById('colSlider');
-  if (!wrap || !slider) return;
-  var isDown = false, startX, scrollLeft;
-  wrap.addEventListener('mousedown', function(e){
-    isDown = true; wrap.style.cursor = 'grabbing';
-    startX = e.pageX - wrap.offsetLeft; scrollLeft = slider.scrollLeft; e.preventDefault();
-  });
-  wrap.addEventListener('mouseleave', function(){ isDown = false; wrap.style.cursor = 'none'; });
-  wrap.addEventListener('mouseup', function(){ isDown = false; wrap.style.cursor = 'none'; });
-  wrap.addEventListener('mousemove', function(e){
-    if (!isDown) return; e.preventDefault();
-    slider.scrollLeft = scrollLeft - (e.pageX - wrap.offsetLeft - startX) * 1.5;
-  });
-  /* Tab switching: show/hide slides per data-tab */
-  document.querySelectorAll('.col-s1-tab').forEach(function(tab){
-    tab.addEventListener('click', function(){
-      var key = tab.dataset.tab;
-      /* update active tab */
-      document.querySelectorAll('.col-s1-tab').forEach(function(t){ t.classList.remove('active'); });
-      tab.classList.add('active');
-      /* show matching slides, hide others */
-      document.querySelectorAll('.col-s1-slide').forEach(function(slide){
-        slide.style.display = slide.dataset.tab === key ? '' : 'none';
-      });
-      /* reset scroll to start */
-      slider.scrollLeft = 0;
+  var COLS = {
+    grillz: {
+      title: 'DIAMOND<br>GRILLZ',
+      body: 'Every reflection emanating from a Diamond Grillz by MKT awakens the memory, brilliantly sealing the artistry of an object that has become truly symbolic. The stones radiate, light comes to life, and fire vibrates as the world undergoes a transformation: each facet composes a statement where technical mastery meets raw desire. The diamond, placed upon 18K gold like an eternal snowflake, immortalises this moment.',
+      images: [
+        { src: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Gold Grillz' },
+        { src: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Diamond Set' },
+        { src: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Iced Out' },
+        { src: 'https://images.unsplash.com/photo-1561828995-aa79a2db86dd?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Rose Gold' }
+      ]
+    },
+    chains: {
+      title: 'CUBAN<br>CHAINS',
+      body: 'The Cuban Chain is the architecture of confidence — each interlocking link a chapter of presence written in solid gold. MKT\'s chains are cast in 18K gold, then ice-set to the exact weight the wearer commands. Where engineering meets expression, the Cuban Chain remains the definitive language of those who need no introduction.',
+      images: [
+        { src: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Cuban Chain' },
+        { src: 'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Gold Link' },
+        { src: 'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Iced Chain' },
+        { src: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Tennis Chain' }
+      ]
+    },
+    pendants: {
+      title: 'ICED<br>PENDANT',
+      body: 'A pendant is the punctuation of a statement already made in gold. Sculpted from 18K gold and paved in conflict-free diamonds, each MKT Iced Pendant is worn close to what matters most. The stones are hand-set one by one, chosen for their collective fire — pieces that transform presence into permanence.',
+      images: [
+        { src: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Iced Pendant' },
+        { src: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Diamond Pendant' },
+        { src: 'https://images.unsplash.com/photo-1589128777073-263566ae5e4d?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Gold Pendant' },
+        { src: 'https://images.unsplash.com/photo-1623091411395-09e79fdbfcf8?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Custom Pendant' }
+      ]
+    },
+    custom: {
+      title: 'CUSTOM<br>ORDER',
+      body: 'There are pieces no catalogue can contain. The Custom Order service at MKT begins with a conversation and ends with an object unlike any other in the world — conceived for one wearer, completed by one craftsman. Every detail carries intention. Every surface carries identity. This is where a name becomes a material thing.',
+      images: [
+        { src: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=700&h=700&q=88&fit=crop&auto=format', alt: 'One of a Kind' },
+        { src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Bespoke Design' },
+        { src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Engraved' },
+        { src: 'https://images.unsplash.com/photo-1601121141461-9d6647bef0a1?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Handcrafted' }
+      ]
+    }
+  };
+
+  var activeCol = 'grillz';
+  var slider   = document.getElementById('colRmSlider');
+  var leftPanel = document.getElementById('colRmLeft');
+  var titleEl  = document.getElementById('colRmTitle');
+  var bodyEl   = document.getElementById('colRmBody');
+  var fillEl   = document.getElementById('colRmProgressFill');
+  var tabs     = document.querySelectorAll('.col-rm-tab');
+  if (!slider || !leftPanel) return;
+
+  function renderSlides(colKey, animate) {
+    var data = COLS[colKey];
+    slider.innerHTML = '';
+    data.images.forEach(function(img, i) {
+      var slide = document.createElement('div');
+      slide.className = 'col-rm-slide' + (animate ? ' slide-in' : '');
+      if (animate) slide.style.animationDelay = (i * 55) + 'ms';
+      var im = document.createElement('img');
+      im.src = img.src; im.alt = img.alt; im.loading = 'lazy';
+      slide.appendChild(im);
+      slider.appendChild(slide);
     });
+    slider.scrollLeft = 0;
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var max = slider.scrollWidth - slider.clientWidth;
+    var pct = max > 0 ? (slider.scrollLeft / max * 100) : 0;
+    if (fillEl) fillEl.style.width = Math.max(25, pct) + '%';
+  }
+
+  function triggerEnter() {
+    /* Strip old animation class, force reflow, re-add to restart animation */
+    [titleEl, bodyEl].forEach(function(el) { el.classList.remove('slide-in'); });
+    void titleEl.offsetWidth; /* reflow */
+    titleEl.classList.add('slide-in');
+    bodyEl.classList.add('slide-in');
+    /* Clean up after animation settles */
+    setTimeout(function() {
+      titleEl.classList.remove('slide-in');
+      bodyEl.classList.remove('slide-in');
+    }, 650);
+  }
+
+  function switchCol(colKey) {
+    if (colKey === activeCol) return;
+    activeCol = colKey;
+    /* 1. Play exit animation */
+    leftPanel.classList.add('fading');
+    setTimeout(function() {
+      /* 2. Swap content */
+      var data = COLS[activeCol];
+      titleEl.innerHTML = data.title;
+      bodyEl.textContent = data.body;
+      renderSlides(activeCol, true);
+      /* 3. Remove exit state, trigger entrance */
+      leftPanel.classList.remove('fading');
+      triggerEnter();
+    }, 280);
+  }
+
+  /* Init — no entrance animation on first render */
+  renderSlides(activeCol, false);
+
+  /* Tab clicks */
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      switchCol(tab.dataset.col);
+    });
+  });
+
+  /* Progress bar update on scroll */
+  slider.addEventListener('scroll', updateProgress, { passive: true });
+
+  /* Drag-to-scroll */
+  var isDragging = false, dragStartX, dragScrollLeft;
+  slider.addEventListener('mousedown', function(e) {
+    isDragging = true; dragStartX = e.pageX - slider.getBoundingClientRect().left;
+    dragScrollLeft = slider.scrollLeft; slider.style.cursor = 'grabbing'; e.preventDefault();
+  });
+  slider.addEventListener('mouseleave', function() { isDragging = false; slider.style.cursor = 'grab'; });
+  slider.addEventListener('mouseup', function() { isDragging = false; slider.style.cursor = 'grab'; });
+  slider.addEventListener('mousemove', function(e) {
+    if (!isDragging) return; e.preventDefault();
+    var x = e.pageX - slider.getBoundingClientRect().left;
+    slider.scrollLeft = dragScrollLeft - (x - dragStartX);
   });
 })();
 </script>
