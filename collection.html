@@ -110,7 +110,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   transition: none; /* JS spring handles this */
 }
 .s2-hero-title {
-  font-size: clamp(38px, 5.8vw, 76px);
+  font-size: clamp(52px, 7vw, 96px);
   font-weight: 700;
   line-height: 1.0;
   letter-spacing: -.03em;
@@ -119,7 +119,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   margin-bottom: 20px;
 }
 .s2-hero-eyebrow {
-  font-size: 11px; font-weight: 300; letter-spacing: .35em;
+  font-size: 11px; font-weight: 400; letter-spacing: .4em;
   text-transform: uppercase;
   color: rgba(245,240,234,.65);
   margin-bottom: 32px;
@@ -179,13 +179,13 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 }
 /* Richard Mille-style section label */
 .s2-rm-label {
-  font-size: 9px; font-weight: 600; letter-spacing: .52em;
+  font-size: 11px; font-weight: 400; letter-spacing: .45em;
   text-transform: uppercase; color: rgba(245,240,234,.55);
   margin-bottom: 28px;
 }
 /* Richard Mille-style large title */
 .s2-rm-title {
-  font-size: clamp(38px, 5.8vw, 76px);
+  font-size: clamp(52px, 7vw, 96px);
   font-weight: 700;
   line-height: 1.0;
   letter-spacing: -.03em;
@@ -194,9 +194,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   margin-bottom: 0;
 }
 .s2-text-para {
-  font-size: clamp(13px, 1.15vw, 16px);
+  font-size: clamp(17px, 1.5vw, 22px);
   font-weight: 300;
-  line-height: 1.75;
+  line-height: 1.8;
   letter-spacing: 0em;
   color: rgba(245,240,234,.82);
   margin: 0;
@@ -235,6 +235,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   z-index: 20;
   background: #fff;
   margin-top: -30vh; /* pull video up so 30% peeks below the dark zone */
+  overflow: hidden;  /* prevent sv-frame margin-bottom from collapsing outside */
 }
 /* Video frame — flush top, 7% white margin each side */
 .sv-frame {
@@ -312,11 +313,12 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   position: relative; z-index: 20; background: #fff;
   display: grid; grid-template-columns: 35% 65%;
   min-height: 100vh;
+  margin: 0 52px;
+  box-shadow: -52px 0 0 0 #fff, 52px 0 0 0 #fff;
 }
 .col-rm-left {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 120px 64px 80px 80px;
-  border-right: 1px solid rgba(0,0,0,.07);
+  display: flex; flex-direction: column; justify-content: flex-start;
+  padding: 116px 64px 80px 80px;
 }
 /* Slide-bounce keyframes — entrance from right with overshoot */
 @keyframes slide-bounce {
@@ -330,14 +332,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   100% { transform: translateX(-18px); opacity: 0; }
 }
 .col-rm-title {
-  font-size: clamp(38px, 3.6vw, 58px);
-  font-weight: 800; line-height: 1.0; letter-spacing: -.01em;
-  color: #0a0a0a; margin-bottom: 32px;
+  font-size: clamp(28px, 2.8vw, 44px);
+  font-weight: 800; line-height: 1.0; letter-spacing: -.02em;
+  color: #0a0a0a; margin-bottom: 36px;
   will-change: transform, opacity;
 }
 .col-rm-body {
-  font-size: clamp(13px, .82vw, 14px);
-  line-height: 1.82; color: rgba(0,0,0,.58);
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.85; color: rgba(0,0,0,.58);
   font-weight: 300; max-width: 360px;
   will-change: transform, opacity;
 }
@@ -366,10 +368,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .col-rm-tabs-row {
   display: flex; align-items: flex-end; justify-content: flex-end;
   padding: 48px 60px 0; flex-shrink: 0;
-  border-bottom: 1px solid rgba(0,0,0,.08);
 }
 .col-rm-tab {
-  font-size: 13px; font-weight: 400; color: rgba(0,0,0,.32);
+  font-size: 12px; font-weight: 400; letter-spacing: .12em; color: rgba(0,0,0,.32);
   padding: 0 0 18px; margin-left: 44px;
   background: none; border: none; font-family: var(--sans);
   cursor: pointer; position: relative;
@@ -423,14 +424,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 /* ── SPEC: Product Detail — Richard Mille-style image + spec layout ── */
 .spec-section {
-  position: relative; z-index: 20; background: #fff;
+  position: relative; z-index: 20; background: #ffffff;
   display: grid; grid-template-columns: 57% 43%;
   min-height: 100vh;
   border-top: 1px solid rgba(0,0,0,.06);
 }
 .spec-img-wrap {
   overflow: hidden; position: relative; min-height: 70vh;
-  background: #f5f5f3;
+  background: #ffffff;
   display: flex; align-items: center; justify-content: center;
 }
 .spec-img-wrap img {
@@ -443,17 +444,17 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   padding: 100px 80px 100px 72px;
 }
 .spec-title {
-  font-size: clamp(44px, 5.2vw, 78px);
+  font-size: clamp(48px, 5.8vw, 86px);
   font-weight: 800; line-height: 1.0;
-  letter-spacing: -.02em; text-transform: uppercase;
+  letter-spacing: -.03em; text-transform: uppercase;
   color: #0a0a0a; margin-bottom: 56px;
 }
 .spec-list {
   display: flex; flex-direction: column; gap: 28px;
 }
 .spec-list p {
-  font-size: clamp(14px, 1.05vw, 16px);
-  font-weight: 300; line-height: 1.78;
+  font-size: clamp(16px, 1.3vw, 20px);
+  font-weight: 300; line-height: 1.8;
   color: rgba(0,0,0,.65); letter-spacing: .01em;
 }
 @media(max-width:768px){
@@ -467,15 +468,19 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   position: relative; z-index: 20; background: #fff;
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 20px;
-  padding: 0 52px;
+  padding: 80px 52px 0;
   border-top: 1px solid rgba(0,0,0,.06);
+  align-items: start;
 }
 .duo-col {
   display: flex; flex-direction: column;
 }
+.duo-col:nth-child(2) {
+  margin-top: 120px;
+}
 .duo-img {
   width: 100%; overflow: hidden;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
 }
 .duo-img img {
   width: 100%; height: 100%;
@@ -484,18 +489,18 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 }
 .duo-col:hover .duo-img img { transform: scale(1.04); }
 .duo-text {
-  padding: 48px 60px 72px;
+  padding: 48px 0 72px;
   flex: 1;
 }
 .duo-title {
-  font-size: clamp(28px, 3.0vw, 46px);
+  font-size: clamp(36px, 3.8vw, 58px);
   font-weight: 800; line-height: 1.0;
   letter-spacing: -.02em; text-transform: uppercase;
-  color: #0a0a0a; margin-bottom: 24px;
+  color: #0a0a0a; margin-bottom: 28px;
 }
 .duo-body {
-  font-size: clamp(13px, .9vw, 15px);
-  font-weight: 300; line-height: 1.82;
+  font-size: clamp(16px, 1.25vw, 20px);
+  font-weight: 300; line-height: 1.88;
   color: rgba(0,0,0,.55); max-width: 480px;
 }
 @media(max-width:768px){
@@ -508,33 +513,32 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .craft-section {
   position: relative; z-index: 20; background: #fff;
   display: grid; grid-template-columns: 38% 62%;
-  border-top: 1px solid rgba(0,0,0,.06);
 }
 /* Reversed variant: image left, text right */
 .craft-section.craft-reverse {
   grid-template-columns: 62% 38%;
 }
-.craft-section.craft-reverse .craft-img-wrap { order: -1; }
+.craft-section.craft-reverse .craft-img-wrap { order: -1; margin-left: 52px; margin-right: 0; }
 .craft-section.craft-reverse .craft-content {
   padding: 80px 80px 80px 56px;
 }
 .craft-content {
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex; flex-direction: column; justify-content: flex-start;
   padding: 80px 56px 80px 80px;
 }
 .craft-title {
-  font-size: clamp(22px, 2.6vw, 40px);
-  font-weight: 800; line-height: 1.08;
+  font-size: clamp(36px, 4.0vw, 60px);
+  font-weight: 800; line-height: 1.0;
   letter-spacing: -.02em; text-transform: uppercase;
   color: #0a0a0a; margin-bottom: 40px;
 }
-.craft-body { display: flex; flex-direction: column; gap: 22px; }
+.craft-body { display: flex; flex-direction: column; gap: 24px; }
 .craft-body p {
-  font-size: clamp(13px, .92vw, 15px);
-  font-weight: 300; line-height: 1.82;
+  font-size: clamp(16px, 1.25vw, 20px);
+  font-weight: 300; line-height: 1.85;
   color: rgba(0,0,0,.62); letter-spacing: .01em;
 }
-.craft-img-wrap { overflow: hidden; min-height: 60vh; }
+.craft-img-wrap { overflow: hidden; min-height: 60vh; margin-right: 52px; }
 .craft-img-wrap img {
   width: 100%; height: 100%; object-fit: cover;
   object-position: center; display: block;
@@ -577,15 +581,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   border-top: 1px solid rgba(0,0,0,.06);
 }
 .cd-left {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 60px 100px 80px;
+  overflow: hidden;
+  padding: 0;
+  margin-left: 52px;
 }
 .cd-photo {
   width: 100%;
-  max-width: 340px;
-  aspect-ratio: 1 / 1;
+  height: 100%;
+  display: block;
   object-fit: cover;
   object-position: center;
   filter: grayscale(10%) brightness(1.0);
@@ -598,7 +601,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   border-left: 1px solid rgba(0,0,0,.06);
 }
 .cd-label {
-  font-size: 9px; font-weight: 500; letter-spacing: .45em;
+  font-size: 11px; font-weight: 500; letter-spacing: .45em;
   text-transform: uppercase; color: var(--gold);
   margin-bottom: 40px; opacity: .85;
   display: flex; align-items: center; gap: 16px;
@@ -608,14 +611,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 }
 .cd-title {
   font-family: var(--serif);
-  font-size: clamp(22px, 2.4vw, 36px);
-  font-weight: 600; letter-spacing: .04em;
+  font-size: clamp(32px, 3.2vw, 50px);
+  font-weight: 700; letter-spacing: .04em;
   text-transform: uppercase;
   color: #0a0a0a;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 .cd-quote {
-  font-size: clamp(14px, 1.3vw, 17px);
+  font-size: clamp(17px, 1.5vw, 22px);
   font-weight: 300; line-height: 1.85;
   color: rgba(0,0,0,.5);
   letter-spacing: .01em;
@@ -624,7 +627,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 }
 .cd-sig {
   margin-top: 40px;
-  font-size: 10px; letter-spacing: .3em;
+  font-size: 11px; letter-spacing: .35em;
   text-transform: uppercase; color: rgba(0,0,0,.28);
 }
 @media(max-width:768px){
@@ -667,83 +670,67 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   filter: brightness(0.6);
 }
 .s4-spacer { height: 100vh; position: relative; z-index: 0; background: transparent; }
+.std-mid-spacer { height: 90vh; position: relative; z-index: 0; background: transparent; }
 
 /* ── STANDARDS SECTION ── */
 .std-section {
-  position: relative;
-  z-index: 20;
-  background: #fff;
-  display: grid;
-  grid-template-columns: 38% 62%;
-  min-height: 60vh;
+  position: relative; z-index: 20; background: #fff;
+  display: flex; flex-direction: column;
 }
-.std-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 60px 80px 80px;
-  border-right: 1px solid rgba(0,0,0,.06);
+.std-header {
+  padding: 56px 80px 40px;
+  display: flex; align-items: center; gap: 32px;
 }
 .std-eyebrow {
-  font-size: 9px; font-weight: 500; letter-spacing: .45em;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 28px; opacity: .8;
-  display: flex; align-items: center; gap: 16px;
+  font-size: 11px; font-weight: 500; letter-spacing: .45em;
+  text-transform: uppercase; color: var(--gold); opacity: .8;
+  display: flex; align-items: center; gap: 14px; white-space: nowrap;
 }
-.std-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+.std-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
 .std-title {
-  font-size: clamp(28px, 3.5vw, 52px);
-  font-weight: 700; line-height: 1.05;
-  letter-spacing: -.02em; text-transform: uppercase;
-  color: #0a0a0a; margin-bottom: 28px;
+  font-size: clamp(44px, 5.5vw, 82px);
+  font-weight: 700; line-height: 1.0;
+  letter-spacing: -.03em; text-transform: uppercase;
+  color: #0a0a0a; margin: 0;
 }
-.std-body {
-  font-size: 13px; font-weight: 300; line-height: 1.9;
-  color: rgba(0,0,0,.55); max-width: 380px;
-  letter-spacing: .015em;
+/* each row: text left + image right */
+.std-row {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  min-height: 52vh;
 }
-.std-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px 48px 40px 40px;
+.std-row:last-child { border-bottom: none; }
+.std-row-text {
+  display: flex; flex-direction: column; justify-content: flex-start;
+  padding: 56px 60px 56px 80px;
+}
+.std-row-title {
+  font-size: clamp(26px, 2.8vw, 42px);
+  font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: #0a0a0a;
+  margin-bottom: 28px;
+}
+.std-row-body {
+  font-size: clamp(16px, 1.25vw, 20px); font-weight: 300; line-height: 1.9;
+  color: rgba(0,0,0,.55); letter-spacing: .01em; max-width: 420px;
+}
+.std-row-img {
   overflow: hidden;
+  margin-right: 52px;
 }
-.std-slider-wrap { overflow: hidden; cursor: none; user-select: none; }
-.std-slider {
-  display: flex; gap: 16px;
-  overflow-x: auto; scroll-snap-type: x mandatory;
-  scrollbar-width: none; -ms-overflow-style: none;
-  padding-bottom: 4px;
-}
-.std-slider::-webkit-scrollbar { display: none; }
-.std-slide {
-  flex: 0 0 calc(50% - 8px);
-  aspect-ratio: 4 / 3;
-  scroll-snap-align: start;
-  overflow: hidden; position: relative;
-  background: #e8e8e8; border-radius: 2px;
-  flex-shrink: 0;
-}
-.std-slide img {
+.std-row-img img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
-  transition: transform .7s cubic-bezier(.16,1,.3,1);
-  pointer-events: none;
-  filter: grayscale(30%) brightness(0.85);
+  filter: brightness(0.92);
+  transition: transform .8s cubic-bezier(.16,1,.3,1);
 }
-.std-slide:hover img { transform: scale(1.04); }
-.std-slide-lbl {
-  position: absolute; bottom: 12px; left: 14px;
-  font-size: 8px; font-weight: 500; letter-spacing: .32em;
-  text-transform: uppercase; color: rgba(255,255,255,.5);
-  background: rgba(0,0,0,.35); padding: 3px 8px;
-  backdrop-filter: blur(4px);
-}
+.std-row:hover .std-row-img img { transform: scale(1.03); }
 @media(max-width:768px){
-  .std-section{grid-template-columns:1fr;}
-  .std-left{padding:60px 32px 40px;}
-  .std-right{padding:0 32px 60px;}
+  .std-header { padding: 48px 32px 32px; flex-wrap: wrap; gap: 12px; }
+  .std-row { grid-template-columns: 1fr; min-height: auto; }
+  .std-row-text { padding: 40px 32px; }
+  .std-row-img { min-height: 55vw; }
 }
 
 /* ── FEATURE SECTION ── */
@@ -753,7 +740,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   background: #fff;
   display: grid;
   grid-template-columns: 50% 50%;
-  min-height: 100vh;
+  align-items: start;
 }
 .feat-left {
   display: flex;
@@ -762,7 +749,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   padding: 120px 60px 120px 80px;
 }
 .feat-eyebrow {
-  font-size: 9px; font-weight: 500; letter-spacing: .45em;
+  font-size: 11px; font-weight: 500; letter-spacing: .45em;
   text-transform: uppercase; color: var(--gold);
   margin-bottom: 36px; opacity: .8;
   display: flex; align-items: center; gap: 16px;
@@ -771,16 +758,16 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   content: ''; width: 32px; height: 1px; background: var(--gold);
 }
 .feat-title {
-  font-size: clamp(38px, 4.8vw, 72px);
+  font-size: clamp(44px, 5.5vw, 82px);
   font-weight: 700;
   line-height: 1.0;
-  letter-spacing: -.02em;
+  letter-spacing: -.03em;
   color: #111;
   text-transform: uppercase;
   margin-bottom: 36px;
 }
 .feat-body {
-  font-size: clamp(13px, 1.1vw, 16px);
+  font-size: clamp(16px, 1.25vw, 20px);
   font-weight: 300;
   line-height: 1.9;
   color: rgba(0,0,0,.45);
@@ -789,7 +776,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 }
 .feat-right {
   overflow: hidden;
-  min-height: 70vh;
+  height: 50vw;
 }
 .feat-right img {
   width: 100%; height: 100%;
@@ -810,7 +797,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   z-index: 7;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.9s ease;
+  transition: none;
   background: #0a0a0a;
 }
 .s5-video-wrap.visible { opacity: 1; }
@@ -825,22 +812,38 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   .feat-section--reverse .feat-right{order:1;}
 }
 
+/* ── GLOBAL SPRING SCROLL REVEAL ── */
+.sr {
+  opacity: 0;
+  transform: translateY(32px);
+}
+.sr.sr-img {
+  transform: scale(0.96) translateY(20px);
+}
+.sr.visible {
+  opacity: 1 !important;
+  transform: none !important;
+  transition:
+    opacity   .72s cubic-bezier(.34,1.56,.64,1),
+    transform .72s cubic-bezier(.34,1.56,.64,1);
+}
+
 /* ── FOOTER ── */
 footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60px;border-top:1px solid rgba(65,105,225,.1);}
 .footer-inner{max-width:1400px;margin:0 auto;}
 .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;padding-bottom:60px;border-bottom:1px solid rgba(65,105,225,.07);}
 .footer-logo{margin-bottom:20px;display:flex;align-items:center;}
-.footer-tagline{font-size:13px;font-weight:400;line-height:1.8;color:var(--gray);max-width:280px;margin-bottom:32px;}
+.footer-tagline{font-size:15px;font-weight:300;line-height:1.85;color:var(--gray);max-width:300px;margin-bottom:32px;}
 .footer-socials{display:flex;gap:12px;}
-.footer-social{width:40px;height:40px;border:1px solid rgba(65,105,225,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.08em;color:var(--gray);text-decoration:none;transition:border-color .3s,color .3s;}
+.footer-social{width:40px;height:40px;border:1px solid rgba(65,105,225,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:.08em;color:var(--gray);text-decoration:none;transition:border-color .3s,color .3s;}
 .footer-social:hover{border-color:var(--gold);color:var(--gold);}
-.footer-col h4{font-size:9px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:24px;}
+.footer-col h4{font-size:11px;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:24px;}
 .footer-col ul{list-style:none;}
-.footer-col ul li{margin-bottom:12px;}
-.footer-col ul li a{font-size:13px;font-weight:400;color:var(--gray);text-decoration:none;transition:color .3s;letter-spacing:.04em;}
+.footer-col ul li{margin-bottom:14px;}
+.footer-col ul li a{font-size:14px;font-weight:400;color:var(--gray);text-decoration:none;transition:color .3s;letter-spacing:.04em;}
 .footer-col ul li a:hover{color:var(--white);}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:40px;}
-.footer-copy{font-size:11px;color:var(--gray);letter-spacing:.12em;}
+.footer-copy{font-size:12px;color:var(--gray);letter-spacing:.12em;}
 .footer-copy span{color:var(--gold-dim);}
 
 /* ── SCROLL REVEAL — Spring Physics ── */
@@ -1109,15 +1112,15 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 <!-- RM: Collection Showcase — Richard Mille-style layout -->
 <section class="col-rm" id="colRm">
   <div class="col-rm-left" id="colRmLeft">
-    <h2 class="col-rm-title" id="colRmTitle">DIAMOND<br>GRILLZ</h2>
+    <h2 class="col-rm-title" id="colRmTitle">K'BOUTEGON</h2>
     <p class="col-rm-body" id="colRmBody">Every reflection emanating from a Diamond Grillz by MKT carries within it the full weight of intention. Hand-set stones, chosen for their fire and depth, are mounted in 18K gold structures built to last beyond the wearer.</p>
   </div>
   <div class="col-rm-right">
     <div class="col-rm-tabs-row">
-      <button class="col-rm-tab active" data-col="grillz">Diamond Grillz</button>
-      <button class="col-rm-tab" data-col="chains">Cuban Chains</button>
-      <button class="col-rm-tab" data-col="pendants">Iced Pendant</button>
-      <button class="col-rm-tab" data-col="custom">Custom Order</button>
+      <button class="col-rm-tab active" data-col="grillz">K'BOUTEGON</button>
+      <button class="col-rm-tab" data-col="chains">K'ETHEREALITY</button>
+      <button class="col-rm-tab" data-col="pendants">K'HARMONICS</button>
+      <button class="col-rm-tab" data-col="custom">K'NOT</button>
     </div>
     <div class="col-rm-slider-outer">
       <div class="col-rm-slider-wrap">
@@ -1133,7 +1136,7 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 
 <!-- S3: Parallax fixed image — between collection & creative director -->
 <div class="s3-img-wrap" id="s3ImgWrap">
-  <img class="s3-img" src="parallax-mid.avif" alt="MKT Craftsmanship">
+  <img class="s3-img" src="s3-fixed.avif" alt="MKT Craftsmanship">
 </div>
 <!-- Spacer: scroll zone for s3 image -->
 <div class="s3-spacer"></div>
@@ -1159,36 +1162,32 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
   <div class="craft-content">
     <h2 class="craft-title">CRAFTED<br>CONNECTIONS</h2>
     <div class="craft-body">
-      <p>The collection is created as a language of its own, where every line and detail tells a story of the bond between love and friendship. Without the need for explanation, the designs reflect the silent understanding shared between those who wear them.</p>
-      <p>Each piece carries a meaning that belongs only to the wearer — a private language made permanent in gold and stone.</p>
+      <p>The collection is created as a language of its own, where every line and detail tells a story of the bond between love and friendship. Without the need for explanation, the designs reflect companionship, understanding, and trust — values formed only through genuine appreciation.</p>
+      <p>Within each piece, love and friendship are inseparable, naturally intertwined just as they exist in life itself.</p>
     </div>
   </div>
   <div class="craft-img-wrap">
-    <img
-      src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1400&h=900&q=90&fit=crop&auto=format"
-      alt="MKT Crafted Connections" loading="lazy">
+    <img src="harmonics-necklace.png" alt="MKT Crafted Connections" loading="lazy">
   </div>
 </section>
 
 <!-- CRAFT REVERSED: Image left, Text right -->
 <section class="craft-section craft-reverse">
   <div class="craft-img-wrap">
-    <img
-      src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1400&h=900&q=90&fit=crop&auto=format"
-      alt="MKT Bound Together" loading="lazy">
+    <img src="kboutegon-ring.png" alt="MKT Bound Together" loading="lazy">
   </div>
   <div class="craft-content">
     <h2 class="craft-title">BOUND<br>TOGETHER</h2>
     <div class="craft-body">
-      <p>The image of the collection unfolds a story of two distinct individuals bound by an inseparable connection. The diamond-set metal circles interwoven between the two forms symbolize the intersection of friendship and love.</p>
-      <p>Independent, yet always drawn toward one another — a geometry that cannot be undone.</p>
+      <p>The image of the collection unfolds a story of two distinct individuals bound by an inseparable connection. The diamond-set metal circles interwoven between the two forms symbolize the intersection of friendship and love — independent, yet always drawn toward one another.</p>
+      <p>Rather than seeking perfect symmetry, the design celebrates a natural connection, where lasting value is formed through understanding and companionship.</p>
     </div>
   </div>
 </section>
 
 <!-- S-MID: Fixed background image -->
 <div class="smid-img-wrap" id="smidVideoWrap">
-  <img class="smid-img" src="smid-bg.avif" alt="MKT Background">
+  <img class="smid-img" src="smid-fixed.avif" alt="MKT Background">
 </div>
 <!-- Spacer: scroll zone for image -->
 <div class="smid-spacer"></div>
@@ -1197,7 +1196,7 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
 <section class="cd-section">
   <div class="cd-left">
     <img class="cd-photo"
-      src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=90&fit=crop"
+      src="cd-photo.avif"
       alt="MKT Creative Director">
   </div>
   <div class="cd-right">
@@ -1210,52 +1209,60 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
   </div>
 </section>
 
-<!-- S4: Fixed image — revealed after Creative Director scrolls past -->
-<div class="s4-img-wrap" id="s4ImgWrap">
-  <img class="s4-img"
-    src="https://images.unsplash.com/photo-1601121141418-1a57c17db37b?w=1920&q=90&fit=crop"
-    alt="MKT Craftsmanship">
-</div>
 
-<!-- Spacer: user views s4 fixed image -->
-<!-- Standards section: dark bg, text left + image slider right -->
+<!-- S4: Fixed background image between CD & Standards sections -->
+<div class="s4-img-wrap" id="s4ImgWrap">
+  <img class="s4-img" src="s4-fixed.avif" alt="MKT Background">
+</div>
+<!-- Spacer: reveals s4 fixed image between CD section and Standards section -->
+<div class="s4-spacer"></div>
+
+<!-- Standards section: header + 3 rows of text + image -->
 <section class="std-section">
-  <div class="std-left">
-    <div class="std-eyebrow">Material Excellence</div>
-    <h2 class="std-title">ETERNAL<br>STANDARDS</h2>
-    <p class="std-body">18K gold is chosen by MKT as the foundation of every design, achieving the perfect balance between durability, refined golden brilliance, and exceptional craftsmanship. Paired with meticulously selected natural diamonds, each creation reflects pure light and timeless value. More than materials, this is the standard MKT upholds in crafting masterpieces of personal expression.</p>
+  <div class="std-header">
+    <span class="std-eyebrow">Material Excellence</span>
+    <h2 class="std-title">ETERNAL STANDARDS</h2>
   </div>
-  <div class="std-right">
-    <div class="std-slider-wrap" id="stdSliderWrap">
-      <div class="std-slider" id="stdSlider">
-        <div class="std-slide">
-          <img src="https://images.unsplash.com/photo-1601121141461-9d6647bef0a1?w=900&q=85&fit=crop&auto=format" alt="Craftsmanship" loading="lazy">
-          <span class="std-slide-lbl">Craftsmanship</span>
-        </div>
-        <div class="std-slide">
-          <img src="https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=900&q=85&fit=crop&auto=format" alt="18K Gold" loading="lazy">
-          <span class="std-slide-lbl">18K Gold</span>
-        </div>
-        <div class="std-slide">
-          <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=85&fit=crop&auto=format" alt="Natural Diamond" loading="lazy">
-          <span class="std-slide-lbl">Natural Diamond</span>
-        </div>
-        <div class="std-slide">
-          <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=900&q=85&fit=crop&auto=format" alt="Precision" loading="lazy">
-          <span class="std-slide-lbl">Precision</span>
-        </div>
-      </div>
+
+  <div class="std-row">
+    <div class="std-row-text">
+      <h3 class="std-row-title">Craftsmanship</h3>
+      <p class="std-row-body">Every MKT piece is shaped by hands that have spent years refining the art of precision. Each joint, each setting, each surface is worked to a standard that machines cannot replicate — because the mark of a craftsman is present in every detail.</p>
+    </div>
+    <div class="std-row-img">
+      <img src="std-row1.avif" alt="Craftsmanship" loading="lazy">
+    </div>
+  </div>
+
+  <div class="std-row">
+    <div class="std-row-text">
+      <h3 class="std-row-title">18K Gold</h3>
+      <p class="std-row-body">18K gold is chosen as the foundation of every design — achieving the perfect balance between durability, refined golden brilliance, and exceptional craftsmanship. It is the material through which MKT's vision becomes permanent.</p>
+    </div>
+    <div class="std-row-img">
+      <img src="std-row2.avif" alt="18K Gold" loading="lazy">
+    </div>
+  </div>
+
+  <div class="std-row">
+    <div class="std-row-text">
+      <h3 class="std-row-title">Natural Diamond</h3>
+      <p class="std-row-body">Paired with meticulously selected natural diamonds, each creation reflects pure light and timeless value. Stones are chosen individually for fire, clarity, and the way they carry meaning — because nothing less is worthy of the wearer.</p>
+    </div>
+    <div class="std-row-img">
+      <img src="std-row3.avif" alt="Natural Diamond" loading="lazy">
     </div>
   </div>
 </section>
+
+<!-- Spacer: fixed image between std-section and duo-section -->
+<div class="std-mid-spacer"></div>
 
 <!-- DUO: 2-col image + text below (replaces feat sections) -->
 <section class="duo-section" id="featSection1">
   <div class="duo-col">
     <div class="duo-img">
-      <img
-        src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=900&h=1100&q=90&fit=crop&auto=format"
-        alt="MKT Goldsmith at work" loading="lazy">
+      <img src="duo-img1.avif" alt="MKT Collection" loading="lazy">
     </div>
     <div class="duo-text">
       <h2 class="duo-title">BUILT FOR<br>THOSE WHO<br>DEMAND MORE</h2>
@@ -1264,9 +1271,7 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
   </div>
   <div class="duo-col">
     <div class="duo-img">
-      <img
-        src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=900&h=1100&q=90&fit=crop&auto=format"
-        alt="MKT Unique Piece" loading="lazy">
+      <img src="duo-img2.avif" alt="MKT Collection" loading="lazy">
     </div>
     <div class="duo-text">
       <h2 class="duo-title">NO TWO<br>PIECES ARE<br>EVER THE SAME</h2>
@@ -1275,7 +1280,14 @@ footer{position:relative;z-index:20;background:var(--black);padding:80px 80px 60
   </div>
 </section>
 
-<div class="s4-spacer"></div>
+<!-- S5: Fixed background video — revealed after duo section scrolls past -->
+<div class="s5-video-wrap" id="s5VideoWrap">
+  <video class="s5-video" autoplay muted loop playsinline preload="auto">
+    <source src="knot-breakdown.mp4" type="video/mp4">
+  </video>
+</div>
+<!-- Spacer: scroll zone for s5 video -->
+<div class="s5-spacer"></div>
 
 <!-- ═══ FOOTER ═══ -->
 <footer><div class="footer-inner">
@@ -1376,11 +1388,12 @@ window.addEventListener('scroll',function(){
 /* Scroll reveal: s3/s4/s5 fixed layer transitions */
 (function(){
   var s3Img     = document.getElementById('s3ImgWrap');
-  var s4Img     = document.getElementById('s4ImgWrap');
+  var s4Img     = null; // s4ImgWrap removed
   var s5Video   = document.getElementById('s5VideoWrap');
   var colRm        = document.getElementById('colRm');
   var cdSection    = document.querySelector('.cd-section');
   var featSection  = document.getElementById('featSection1');
+  var s5Spacer     = document.querySelector('.s5-spacer');
 
   function updateReveal() {
     var wh = window.innerHeight;
@@ -1390,12 +1403,17 @@ window.addEventListener('scroll',function(){
     var cdEnter  = cdSection  ? cdSection.getBoundingClientRect().top     <= wh * 0.55 : false;
     var cdPast   = cdSection  ? cdSection.getBoundingClientRect().bottom  <= 0    : false;
     var featPast = featSection? featSection.getBoundingClientRect().bottom<= 0    : false;
+    // s5-spacer entering viewport from below → show video as soon as zone comes into view
+    var s5Enter  = s5Spacer   ? s5Spacer.getBoundingClientRect().top      <= wh   : false;
+
+    // s3 parallax: hide when s5 zone comes into view so it doesn't bleed
+    if (s3Img) s3Img.style.opacity = s5Enter ? '0' : '1';
 
     // s4 craft image: on after cd-section, off when s5 takes over
-    if (s4Img) s4Img.classList.toggle('visible', cdPast && !featPast);
+    if (s4Img) s4Img.classList.toggle('visible', cdPast && !s5Enter);
 
-    // s5 final video: on after first feat-section scrolls past
-    if (s5Video) s5Video.classList.toggle('visible', featPast);
+    // s5 final video: on as soon as s5-spacer enters the viewport
+    if (s5Video) s5Video.classList.toggle('visible', s5Enter);
   }
 
   window.addEventListener('scroll', updateReveal, { passive: true });
@@ -1491,9 +1509,9 @@ window.addEventListener('scroll',function(){
     /* 1. DIAMOND COLLECTION target — exits fully at p ≈ 0.57 */
     dcSpring.target = sy * 1.08;
 
-    /* 2. Hero video — direct (fade doesn't benefit from bounce) */
+    /* 2. Hero video — keep visible so section 2 dark overlay shows video through */
     if (heroVideo) {
-      heroVideo.style.opacity = Math.max(0, 1 - p * 1.1).toFixed(3);
+      heroVideo.style.opacity = 1;
     }
 
     /* 3. Section 2 overlay — direct (background gradient, no spring needed) */
@@ -1508,10 +1526,8 @@ window.addEventListener('scroll',function(){
         ' transparent 80%)';
     }
 
-    /* 4. THE MKT STORY target — spring kicks in at p > 0.85 */
-    mktSpring.target = p > 0.85
-      ? Math.max(0, (sy - spacerH * 0.85) * 0.25)
-      : 0;
+    /* 4. THE MKT STORY — same natural scroll speed as body text below */
+    mktSpring.target = 0;
 
     /* 5. Reveal THE MKT STORY only after DC has fully exited the viewport.
           DC bottom exits at p ≈ 0.72; p=0.82 adds buffer for spring lag. */
@@ -1573,43 +1589,39 @@ window.addEventListener('scroll',function(){
 (function(){
   var COLS = {
     grillz: {
-      title: 'DIAMOND<br>GRILLZ',
-      body: 'Every reflection emanating from a Diamond Grillz by MKT awakens the memory, brilliantly sealing the artistry of an object that has become truly symbolic. The stones radiate, light comes to life, and fire vibrates as the world undergoes a transformation: each facet composes a statement where technical mastery meets raw desire. The diamond, placed upon 18K gold like an eternal snowflake, immortalises this moment.',
+      title: "K'BOUTEGON",
+      body: "Every reflection emanating from a K'BOUTEGON piece by MKT awakens the memory, brilliantly sealing the artistry of an object that has become truly symbolic. The stones radiate, light comes to life, and fire vibrates as the world undergoes a transformation: each facet composes a statement where technical mastery meets raw desire.",
       images: [
-        { src: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Gold Grillz' },
-        { src: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Diamond Set' },
-        { src: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Iced Out' },
-        { src: 'https://images.unsplash.com/photo-1561828995-aa79a2db86dd?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Rose Gold' }
+        { src: 'kboutegon-ring.png',     alt: "K'BOUTEGON Ring" },
+        { src: 'kboutegon-bracelet.png', alt: "K'BOUTEGON Bracelet" },
+        { src: 'kboutegon-earring.png',  alt: "K'BOUTEGON Earring" }
       ]
     },
     chains: {
-      title: 'CUBAN<br>CHAINS',
-      body: 'The Cuban Chain is the architecture of confidence — each interlocking link a chapter of presence written in solid gold. MKT\'s chains are cast in 18K gold, then ice-set to the exact weight the wearer commands. Where engineering meets expression, the Cuban Chain remains the definitive language of those who need no introduction.',
+      title: "K'ETHEREALITY",
+      body: "K'ETHEREALITY is where form transcends function — each piece sculpted to carry light and movement simultaneously. Crafted in 925 silver with precision-set stones, this collection speaks to those who wear silence as eloquently as they wear fire.",
       images: [
-        { src: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Cuban Chain' },
-        { src: 'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Gold Link' },
-        { src: 'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Iced Chain' },
-        { src: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Tennis Chain' }
+        { src: 'ethereality-necklace.png', alt: "K'ETHEREALITY Necklace" },
+        { src: 'ethereality-ring.png',     alt: "K'ETHEREALITY Ring" },
+        { src: 'ethereality-earring.png',  alt: "K'ETHEREALITY Earring" }
       ]
     },
     pendants: {
-      title: 'ICED<br>PENDANT',
-      body: 'A pendant is the punctuation of a statement already made in gold. Sculpted from 18K gold and paved in conflict-free diamonds, each MKT Iced Pendant is worn close to what matters most. The stones are hand-set one by one, chosen for their collective fire — pieces that transform presence into permanence.',
+      title: "K'HARMONICS",
+      body: "K'HARMONICS finds its language in the perfect circle — geometry refined to its purest form. Each piece echoes the rhythm of balance: stone and metal in conversation, weight and lightness in harmony. Worn as a ring, a necklace, or an earring, K'HARMONICS is the signature of those who move through the world with intention.",
       images: [
-        { src: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Iced Pendant' },
-        { src: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Diamond Pendant' },
-        { src: 'https://images.unsplash.com/photo-1589128777073-263566ae5e4d?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Gold Pendant' },
-        { src: 'https://images.unsplash.com/photo-1623091411395-09e79fdbfcf8?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Custom Pendant' }
+        { src: 'harmonics-ring.png',     alt: "K'HARMONICS Ring" },
+        { src: 'harmonics-necklace.png', alt: "K'HARMONICS Necklace" },
+        { src: 'harmonics-earring.png',  alt: "K'HARMONICS Earring" }
       ]
     },
     custom: {
-      title: 'CUSTOM<br>ORDER',
-      body: 'There are pieces no catalogue can contain. The Custom Order service at MKT begins with a conversation and ends with an object unlike any other in the world — conceived for one wearer, completed by one craftsman. Every detail carries intention. Every surface carries identity. This is where a name becomes a material thing.',
+      title: "K'NOT",
+      body: "K'NOT is a study in restraint — a single baguette stone, positioned with absolute precision, anchored in brushed 925 silver. Minimal by design, maximal in presence. This is jewelry that does not compete for attention; it commands it.",
       images: [
-        { src: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=700&h=700&q=88&fit=crop&auto=format', alt: 'One of a Kind' },
-        { src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Bespoke Design' },
-        { src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Engraved' },
-        { src: 'https://images.unsplash.com/photo-1601121141461-9d6647bef0a1?w=700&h=700&q=88&fit=crop&auto=format', alt: 'Handcrafted' }
+        { src: 'knot-ring.png',     alt: "K'NOT Ring" },
+        { src: 'knot-earring.png',  alt: "K'NOT Earring" },
+        { src: 'knot-bracelet.png', alt: "K'NOT Bracelet" }
       ]
     }
   };
@@ -1703,6 +1715,62 @@ window.addEventListener('scroll',function(){
     var x = e.pageX - slider.getBoundingClientRect().left;
     slider.scrollLeft = dragScrollLeft - (x - dragStartX);
   });
+})();
+
+/* ── GLOBAL SPRING SCROLL REVEAL ── */
+(function(){
+  // Text targets
+  var textSel = [
+    '.col-rm-title','.col-rm-body',
+    '.craft-title','.craft-body p',
+    '.cd-label','.cd-title','.cd-quote','.cd-sig',
+    '.std-header','.std-row-title','.std-row-body',
+    '.duo-title','.duo-body',
+    '.feat-eyebrow','.feat-title','.feat-body',
+    '.spec-title','.spec-list p',
+    '.sv-frame',
+    '.footer-tagline','.footer-col h4','.footer-col li'
+  ].join(',');
+
+  // Image / block targets
+  var imgSel = [
+    '.craft-img-wrap','.cd-photo','.std-row-img',
+    '.duo-img','.feat-right','.spec-img-wrap',
+    '.col-rm-slide'
+  ].join(',');
+
+  // Group elements by nearest section for stagger
+  function tagGroup(sel, isImg) {
+    document.querySelectorAll(sel).forEach(function(el) {
+      // skip elements already handled by other animations
+      if (el.classList.contains('sr')) return;
+      var section = el.closest('section, footer, .col-rm, .s2-wrapper') || el.parentElement;
+      var siblings = Array.from(section.querySelectorAll(isImg ? '.sr-img-pending' : '.sr-text-pending'));
+      var idx = siblings.indexOf(el);
+      el.classList.add('sr', isImg ? 'sr-img' : '');
+      el.dataset.srDelay = (idx < 0 ? 0 : idx) * 0.09;
+    });
+  }
+
+  // Mark pending before tagging for index lookup
+  document.querySelectorAll(textSel).forEach(function(el){ el.classList.add('sr-text-pending'); });
+  document.querySelectorAll(imgSel).forEach(function(el){ el.classList.add('sr-img-pending'); });
+  tagGroup(textSel, false);
+  tagGroup(imgSel, true);
+  document.querySelectorAll('.sr-text-pending').forEach(function(el){ el.classList.remove('sr-text-pending'); });
+  document.querySelectorAll('.sr-img-pending').forEach(function(el){ el.classList.remove('sr-img-pending'); });
+
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      var delay = parseFloat(el.dataset.srDelay || 0);
+      setTimeout(function(){ el.classList.add('visible'); }, delay * 1000);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.sr').forEach(function(el){ io.observe(el); });
 })();
 </script>
 
