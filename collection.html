@@ -1345,9 +1345,16 @@ document.querySelectorAll('.menu-links a').forEach(function(a){
 });
 
 // ── NAVBAR SCROLL — stays transparent on collection page ──
+var navTicking = false;
 window.addEventListener('scroll',function(){
-  document.getElementById('navbar').classList.remove('scrolled');
-});
+  if (!navTicking) {
+    window.requestAnimationFrame(function() {
+      document.getElementById('navbar').classList.remove('scrolled');
+      navTicking = false;
+    });
+    navTicking = true;
+  }
+}, { passive: true });
 
 // ── CUSTOM CURSOR ──
 (function(){
@@ -1416,7 +1423,16 @@ window.addEventListener('scroll',function(){
     if (s5Video) s5Video.classList.toggle('visible', s5Enter);
   }
 
-  window.addEventListener('scroll', updateReveal, { passive: true });
+  var revealTicking = false;
+  window.addEventListener('scroll', function() {
+    if (!revealTicking) {
+      window.requestAnimationFrame(function() {
+        updateReveal();
+        revealTicking = false;
+      });
+      revealTicking = true;
+    }
+  }, { passive: true });
   updateReveal();
 })();
 
@@ -1539,8 +1555,27 @@ window.addEventListener('scroll',function(){
     startRaf();
   }
 
-  window.addEventListener('resize', measure, { passive: true });
-  window.addEventListener('scroll', onScroll, { passive: true });
+  var resizeTicking = false;
+  window.addEventListener('resize', function() {
+    if (!resizeTicking) {
+      window.requestAnimationFrame(function() {
+        measure();
+        resizeTicking = false;
+      });
+      resizeTicking = true;
+    }
+  }, { passive: true });
+
+  var scrollTicking = false;
+  window.addEventListener('scroll', function() {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(function() {
+        onScroll();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  }, { passive: true });
   measure();
   onScroll();
 })();
