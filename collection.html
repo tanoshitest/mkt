@@ -645,9 +645,11 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   width: 100%; height: 100vh;
   z-index: 6;
   overflow: hidden;
-  opacity: 1;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 0.9s ease;
 }
+.s3-img-wrap.visible { opacity: 1; }
 .s3-img {
   width: 100%; height: 100%;
   object-fit: cover; object-position: center;
@@ -1400,18 +1402,20 @@ window.addEventListener('scroll',function(){
   var smidImg   = document.getElementById('smidVideoWrap');
   var s4Img     = document.getElementById('s4ImgWrap');
   var s5Video   = document.getElementById('s5VideoWrap');
+  var s3Spacer     = document.querySelector('.s3-spacer');
   var smidSpacer   = document.querySelector('.smid-spacer');
   var s4Spacer     = document.querySelector('.s4-spacer');
   var s5Spacer     = document.querySelector('.s5-spacer');
 
   function updateReveal() {
     var wh = window.innerHeight;
+    var s3Enter   = s3Spacer   ? s3Spacer.getBoundingClientRect().top <= wh : false;
     var smidEnter = smidSpacer ? smidSpacer.getBoundingClientRect().top <= wh : false;
     var s4Enter   = s4Spacer   ? s4Spacer.getBoundingClientRect().top <= wh : false;
     var s5Enter   = s5Spacer   ? s5Spacer.getBoundingClientRect().top <= wh : false;
 
-    // s3 parallax: hide when s5 zone comes into view so it doesn't bleed
-    if (s3Img) s3Img.style.opacity = s5Enter ? '0' : '1';
+    // s3 parallax: on when s3-spacer enters, off when smid or s5 takes over
+    if (s3Img) s3Img.classList.toggle('visible', s3Enter && !smidEnter && !s5Enter);
 
     // smid image: on when smid-spacer enters, off when s5
     if (smidImg) smidImg.classList.toggle('visible', smidEnter && !s5Enter);
